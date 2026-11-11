@@ -43,10 +43,10 @@ i,.it{font-style:italic}
 </style></head>
 <body>
 <div id="cam"></div>
-<div id="hud"><div id="hudTL" style="left:56px;top:44px">CINEMATY · HYDERABAD</div><div id="hudTR" style="right:56px;top:44px"></div><div id="hudBL" style="left:56px;bottom:40px"></div><div id="hudBR" style="right:56px;bottom:40px">INDIE FILM COMMONS</div></div>
+<div id="hud"><div id="hudTL" style="left:56px;top:44px">CINEMATY · HYDERABAD</div><div id="hudTR" style="right:56px;top:44px"></div><div id="hudBL" style="left:56px;bottom:40px"></div><div id="hudBR" style="right:56px;bottom:40px"></div></div>
 <div id="grain"></div><div id="vig"></div><div id="flash"></div>
 <script>
-const P=0.5,DUR=120,FPS=30;
+const P=0.5,DUR=130,FPS=30;
 const cl=(x,a=0,b=1)=>x<a?a:x>b?b:x, lerp=(a,b,x)=>a+(b-a)*x;
 const ez={expo:x=>x>=1?1:1-Math.pow(2,-10*x),quart:x=>1-Math.pow(1-x,4),out:x=>1-Math.pow(1-x,3),
  inOut:x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,sine:x=>-(Math.cos(Math.PI*x)-1)/2,lin:x=>x,inn:x=>x*x*x,
@@ -146,7 +146,7 @@ S(16,20,'ink',(w,c)=>{
  for(const y of [40,1000]){const s=E(w,'div','a',`left:-200px;top:${y}px;width:2400px;height:40px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.35) 0 26px,transparent 26px 60px);border-radius:4px`);(c.perf=c.perf||[]).push(s)}
  c.lg=[];for(let i=0;i<3;i++){c.lg.push(E(w,'div','a',`left:${960-430}px;top:170px;width:860px;color:#fff;opacity:${i?0.3:1}`,LOGO))}
  const tl=E(w,'div','a row','left:0;right:0;top:700px;justify-content:center;gap:.25em;font-size:110px');c.words=['Where','Hyderabad’s','films','<i>begin.</i>'].map(t=>{const o=E(tl,'div','rl');return E(o,'div','serif','',t)});
- c.m=E(w,'div','mono a','left:0;right:0;top:860px;text-align:center;font-size:22px','Indie Film Commons');
+ c.m=E(w,'div','mono a','left:0;right:0;top:860px;text-align:center;font-size:22px','');
 },(lt,c,t)=>{
  const e=tw(lt,0,.9,'expo');
  c.lg.forEach((l,i)=>{const off=(i===0?0:(i===1?1:-1))*(1-tw(lt,0,.6))*40;tf(l,`translateX(${off}px) scale(${lerp(1.5,1,e)})`);l.style.filter=e<1?`blur(${(1-e)*20}px)`:'none';if(i)op(l,.35*(1-tw(lt,0,.6,'lin')))});
@@ -304,8 +304,8 @@ S(48,56,'ink',(w,c)=>{
  c.ch=[['00:00','Matinee crowd'],['03:20','The projection booth'],['06:20','The 1979 print'],['09:20','Interval'],['10:10','Lights up']].map(([a,b],i)=>{const el=E(c.g,'div','a row',`left:1290px;top:${220+i*80}px;gap:24px;width:520px;padding:18px 0;border-top:1px solid #2b2b2b`);E(el,'div','mono','font-size:16px;color:#8A8A8A',a);E(el,'div','sans','font-size:26px',b);return el});
  c.aw=['Winner · Best Short — Indian Competition · IFFK 2024','Winner · Audience Choice · Dharamshala IFF 2024','Official Selection · Jio MAMI 2024'].map((s,i)=>E(c.g,'div','mono a',`left:120px;top:${830+i*42}px;font-size:18px`,'✦ '+s));
  c.big=E(w,'div','a','left:0;right:0;top:300px;text-align:center');
- c.n=E(c.big,'div','serif','font-size:300px','7 of 7');E(c.big,'div','sans','font-size:40px;margin-top:10px','member credits are verified.');
- const ck=E(c.big,'div','row','justify-content:center;gap:22px;margin-top:40px');c.ck=Array.from({length:7},()=>E(ck,'div','','width:46px;height:46px;border-radius:50%;border:2px solid #fff;display:flex;align-items:center;justify-content:center;font-size:24px;font-family:Geist'));
+ c.n=E(c.big,'div','serif','font-size:220px;line-height:1.05','Every credit,<br><i>verified.</i>');
+
 },(lt,c)=>{
  const out=tw(lt,4.6,1.0,'inOut');tf(c.g,`scale(${lerp(1,1.04,lt/8)-out*.1})`);op(c.g,1-out*.9);c.g.style.filter=out>0?`blur(${out*12}px)`:'none';
  const pe=tw(lt,0,1.4,'expo');tf(c.pl,`translateY(${(1-pe)*60}px)`);op(c.pl,pe);
@@ -313,7 +313,7 @@ S(48,56,'ink',(w,c)=>{
  c.ch.forEach((el,i)=>{const e=tw(lt,.4+i*.35,1.2,'quart');op(el,e*(i===1?1:.6));tf(el,`translateX(${(1-e)*40}px)`)});
  c.aw.forEach((el,i)=>{const e=tw(lt,2.2+i*.4,1.2,'quart');op(el,e)});
  const be=tw(lt,5,1.2,'expo');op(c.big,be);tf(c.big,`scale(${lerp(1.15,1,be)+(lt-5)*.01})`);c.big.style.filter=be<1?`blur(${(1-be)*14}px)`:'none';
- c.ck.forEach((k,i)=>{const on=lt>5.6+i*.25;k.style.background=on?'#fff':'transparent';k.style.color=on?'#000':'#fff';k.textContent=on?'✓':''});
+
 },{noOut:1});
 
 // 11. Events 56-62
@@ -520,7 +520,7 @@ S(105,115,'paper',(w,c)=>{
  c.ul=E(c.g,'div','a','left:810px;top:625px;height:6px;width:640px;background:#D92D20;transform-origin:0 50%;transform:scaleX(0)');
 },(lt,c,t)=>{
  mq(c.mq,lt,90);mq(c.mq2,-lt-50,70);
- if(!c.lw){c.lw=c.l.firstChild.offsetWidth;const mx=Math.max(...c.W.map(x=>x.el.offsetWidth));c.gx=(1920-(c.lw+40+mx))/2-(770-c.lw);tf(c.g,`translateX(${c.gx}px)`);c.ul.style.width=c.W[17].el.offsetWidth+'px'}
+ if(!c.lw){c.lw=c.l.firstChild.offsetWidth;const ws=c.W.map(x=>x.el.offsetWidth).sort((a,b)=>a-b);const mx=ws[Math.floor(ws.length/2)];c.gx=(1920-(c.lw+40+mx))/2-(770-c.lw);tf(c.g,`translateX(${c.gx}px)`);c.ul.style.width=c.W[17].el.offsetWidth+'px'}
  const le=tw(lt,0,.6,'quart');op(c.l,le);tf(c.l,`translateY(${(1-le)*20}px)`);
  c.W.forEach((x,i)=>{const last=i===17;if(lt<x.st-.01||(!last&&lt>x.en+.16)){op(x.el,0);return}
   const ei=tw(lt,x.st,.28,'quart'),eo=last?0:tw(lt,x.en,.14,'quart');
@@ -529,16 +529,16 @@ S(105,115,'paper',(w,c)=>{
 },{noIn:1,noOut:1});
 
 // 23. Waitlist 115-120
-S(115,120,'paper',(w,c)=>{
+S(115,130,'paper',(w,c)=>{c.w=E(w,'div','a','inset:0');w=c.w;
  c.lg=E(w,'div','a','left:700px;top:150px;width:520px;color:#000',LOGO);
  c.h=RL(w,'Join the waitlist <i>now.</i>','left:0;right:0;top:470px;text-align:center;font-size:140px');
  c.box=E(w,'div','a row','left:0;right:0;top:700px;justify-content:center');const b=E(c.box,'div','row','border:2px solid #000;border-radius:999px;padding:22px 46px;gap:22px');c.dot=E(b,'div','','width:22px;height:22px;border-radius:50%;background:#D92D20');c.url=E(b,'div','mono','font-size:56px;letter-spacing:.06em;text-transform:none;min-width:420px','');
- c.f=E(w,'div','mono a','left:0;right:0;top:900px;text-align:center;font-size:18px;color:#6B6B6B','Where Hyderabad’s films begin.');
+ c.cs=RL(w,'<i>Coming soon.</i>','left:0;right:0;top:860px;text-align:center;font-size:84px');c.f=E(w,'div','mono a','left:0;right:0;top:990px;text-align:center;font-size:18px;color:#6B6B6B','Where Hyderabad’s films begin.');
 },(lt,c,t)=>{
  const e=tw(lt,0,.8);tf(c.lg,`scale(${lerp(1.3,1,e)})`);op(c.lg,cl(e*2));c.lg.style.filter=e<1?`blur(${(1-e)*14}px)`:'none';
  rv(c.h,lt,1,.8);const be=tw(lt,2,.5,'back');tf(c.box,`scale(${be})`);op(c.box,cl(be*2));
  const s='cinematy.in';c.url.textContent=s.slice(0,Math.floor(cl((lt-2.2)/.9)*s.length));
- tf(c.dot,`scale(${1+.5*kick(t)})`);op(c.f,tw(lt,3.2,.8));
+ tf(c.dot,`scale(${1+.5*kick(t)})`);rv(c.cs,lt,3.4,.9);op(c.f,tw(lt,4.5,.8));tf(c.w,`scale(${1+cl((lt-5)/10)*.035})`);
 },{noIn:1,noOut:1});
 
 // ===================== ENGINE =====================
