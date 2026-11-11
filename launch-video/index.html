@@ -290,7 +290,7 @@ S(44,48,'ink',(w,c)=>{
 },(lt,c,t)=>{
  rv(c.h,lt,.05,.8);op(c.beam,.8+Math.sin(lt*41)*.1+kick(t)*.3);
  c.p.forEach((p,i)=>{const e=tw(lt,.2+i*.5,.9,'expo');const ang=(i-1)*-14*e+(1-e)*(i-1)*-60;tf(p.el,`translateZ(${lerp(-1400,0,e)+(i===1?60:0)}px) rotateY(${ang}deg) translateY(${Math.sin(lt*1.5+i)*8}px)`);op(p.el,cl(e*2));
-  p.sheen.style.left=lerp(-300,600,cl((lt-1.5-i*.3)/1))+'px';count(p.vw,lt,.6+i*.5,1.6,0,p.v,v=>(v/1000).toFixed(1)+'K views');op(p.vw,cl(e*2))});
+  p.sheen.style.left=lerp(-300,600,cl((lt-1.5-i*.3)/1))+'px';p.vw.textContent='';op(p.vw,cl(e*2))});
 });
 
 // 10. Film page 48-56 (dip)
@@ -513,17 +513,18 @@ S(104,105,'ink',(w,c)=>{
 S(105,115,'paper',(w,c)=>{
  c.mq=marquee(w,'Writers · Directors · Editors · Actors · Colorists · Composers · ','left:0;top:820px;font-family:IS;font-size:220px;-webkit-text-stroke:1.5px #D1D1D1;color:transparent');
  c.mq2=marquee(w,'Producers · Choreographers · Students · Dreamers · ','left:0;top:-30px;font-family:IS;font-size:220px;-webkit-text-stroke:1.5px #E8E8E8;color:transparent');
- c.g=E(w,'div','a','left:0;top:0;width:1920px;height:1080px');c.l=RL(c.g,'<span>Cinematy for</span>','left:0;width:770px;top:440px;font-size:160px;text-align:right');
- c.slot=E(c.g,'div','a','left:810px;top:420px;width:1100px;height:230px;overflow:hidden');
+ c.g=E(w,'div','a','left:0;top:0;width:1920px;height:1080px');
+ c.l=E(c.g,'div','serif a','left:0;width:770px;top:450px;font-size:136px;text-align:right','<span>Cinematy for</span>');
  const W=['Writers','Directors','Editors','Cinematographers','Actors','Colorists','Composers','Sound designers','Producers','Choreographers','Costume designers','Dubbing artists','Casting directors','Students','Storytellers','Dreamers','<i>Filmmakers.</i>','<i>Hyderabad.</i>'];
- c.W=W.map((s,i)=>{const st=i<16?i*.5:(i===16?8:9);const en=i<16?st+.5:st+1;return{el:E(c.slot,'div','serif a',`left:0;top:20px;font-size:160px;white-space:nowrap`,s),st,en}});
- c.ul=E(c.g,'div','a','left:810px;top:640px;height:6px;width:640px;background:#D92D20;transform-origin:0 50%;transform:scaleX(0)');
+ c.W=W.map((s,i)=>{const st=i<16?i*.5:(i===16?8:9);const en=i<16?st+.5:st+1;return{el:E(c.g,'div','serif a',`left:810px;top:450px;font-size:136px;white-space:nowrap`,s),st,en}});
+ c.ul=E(c.g,'div','a','left:810px;top:625px;height:6px;width:640px;background:#D92D20;transform-origin:0 50%;transform:scaleX(0)');
 },(lt,c,t)=>{
- mq(c.mq,lt,90);mq(c.mq2,-lt-50,70);rv(c.l,lt,0,.5);
- if(!c.lw){c.lw=c.l.firstChild.offsetWidth;c.W.forEach(x=>x.ww=x.el.offsetWidth)}
- const sh=j=>{const tot=c.lw+40+c.W[j].ww;return (1920-tot)/2-(770-c.lw)};
- let j=0;c.W.forEach((x,i)=>{if(lt>=x.st)j=i});const pj=Math.max(0,j-1);const gx=lerp(sh(pj),sh(j),j===0?1:tw(lt,c.W[j].st,.3,'expo'));tf(c.g,`translateX(${gx}px)`);
- c.W.forEach(x=>{if(lt<x.st-.01||lt>x.en+.2){op(x.el,0);return}op(x.el,1);const ei=tw(lt,x.st,.22,'expo'),eo=x===c.W[17]?0:tw(lt,x.en,.2,'expo');const y=(1-ei)*110-eo*110;tf(x.el,`translateY(${y}%) scale(${1+.03*kick(t)})`);x.el.style.filter=(ei<.9||eo>0)?`blur(${Math.max(1-ei,eo)*8}px)`:'none'});
+ mq(c.mq,lt,90);mq(c.mq2,-lt-50,70);
+ if(!c.lw){c.lw=c.l.firstChild.offsetWidth;const mx=Math.max(...c.W.map(x=>x.el.offsetWidth));c.gx=(1920-(c.lw+40+mx))/2-(770-c.lw);tf(c.g,`translateX(${c.gx}px)`);c.ul.style.width=c.W[17].el.offsetWidth+'px'}
+ const le=tw(lt,0,.6,'quart');op(c.l,le);tf(c.l,`translateY(${(1-le)*20}px)`);
+ c.W.forEach((x,i)=>{const last=i===17;if(lt<x.st-.01||(!last&&lt>x.en+.16)){op(x.el,0);return}
+  const ei=tw(lt,x.st,.28,'quart'),eo=last?0:tw(lt,x.en,.14,'quart');
+  op(x.el,ei*(1-eo));tf(x.el,`translateY(${(1-ei)*28-eo*28}px)`)});
  tf(c.ul,`scaleX(${tw(lt,9.1,.6,'expo')})`);
 },{noIn:1,noOut:1});
 
