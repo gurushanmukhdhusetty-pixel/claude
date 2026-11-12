@@ -46,7 +46,7 @@ i,.it{font-style:italic}
 <div id="hud"><div id="hudTL" style="left:56px;top:44px">CINEMATY · HYDERABAD</div><div id="hudTR" style="right:56px;top:44px"></div><div id="hudBL" style="left:56px;bottom:40px"></div><div id="hudBR" style="right:56px;bottom:40px"></div></div>
 <div id="grain"></div><div id="vig"></div><div id="flash"></div>
 <script>
-const P=0.5,DUR=140,FPS=30;
+const P=0.5,DUR=150,FPS=30;
 const VERT=location.hash==='#v',W=VERT?1080:1920,H=VERT?1920:1080,CX=W/2,CY=H/2;
 const VH={};
 function V(el,dx,dy,z=1){if(!el||!el.parentNode)return;const g=document.createElement('div');g.className='vw';g.style.cssText=`position:absolute;left:0;top:0;width:1920px;height:1080px;transform-origin:0 0;transform:translate(${dx}px,${dy}px) scale(${z})`;el.parentNode.insertBefore(g,el);g.appendChild(el)}
@@ -535,8 +535,8 @@ S(105,115,'paper',(w,c)=>{
 },{noIn:1,noOut:1});
 
 // 23. Waitlist 115-120
-S(115,140,'paper',(w,c)=>{c.w=E(w,'div','a','inset:0');const W0=w;w=c.w;
- c.qr=E(W0,'div','a','left:1290px;top:250px;width:470px;text-align:center');c.qb=E(c.qr,'div','','background:#fff;border:2px solid #000;border-radius:28px;padding:34px;width:470px;height:470px;box-shadow:0 40px 80px -30px rgba(0,0,0,.35)',QR);E(c.qr,'div','mono','font-size:20px;margin-top:34px','Scan to join the waitlist');E(c.qr,'div','sans grey','font-size:22px;margin-top:10px','cinematy.in');
+S(115,150,'paper',(w,c)=>{c.w=E(w,'div','a','inset:0');const W0=w;w=c.w;
+ c.qr=E(W0,'div','a','left:1290px;top:250px;width:470px;text-align:center;transform-origin:235px 235px');c.qb=E(c.qr,'div','','background:#fff;border:2px solid #000;border-radius:28px;padding:34px;width:470px;height:470px;box-shadow:0 40px 80px -30px rgba(0,0,0,.35)',QR);E(c.qr,'div','mono','font-size:20px;margin-top:34px','Scan to join the waitlist');E(c.qr,'div','sans grey','font-size:22px;margin-top:10px','cinematy.in');
  c.lg=E(w,'div','a','left:700px;top:150px;width:520px;color:#000',LOGO);
  c.h=RL(w,'Join the waitlist <i>now.</i>','left:0;right:0;top:470px;text-align:center;font-size:140px');
  c.box=E(w,'div','a row','left:0;right:0;top:700px;justify-content:center');const b=E(c.box,'div','row','border:2px solid #000;border-radius:999px;padding:22px 46px;gap:22px');c.dot=E(b,'div','','width:22px;height:22px;border-radius:50%;background:#D92D20');c.url=E(b,'div','mono','font-size:56px;letter-spacing:.06em;text-transform:none;min-width:420px','');
@@ -545,7 +545,11 @@ S(115,140,'paper',(w,c)=>{c.w=E(w,'div','a','inset:0');const W0=w;w=c.w;
  const e=tw(lt,0,.8);tf(c.lg,`scale(${lerp(1.3,1,e)})`);op(c.lg,cl(e*2));c.lg.style.filter=e<1?`blur(${(1-e)*14}px)`:'none';
  rv(c.h,lt,1,.8);const be=tw(lt,2,.5,'back');tf(c.box,`scale(${be})`);op(c.box,cl(be*2));
  const s='cinematy.in';c.url.textContent=s.slice(0,Math.floor(cl((lt-2.2)/.9)*s.length));
- tf(c.dot,`scale(${1+.5*kick(t)})`);rv(c.cs,lt,3.4,.9);op(c.f,tw(lt,4.5,.8));const qe=tw(lt,13,1.1,'expo');tf(c.w,`translateX(${VERT?0:-330*qe}px) scale(${1+cl((lt-5)/10)*.035})`);op(c.qr,VERT?0:cl(qe*1.5));tf(c.qr,`translateX(${(1-qe)*120}px) scale(${lerp(.9,1,qe)})`);c.qr.style.filter=qe<1?`blur(${(1-qe)*12}px)`:'none';
+ tf(c.dot,`scale(${1+.5*kick(t)})`);rv(c.cs,lt,3.4,.9);op(c.f,tw(lt,4.5,.8));const qe=tw(lt,10,1.1,'expo'),qb=VERT?0:tw(lt,15,1.3,'inOut');const zm=1+cl((lt-5)/10)*.035;
+ tf(c.w,`translateX(${VERT?0:-330*qe*(1-qb)}px) scale(${lerp(zm,1,qb)})`);
+ if(!VERT){if(!c.vg){c.vg=[[c.lg,960,290,.62,330,330],[c.h.parentNode,960,540,.42,330,560],[c.box,960,745,.72,1590,420],[c.cs.parentNode,960,905,.8,1590,560],[c.f,960,1000,1,960,1035]].map(([el,ox,oy,s2,X,Y])=>{V(el,0,0);return{g:el.parentNode,ox,oy,s2,X,Y}})}
+  c.vg.forEach(v=>{const s2=lerp(1,v.s2,qb),tx=lerp(0,v.X-v.s2*v.ox,qb),ty=lerp(0,v.Y-v.s2*v.oy,qb);const ox=lerp(0,v.ox,qb),oy=lerp(0,v.oy,qb);v.g.style.transform=`translate(${lerp(0,v.X-v.ox,qb)}px,${lerp(0,v.Y-v.oy,qb)}px)`;v.g.style.transformOrigin=`${v.ox}px ${v.oy}px`;v.g.style.transform+=` scale(${s2})`})}
+ op(c.qr,VERT?0:cl(qe*1.5));tf(c.qr,`translate(${(1-qe)*120-565*qb}px,${-15*qb}px) scale(${lerp(.9,1,qe)*lerp(1,1.3,qb)})`);c.qr.style.filter=qe<1?`blur(${(1-qe)*12}px)`:'none';
 },{noIn:1,noOut:1});
 
 
