@@ -287,7 +287,7 @@ S(44,48,'ink',(w,c)=>{
  c.beam=E(w,'div','a','left:360px;top:-80px;width:1200px;height:1200px;background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0) 75%);clip-path:polygon(48% 0,52% 0,100% 100%,0 100%)');
  c.h=RL(w,'Put your film <i>on screen.</i>','left:0;right:0;top:90px;text-align:center;font-size:110px');
  const st=E(w,'div','a','left:0;top:0;width:1920px;height:1080px;perspective:1600px');
- const F=[['Last Show at Sudarshan','Best Short — IFFK 2024','Bhaskar Nallamothu · Telugu · 26m',61800,'radial-gradient(ellipse at 50% 0%,#8A8A8A,#191919 60%,#000)'],['Four in the Morning','Best Short Fiction — IDSFFK 2025','Ananya Rao · Telugu · 18m',48200,'linear-gradient(200deg,#4a4a4a,#000 70%)'],['Pathar ki Deewar','Official Selection — MAMI 2025','Syed Ali Hussaini · Hindi · 22m',31500,'repeating-linear-gradient(90deg,#191919 0 14px,#232323 14px 28px)']];
+ const F=[['Midnight at Tank Bund','Best Short — IFFK 2024','Bhaskar Nallamothu · Telugu · 26m',61800,'radial-gradient(ellipse at 50% 0%,#8A8A8A,#191919 60%,#000)'],['Four in the Morning','Best Short Fiction — IDSFFK 2025','Ananya Rao · Telugu · 18m',48200,'linear-gradient(200deg,#4a4a4a,#000 70%)'],['Pathar ki Deewar','Official Selection — MAMI 2025','Syed Ali Hussaini · Hindi · 22m',31500,'repeating-linear-gradient(90deg,#191919 0 14px,#232323 14px 28px)']];
  c.p=F.map(([t,a,m,v,g],i)=>{const el=E(st,'div','a',`left:${560+i*400-200}px;top:300px;width:400px;height:590px;border-radius:14px;overflow:hidden;background:${g};border:1px solid #333;box-shadow:0 60px 120px rgba(0,0,0,.6)`);
   E(el,'div','mono a','left:28px;top:28px;right:28px;font-size:13px;color:#D1D1D1;line-height:1.6','✦ '+a);E(el,'div','serif a','left:28px;right:28px;bottom:110px;font-size:72px;line-height:.95',t);E(el,'div','mono a','left:28px;bottom:70px;font-size:12px;color:#B3B3B3',m);
   const sheen=E(el,'div','a','top:0;bottom:0;width:200px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent);left:-300px');
@@ -302,11 +302,11 @@ S(44,48,'ink',(w,c)=>{
 S(48,56,'ink',(w,c)=>{
  c.g=E(w,'div','a','inset:0;transform-origin:50% 50%');
  const pl=E(c.g,'div','a','left:120px;top:170px;width:1100px;height:620px;border-radius:18px;overflow:hidden;background:radial-gradient(ellipse at 40% 30%,#4a4a4a,#111 70%);border:1px solid #2b2b2b');c.pl=pl;
- E(pl,'div','mono a','left:40px;top:36px;font-size:14px;color:#B3B3B3','Now screening · Short · Telugu · 2024');E(pl,'div','serif a','left:40px;top:330px;font-size:110px','Last Show at Sudarshan');
+ E(pl,'div','mono a','left:40px;top:36px;font-size:14px;color:#B3B3B3','Now screening · Short · Telugu · 2024');E(pl,'div','serif a','left:40px;top:330px;font-size:110px','Midnight at Tank Bund');
  E(pl,'div','a','left:40px;right:40px;bottom:56px;height:4px;background:rgba(255,255,255,.25)');c.pb=E(pl,'div','a','left:40px;bottom:56px;height:4px;background:#fff;width:0');c.tc=E(pl,'div','mono a','right:40px;bottom:76px;font-size:16px','00:00 / 26:00');
  E(pl,'div','a','left:40px;bottom:68px;width:0;height:0;border-left:22px solid #fff;border-top:13px solid transparent;border-bottom:13px solid transparent');
  E(c.g,'div','mono a','left:1290px;top:170px;font-size:16px;color:#8A8A8A','Chapters');
- c.ch=[['00:00','Matinee crowd'],['03:20','The projection booth'],['06:20','The 1979 print'],['09:20','Interval'],['10:10','Lights up']].map(([a,b],i)=>{const el=E(c.g,'div','a row',`left:1290px;top:${220+i*80}px;gap:24px;width:520px;padding:18px 0;border-top:1px solid #2b2b2b`);E(el,'div','mono','font-size:16px;color:#8A8A8A',a);E(el,'div','sans','font-size:26px',b);return el});
+ c.ch=[['00:00','Sodium lights'],['03:20','The last bus'],['06:20','Chai at 2 a.m.'],['09:20','The lake'],['10:10','First light']].map(([a,b],i)=>{const el=E(c.g,'div','a row',`left:1290px;top:${220+i*80}px;gap:24px;width:520px;padding:18px 0;border-top:1px solid #2b2b2b`);E(el,'div','mono','font-size:16px;color:#8A8A8A',a);E(el,'div','sans','font-size:26px',b);return el});
  c.aw=['Winner · Best Short — Indian Competition · IFFK 2024','Winner · Audience Choice · Dharamshala IFF 2024','Official Selection · Jio MAMI 2024'].map((s,i)=>E(c.g,'div','mono a',`left:120px;top:${830+i*42}px;font-size:18px`,'✦ '+s));
  c.big=E(w,'div','a','left:0;right:0;top:300px;text-align:center');
  c.n=E(c.big,'div','serif','font-size:220px;line-height:1.05','Every credit,<br><i>verified.</i>');
