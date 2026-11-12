@@ -4,7 +4,7 @@ const {chromium}=require('playwright');const fs=require('fs');const path=require
  const b=await chromium.launch();const VT=process.env.VERT==='1';const p=await b.newPage({viewport:VT?{width:1080,height:1920}:{width:1920,height:1080}});
  p.on('pageerror',e=>console.error('PAGEERR',e.message));
  await p.goto('file://'+path.resolve(__dirname,'index.html')+(VT?'#v':''));
- await p.evaluate(s=>init(s),fs.readFileSync(path.join(__dirname,'assets/logo.svg'),'utf8'));
+ await p.evaluate(([s,q])=>init(s,q),[fs.readFileSync(path.join(__dirname,'assets/logo.svg'),'utf8'),fs.readFileSync(path.join(__dirname,'assets/qr.svg'),'utf8')]);
  await p.evaluate(()=>document.fonts.ready);
  const out=path.join(__dirname,'out');fs.mkdirSync(out,{recursive:true});
  if(mode==='stills'){for(const t of a){await p.evaluate(t=>render(+t),t);await p.waitForTimeout(30);await p.screenshot({path:path.join(out,`${VT?'v':''}still_${t}.png`)});}}
