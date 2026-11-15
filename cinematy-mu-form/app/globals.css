@@ -117,3 +117,27 @@ textarea.big{min-height:clamp(5rem,16vh,9rem);resize:none}
 @keyframes inL{from{opacity:0;transform:translateX(-2rem)}to{opacity:1;transform:none}}
 @keyframes rise{from{opacity:0;transform:translateY(1.5rem)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.anim.fwd,.anim.bwd,.intro-in{animation:none}}
+
+/* ===== grouped sections ===== */
+.qgroup{display:flex;flex-direction:column;gap:clamp(1.1rem,3vh,1.75rem);margin-top:clamp(1.1rem,3.5vh,2rem)}
+.qblock{min-width:0}
+.qlabel{font-weight:500;font-size:1.05rem;margin-bottom:.45rem}
+.qlabel .req{color:var(--red);margin-left:.2em}
+.qh{margin:-.2rem 0 .6rem}
+.qgroup input[type=text],.qgroup input[type=tel],.qgroup input[type=url],.qgroup textarea{font-size:1.05rem;padding:.8rem 1rem}
+.qgroup textarea{min-height:clamp(4.5rem,12vh,7rem);resize:vertical}
+.qblock.bad input,.qblock.bad textarea{border-color:var(--red)}
+.qgroup .choices{margin-top:.2rem}
+.pills{display:flex;flex-wrap:wrap;gap:.5rem}
+.pillopt{padding:.6rem 1.05rem;border-radius:999px;border:1.5px solid var(--fog);background:#fff;font-size:1rem;cursor:pointer;transition:all .15s;min-height:2.75rem}
+.pillopt:hover{border-color:var(--ink)}
+.pillopt.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.qrow{display:grid;gap:clamp(1.1rem,3vh,1.75rem)}
+@media (min-width:640px){.qrow{grid-template-columns:1fr 1.6fr}}
+.qgroup .or{margin:-.4rem 0}
+.qgroup .check{margin-bottom:0}
+.backbtn{padding:.85rem 1.4rem}
+.qnav .ok{margin-left:auto}
+@media (max-width:640px){.qnav .ok{flex:1}.backbtn{padding:.85rem 1.1rem}}
+.qgroup .choices.many{grid-template-columns:1fr 1fr}
+.qgroup .choice{min-height:2.9rem}
