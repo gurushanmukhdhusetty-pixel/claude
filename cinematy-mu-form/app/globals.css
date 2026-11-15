@@ -122,3 +122,32 @@ footer{border-top:1px solid var(--fog);padding:26px 20px;text-align:center}
 @keyframes inL{from{opacity:0;transform:translateX(-36px)}to{opacity:1;transform:none}}
 @keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.anim.fwd,.anim.bwd,.intro-in{animation:none}}
+
+/* ===== one question per screen ===== */
+.qa{padding:9vh 0 40px;min-height:calc(100svh - 70px);display:flex;flex-direction:column}
+.qnum{color:var(--graphite);margin-bottom:12px}
+.q{font-size:clamp(38px,8vw,60px);line-height:1.04}
+.q .req{color:var(--red);font-family:var(--f-sans);font-size:.5em;vertical-align:top;margin-left:6px}
+.qhint{margin:14px 0 0;font-size:17px;max-width:560px}
+input.big,textarea.big{margin-top:28px;border:0;border-bottom:2px solid var(--fog);border-radius:0;padding:10px 2px;font-size:clamp(22px,5vw,28px);background:transparent}
+input.big:focus,textarea.big:focus{border-bottom-color:var(--ink)}
+textarea.big{min-height:120px}
+.photo-opts{margin-top:26px}
+.photo-opts input.big{margin-top:6px}
+.photo-opts .label{color:var(--graphite);font-size:15px;font-weight:400}
+.choices{display:flex;flex-direction:column;gap:10px;margin-top:28px;max-width:520px}
+.choice{display:flex;align-items:center;gap:14px;text-align:left;padding:14px 16px;border:1.5px solid var(--fog);border-radius:16px;background:#fff;font:inherit;font-size:19px;cursor:pointer;transition:border-color .15s,background .15s,transform .15s}
+.choice:hover{border-color:var(--ink)}
+.choice:active{transform:scale(.99)}
+.choice .key{width:30px;height:30px;border-radius:8px;border:1.5px solid var(--fog);display:flex;align-items:center;justify-content:center;font-family:var(--f-mono);font-size:13px;flex:none}
+.choice .tick{margin-left:auto;font-weight:600}
+.choice.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.choice.on .key{border-color:#4a4a4a;color:#fff}
+.qnav{display:flex;align-items:center;gap:16px;margin-top:30px}
+.ok{padding:15px 30px;border-radius:999px;background:var(--ink);color:var(--paper);border:1.5px solid var(--ink);font:inherit;font-weight:500;font-size:18px;cursor:pointer}
+.ok.ghost{background:#fff;color:var(--ink)}
+.ok:disabled{opacity:.5}
+.enter{font-size:11px}
+@media(max-width:640px){.enter{display:none}.qa{padding-top:6vh}}
+
+input.big,textarea.big{outline:none;box-shadow:none}
