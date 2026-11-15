@@ -141,3 +141,17 @@ textarea.big{min-height:clamp(5rem,16vh,9rem);resize:none}
 @media (max-width:640px){.qnav .ok{flex:1}.backbtn{padding:.85rem 1.1rem}}
 .qgroup .choices.many{grid-template-columns:1fr 1fr}
 .qgroup .choice{min-height:2.9rem}
+
+/* long role names: never let the grid overflow the screen */
+.choices,.qgroup .choices.many{grid-template-columns:minmax(0,1fr)}
+@media (min-width:0px){.qgroup .choices.many{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.choice{min-width:0}
+.choice>span:nth-child(2){min-width:0;overflow-wrap:anywhere;line-height:1.25}
+.stage,.qa{overflow-x:hidden}
+.qa{max-width:100%}
+.choice>span:nth-child(2){overflow-wrap:normal;word-break:normal;hyphens:none}
+@media (max-width:480px){
+  .qgroup .choice{padding:.7rem .85rem;gap:.5rem;font-size:.98rem}
+  .qgroup .choice .key{display:none}
+}
+@media (max-width:359px){.qgroup .choices.many{grid-template-columns:minmax(0,1fr)}}

@@ -2,7 +2,7 @@
 
 Live: **https://cinematy-mu.vercel.app** · Team directory: **https://cinematy-mu.vercel.app/admin**
 
-- `/`: the public application form (brand: ink on paper, Instrument Serif / Geist / Geist Mono, laurel logo).
+- `/`: the public application form (brand: ink on paper, Instrument Serif / Geist / Geist Mono, laurel logo). Roles: Writing, Directing, Acting, Editing, Shooting, Shoot management, Line production, Planning, Other. The role list lives in `lib/schema.js` (`ROLES`); the form, validation, admin filters and CSV all read from it.
 - `/admin`: password-protected team directory:
   - status tabs with counts (New / Contacted / In the unit / Not now)
   - search (name, number, programme, notes, @instagram), role chips, *More filters* (residence, stays back, weekends, and gender / playing age / language for actors), sort

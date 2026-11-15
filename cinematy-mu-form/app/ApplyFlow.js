@@ -37,10 +37,11 @@ function Intro({ onStart }) {
         <div className="intro-main">
           <div className="logo" dangerouslySetInnerHTML={{ __html: LOGO_SVG }} />
           <div className="mono" style={{ color: '#8A8A8A' }}>Cinematy @ Mahindra University</div>
-          <h1 className="serif">Calling all writers, directors, actors <i>and editors.</i></h1>
+          <h1 className="serif">Calling all writers, directors, actors, editors <i>and producers.</i></h1>
           <p>
             We’re <b>Cinematy</b>, a home for Hyderabad’s filmmakers. We’re building the <b>Cinematy Content Unit at MU</b>:
             a crew of students who make short films, reels, skits and behind-the-scenes videos for our YouTube, Instagram and other channels.
+            {' '}That includes the people who make shoots happen: <b>shoot managers, line producers and planners</b>.
           </p>
           <div className="go-wrap"><button className="go" onClick={onStart}>Let’s go <span aria-hidden>→</span></button></div>
         </div>

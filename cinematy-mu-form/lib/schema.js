@@ -1,5 +1,5 @@
 // Shared form options and server-side validation.
-export const ROLES = ['Writing', 'Directing', 'Acting', 'Editing', 'Shooting', 'Other'];
+export const ROLES = ['Writing', 'Directing', 'Acting', 'Editing', 'Shooting', 'Shoot management', 'Line production', 'Planning', 'Other'];
 export const GENDERS = ['Male', 'Female', 'Non-binary', 'Prefer to self-describe'];
 export const PLAYING_AGES = ['16–20', '20–25', '25–30', '30–40', '40+'];
 export const LANGUAGES = ['Telugu', 'Hindi', 'English', 'Other'];

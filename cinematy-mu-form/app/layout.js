@@ -22,11 +22,11 @@ const mono = localFont({ src: './fonts/geist-mono-latin-400-normal.woff2', varia
 
 export const metadata = {
   title: 'Cinematy @ MU · Join the Content Unit',
-  description: 'Calling all writers, directors, actors and editors at Mahindra University. Join the Cinematy Content Unit.',
+  description: 'Calling all writers, directors, actors, editors, shoot managers, line producers and planners at Mahindra University. Join the Cinematy Content Unit.',
   icons: { icon: '/logo.svg' },
   openGraph: {
     title: 'Cinematy @ MU · Join the Content Unit',
-    description: 'Calling all writers, directors, actors and editors at Mahindra University.',
+    description: 'Calling all writers, directors, actors, editors and producers at Mahindra University.',
   },
 };
 

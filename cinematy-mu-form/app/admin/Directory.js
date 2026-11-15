@@ -1,10 +1,10 @@
 'use client';
 import { useEffect, useMemo, useState } from 'react';
-import { GENDERS, PLAYING_AGES, LANGUAGES, STATUSES } from '@/lib/schema';
+import { ROLES, GENDERS, PLAYING_AGES, LANGUAGES, STATUSES } from '@/lib/schema';
 import { LOGO_SVG } from '@/lib/logo-svg';
 
 const ST = Object.fromEntries(STATUSES);
-const MAIN_ROLES = ['Writing', 'Directing', 'Acting', 'Editing', 'Shooting', 'Other'];
+const MAIN_ROLES = ROLES;
 
 const ago = (iso) => {
   if (!iso) return '';
