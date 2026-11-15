@@ -1,0 +1,115 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Aspect Ratios</title>
+<style>
+@font-face{font-family:IS;src:url(../../launch-video/fonts/instrument-serif-latin-400-normal.woff2)}
+@font-face{font-family:IS;font-style:italic;src:url(../../launch-video/fonts/instrument-serif-latin-400-italic.woff2)}
+@font-face{font-family:Geist;font-weight:400;src:url(../../launch-video/fonts/geist-sans-latin-400-normal.woff2)}
+@font-face{font-family:Geist;font-weight:500;src:url(../../launch-video/fonts/geist-sans-latin-500-normal.woff2)}
+@font-face{font-family:Geist;font-weight:600;src:url(../../launch-video/fonts/geist-sans-latin-600-normal.woff2)}
+@font-face{font-family:GM;src:url(../../launch-video/fonts/geist-mono-latin-400-normal.woff2)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#888;width:1080px}
+.s{position:relative;width:1080px;height:1350px;overflow:hidden;margin-bottom:20px}
+.ink{background:#000;color:#fff}.paper{background:#fff;color:#000}
+.serif{font-family:IS;font-weight:400;line-height:.98;letter-spacing:-.01em}
+.sans{font-family:Geist}
+.mono{font-family:GM;text-transform:uppercase;letter-spacing:.14em}
+.a{position:absolute}
+i{font-style:italic}
+.grey{color:#6B6B6B}.ink .grey{color:#8A8A8A}
+.top{position:absolute;left:72px;right:72px;top:64px;display:flex;justify-content:space-between;font-family:GM;font-size:19px;letter-spacing:.16em;text-transform:uppercase;opacity:.65}
+.bot{position:absolute;left:72px;right:72px;bottom:60px;display:flex;justify-content:space-between;align-items:center;font-family:GM;font-size:19px;letter-spacing:.16em;text-transform:uppercase}
+.bot .sw{display:flex;align-items:center;gap:14px}
+.bot .sw span{display:inline-block;width:46px;height:2px;background:currentColor;position:relative}
+.bot .sw span:after{content:'';position:absolute;right:0;top:-6px;width:12px;height:12px;border-top:2px solid currentColor;border-right:2px solid currentColor;transform:rotate(45deg)}
+.kick{font-family:GM;font-size:20px;letter-spacing:.16em;text-transform:uppercase}
+.body{font-family:Geist;font-size:34px;line-height:1.42}
+.pill{display:inline-flex;align-items:center;padding:8px 18px;border-radius:999px;border:2px solid currentColor;font-family:GM;font-size:18px;letter-spacing:.1em;text-transform:uppercase}
+.pill.red{background:#D92D20;border-color:#D92D20;color:#fff}
+.strip{position:absolute;background:#111;display:flex;gap:12px;padding:30px 14px;border-radius:6px}
+.strip:before,.strip:after{content:'';position:absolute;left:0;right:0;height:16px;background:repeating-linear-gradient(90deg,transparent 0 10px,#fff 10px 26px,transparent 26px 38px)}
+.strip:before{top:7px}.strip:after{bottom:7px}
+.fr{flex:none;background:#2b2b2b;border-radius:4px;display:flex;align-items:flex-end;justify-content:flex-start;padding:6px 8px;font-family:GM;font-size:14px;color:#B3B3B3}
+.card{background:#fff;color:#000;border:1.5px solid #E8E8E8;border-radius:24px}
+</style></head><body>
+
+
+<!-- 1 COVER -->
+<section class="s ink" id="s1">
+ <div class="top"><span>Cinematy · Frame by Frame</span><span>01 / 05</span></div>
+ <div class="a" style="left:72px;top:230px;width:936px;height:460px">
+  <div class="a" style="left:0;top:0;width:936px;height:392px;border:3px solid #fff;border-radius:6px"></div>
+  <div class="a mono" style="left:0;top:412px;font-size:17px">2.39 : 1 · Cinema</div>
+  <div class="a" style="left:120px;top:0;width:696px;height:392px;border:2px dashed rgba(255,255,255,.55);border-radius:6px"></div>
+  <div class="a mono" style="left:530px;top:412px;font-size:17px;opacity:.6">16 : 9 · TV</div>
+  <div class="a" style="left:358px;top:0;width:220px;height:392px;border:3px solid #D92D20;border-radius:14px"></div>
+  <div class="a mono" style="right:0;top:412px;font-size:17px;color:#D92D20;white-space:nowrap">9 : 16 · Phone</div>
+ </div>
+ <div class="a serif" style="left:72px;top:760px;font-size:118px;width:940px">Why are movies <i>so wide?</i></div>
+ <div class="a sans" style="left:72px;top:1075px;font-size:30px;color:#B3B3B3;width:900px;line-height:1.4">Your phone is 9:16. Your TV is 16:9. Cinema is 2.39:1. Here’s how a rectangle became a weapon.</div>
+ <div class="bot" style="bottom:52px"><span></span><span class="sw">Swipe <span></span></span></div>
+</section>
+
+<!-- 2 ACADEMY -->
+<section class="s paper" id="s2">
+ <div class="top"><span>Cinematy · Frame by Frame</span><span>02 / 05</span></div>
+ <div class="a kick grey" style="left:72px;top:170px">1890s – 1940s</div>
+ <div class="a serif" style="left:72px;top:220px;font-size:120px;width:940px">Movies started <i>boxy.</i></div>
+ <div class="a" style="left:72px;top:500px;width:936px;height:360px;display:flex;gap:40px;align-items:flex-end">
+  <div><div style="width:440px;height:330px;background:#000;border-radius:6px"></div><div class="mono" style="font-size:17px;margin-top:14px">1.33 : 1 · Silent era</div></div>
+  <div><div style="display:flex;gap:10px"><div style="width:22px;height:330px;background:repeating-linear-gradient(180deg,#000 0 6px,#fff 6px 10px);border:2px solid #000"></div><div style="width:418px;height:330px;background:#000;border-radius:6px"></div></div><div class="mono" style="font-size:17px;margin-top:14px">1.37 : 1 · “Academy”, 1932</div></div>
+ </div>
+ <div class="a body" style="left:72px;top:960px;width:900px">Early film frames were nearly square. When sound arrived, the soundtrack <b>took a strip of the film</b>, and Hollywood standardised the slightly-wider <b>Academy ratio</b>. For 20 years, every movie was a box.</div>
+ <div class="bot"><span class="grey">Cinematy</span><span class="sw">Swipe <span></span></span></div>
+</section>
+
+<!-- 3 TV WAR -->
+<section class="s ink" id="s3">
+ <div class="top"><span>Cinematy · Frame by Frame</span><span>03 / 05</span></div>
+ <div class="a kick grey" style="left:72px;top:170px">1950s · The TV panic</div>
+ <div class="a serif" style="left:72px;top:220px;font-size:120px;width:940px">Then TV <i>stole the box.</i></div>
+ <div class="a" style="left:72px;top:500px;width:936px;height:330px">
+  <div class="a" style="left:0;top:40px;width:280px;height:230px;border:3px solid #fff;border-radius:30px"></div>
+  <div class="a mono" style="left:0;top:290px;font-size:16px;opacity:.6">TV at home · 4 : 3</div>
+  <div class="a" style="left:330px;top:70px;width:606px;height:200px;background:#fff;border-radius:6px;box-shadow:0 0 80px rgba(255,255,255,.25)"></div>
+  <div class="a mono" style="left:330px;top:290px;font-size:16px;opacity:.6">CinemaScope · ~2.35 : 1</div>
+ </div>
+ <div class="a body" style="left:72px;top:880px;width:900px">Audiences stayed home with their square TVs. So studios went <b>wide</b>, giving you something a living room couldn’t. <i>The Robe</i> launched CinemaScope in <b>1953</b>.</div>
+ <div class="a sans" style="left:72px;top:1120px;width:900px;font-size:28px;line-height:1.4;color:#B3B3B3">India went wide in 1959 with Guru Dutt’s <i style="color:#fff">Kaagaz Ke Phool</i>, our first CinemaScope film.</div>
+ <div class="bot"><span></span><span class="sw">Swipe <span></span></span></div>
+</section>
+
+<!-- 4 STORY -->
+<section class="s paper" id="s4">
+ <div class="top"><span>Cinematy · Frame by Frame</span><span>04 / 05</span></div>
+ <div class="a kick grey" style="left:72px;top:170px">Today</div>
+ <div class="a serif" style="left:72px;top:220px;font-size:120px;width:940px">The shape <i>is the story.</i></div>
+ <div class="a" id="ratios" style="left:72px;top:500px;width:936px"></div>
+ <div class="a sans grey" style="left:72px;top:1160px;width:936px;font-size:24px;line-height:1.45"><i style="color:#000">The Grand Budapest Hotel</i> switches ratios to tell you which decade you’re in.</div>
+ <div class="bot"><span class="grey">Cinematy</span><span class="sw">Swipe <span></span></span></div>
+</section>
+
+<!-- 5 CTA -->
+<section class="s paper" id="s5">
+ <div class="top"><span>Cinematy · Frame by Frame</span><span>05 / 05</span></div>
+ <div class="a" id="logo10" style="left:390px;top:150px;width:300px"></div>
+ <div class="a serif" style="left:0;right:0;top:370px;text-align:center;font-size:104px">Every frame has a shape.<br><i>Every film needs a crew.</i></div>
+ <div class="a body" style="left:120px;right:120px;top:620px;text-align:center">Find your DOP, your colorist and your people. Hyderabad’s filmmakers, in one place.</div>
+ <div class="a" style="left:0;right:0;top:770px;display:flex;justify-content:center;align-items:center;gap:56px">
+  <div id="qr10" style="width:300px;height:300px;padding:22px;border:2px solid #000;border-radius:24px"></div>
+  <div>
+   <div class="kick">Coming soon</div>
+   <div class="serif" style="font-size:72px;margin:14px 0 22px">Join the <i>waitlist.</i></div>
+   <div style="display:inline-flex;align-items:center;gap:16px;border:2px solid #000;border-radius:999px;padding:14px 28px"><span style="width:16px;height:16px;border-radius:50%;background:#D92D20;display:inline-block"></span><span class="mono" style="font-size:30px;text-transform:none;letter-spacing:.06em">cinematy.in</span></div>
+  </div>
+ </div>
+ <div class="a sans grey" style="left:0;right:0;top:1170px;text-align:center;font-size:28px">Your next film: 1.85 or 2.39? Tell us below 👇</div>
+ <div class="bot"><span class="grey">Save · Share with your DOP</span><span class="grey">Link in bio</span></div>
+</section>
+
+<script>
+function E(p,tag,css,html){const e=document.createElement(tag);if(css)e.style.cssText=css;if(html!=null)e.innerHTML=html;p.appendChild(e);return e}
+const R=document.getElementById('ratios');
+[['1.37 : 1',1.37,'Intimate. Trapped. Nostalgic.'],['1.85 : 1',1.85,'Everyday cinema. Room to breathe.'],['2.39 : 1',2.39,'Epic. Lonely. Landscapes and standoffs.'],['9 : 16',.5625,'Your phone. Reels. Up close.']].forEach(([n,r,t])=>{const row=E(R,'div','display:flex;align-items:center;gap:34px;padding:18px 0;border-top:1.5px solid #E8E8E8');const H=110;const W=Math.round(H*r);const box=E(row,'div','width:270px;display:flex;align-items:center;justify-content:center');E(box,'div',`width:${W}px;height:${H}px;background:#000;border-radius:4px`);const c=E(row,'div','');E(c,'div','font-family:GM;font-size:20px;letter-spacing:.12em',n);E(c,'div','font-family:Geist;font-size:30px;margin-top:6px',t)});
+window.init=(logo,qr)=>{document.getElementById('logo10').innerHTML=logo.replace(/style="color:[^"]*"/,'').replace(/width="[^"]*"/,'width="100%"').replace(/height="[^"]*"/,'height="auto"');document.getElementById('qr10').innerHTML=qr};
+</script></body></html>
