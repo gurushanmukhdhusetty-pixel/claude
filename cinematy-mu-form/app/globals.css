@@ -83,3 +83,42 @@ textarea{min-height:96px;resize:vertical}
 .dot{width:10px;height:10px;border-radius:50%;background:var(--red);display:inline-block}
 
 footer{border-top:1px solid var(--fog);padding:26px 20px;text-align:center}
+
+/* ===== step flow ===== */
+.intro{min-height:100vh;min-height:100svh;background:var(--ink);color:var(--paper);position:relative;overflow:hidden;display:flex;align-items:center;padding:56px 0}
+.intro-in{animation:rise .8s cubic-bezier(.16,1,.3,1) both}
+.intro .logo{width:170px;margin-bottom:30px}
+.intro .logo svg{width:100%;height:auto;color:#fff;display:block}
+.intro h1{font-size:clamp(46px,9vw,84px);margin:14px 0 20px}
+.intro p{color:#D1D1D1;max-width:560px;font-size:18px}
+.intro p b{color:#fff}
+.go{margin-top:28px;display:inline-flex;align-items:center;gap:12px;padding:18px 34px;border-radius:999px;background:#fff;color:#000;border:0;font:inherit;font-size:19px;font-weight:500;cursor:pointer;transition:transform .2s}
+.go:hover{transform:translateX(4px)}
+.go span{transition:transform .2s}.go:hover span{transform:translateX(4px)}
+
+.flow{min-height:100vh;min-height:100svh;padding-bottom:40px}
+.bar{position:sticky;top:0;z-index:10;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;gap:14px;padding:12px 20px 14px;max-width:760px;margin:0 auto}
+.back{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--fog);background:#fff;font-size:18px;cursor:pointer;flex:none}
+.back:hover{border-color:var(--ink)}
+.bar-logo{width:84px;color:#000;flex:none}.bar-logo svg{width:100%;height:auto;display:block}
+.step-n{margin-left:auto}
+.progress{position:absolute;left:20px;right:20px;bottom:0;height:3px;background:var(--fog);border-radius:3px;overflow:hidden}
+.progress div{height:100%;background:var(--ink);transition:width .5s cubic-bezier(.16,1,.3,1)}
+
+.step{padding:34px 0 10px}
+.step-h{font-size:clamp(46px,10vw,72px)}
+.step-sub{margin:10px 0 32px;font-size:17px}
+.nav{display:flex;gap:12px;margin-top:34px;align-items:center}
+.nav .submit{flex:1;width:auto}
+.nav .btn{padding:17px 24px}
+.note{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--mist);border-radius:14px;padding:14px 16px;font-size:15px;color:var(--graphite)}
+.photos{border:1.5px solid var(--ink);border-radius:22px;padding:22px 20px 6px;margin:6px 0 10px;background:var(--mist)}
+.photos>.label{margin-bottom:4px}
+.logo-sm{width:130px;margin:0 auto 26px;color:#000}.logo-sm svg{width:100%;height:auto;display:block}
+
+.anim.fwd{animation:inR .5s cubic-bezier(.16,1,.3,1) both}
+.anim.bwd{animation:inL .5s cubic-bezier(.16,1,.3,1) both}
+@keyframes inR{from{opacity:0;transform:translateX(36px)}to{opacity:1;transform:none}}
+@keyframes inL{from{opacity:0;transform:translateX(-36px)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.anim.fwd,.anim.bwd,.intro-in{animation:none}}
