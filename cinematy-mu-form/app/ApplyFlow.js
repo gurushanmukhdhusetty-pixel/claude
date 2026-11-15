@@ -13,7 +13,7 @@ const Err = ({ msg }) => (msg ? <div className="err" role="alert">{msg}</div> : 
 
 function Choices({ name, options, value, onPick, multi }) {
   return (
-    <div className="choices" role={multi ? 'group' : 'radiogroup'}>
+    <div className={'choices' + (options.length > 4 ? ' many' : '')} role={multi ? 'group' : 'radiogroup'}>
       {options.map((o, i) => {
         const on = multi ? value.includes(o) : value === o;
         return (
@@ -33,15 +33,17 @@ function Intro({ onStart }) {
   return (
     <section className="intro">
       <div className="perf" style={{ top: 0 }} />
-      <div className="wrap intro-in">
-        <div className="logo" dangerouslySetInnerHTML={{ __html: LOGO_SVG }} />
-        <div className="mono" style={{ color: '#8A8A8A' }}>Cinematy @ Mahindra University</div>
-        <h1 className="serif">Calling all writers, directors, actors <i>and editors.</i></h1>
-        <p>
-          We’re <b>Cinematy</b>, a home for Hyderabad’s filmmakers. We’re building the <b>Cinematy Content Unit at MU</b>:
-          a crew of students who make short films, reels, skits and behind-the-scenes videos for our YouTube, Instagram and other channels.
-        </p>
-        <button className="go" onClick={onStart}>Let’s go <span aria-hidden>→</span></button>
+      <div className="intro-grid intro-in">
+        <div className="intro-main">
+          <div className="logo" dangerouslySetInnerHTML={{ __html: LOGO_SVG }} />
+          <div className="mono" style={{ color: '#8A8A8A' }}>Cinematy @ Mahindra University</div>
+          <h1 className="serif">Calling all writers, directors, actors <i>and editors.</i></h1>
+          <p>
+            We’re <b>Cinematy</b>, a home for Hyderabad’s filmmakers. We’re building the <b>Cinematy Content Unit at MU</b>:
+            a crew of students who make short films, reels, skits and behind-the-scenes videos for our YouTube, Instagram and other channels.
+          </p>
+          <div className="go-wrap"><button className="go" onClick={onStart}>Let’s go <span aria-hidden>→</span></button></div>
+        </div>
         <div className="facts">
           <div className="fact hl"><div className="mono">Heads up</div><div>This is <b>pro bono, not a paid gig.</b> Not a job or an internship. It’s a crew.</div></div>
           <div className="fact"><div className="mono">What you get</div><div>Credit on everything you make, real portfolio work, and people to create with.</div></div>
@@ -63,6 +65,7 @@ export default function ApplyFlow() {
   const [done, setDone] = useState(false);
   const [formError, setFormError] = useState('');
   const timer = useRef(null);
+  const stageRef = useRef(null);
 
   const set = (k, v) => { setF((s) => ({ ...s, [k]: v })); setErrors({}); };
   const setA = (k, v) => { setF((s) => ({ ...s, actor: { ...s.actor, [k]: v } })); setErrors({}); };
@@ -95,7 +98,7 @@ export default function ApplyFlow() {
   ];
   const cur = Q[idx];
 
-  useEffect(() => { window.scrollTo({ top: 0 }); return () => clearTimeout(timer.current); }, [idx, done]);
+  useEffect(() => { window.scrollTo({ top: 0 }); if (stageRef.current) stageRef.current.scrollTop = 0; return () => clearTimeout(timer.current); }, [idx, done]);
 
   function errorsFor(screen, data = f) {
     const r = validate({ ...data, proBono: screen.id === 'confirm' ? data.proBono : true, consent: screen.id === 'confirm' ? data.consent : true });
@@ -178,11 +181,14 @@ export default function ApplyFlow() {
         <div className="progress"><div style={{ width: pct + '%' }} /></div>
       </header>
 
-      <div className="wrap">
+      <div className="stage" ref={stageRef}>
         <div key={cur.id} className={'qa anim ' + (dir > 0 ? 'fwd' : 'bwd')}>
           <div className="hp" aria-hidden="true"><input tabIndex={-1} autoComplete="off" value={f.website} onChange={(e) => set('website', e.target.value)} /></div>
           <div className="qnum mono">{String(idx + 1).padStart(2, '0')} →</div>
-          <h2 className="serif q">{cur.q}{!cur.optional && cur.type !== 'confirm' && <span className="req">*</span>}</h2>
+          <h2 className="serif q">
+            {cur.q.split(' ').slice(0, -1).join(' ')}{' '}
+            <span style={{ whiteSpace: 'nowrap' }}>{cur.q.split(' ').slice(-1)[0]}{!cur.optional && cur.type !== 'confirm' && <span className="req">*</span>}</span>
+          </h2>
           {cur.hint && <p className="grey qhint">{cur.hint}</p>}
 
           {cur.type === 'text' && (
@@ -264,22 +270,24 @@ export default function ApplyFlow() {
           {cur.type === 'photos' && <Err msg={E['actor.photos']} />}
           {formError && <div className="formerr" style={{ marginTop: 18 }}>{formError}</div>}
 
-          <div className="qnav">
-            {cur.type === 'confirm' ? (
-              <button className="ok" onClick={submit} disabled={busy}>{busy ? 'Sending…' : 'Count me in →'}</button>
-            ) : cur.type === 'single' && !(cur.id === 'gender' && f.actor.gender === 'Prefer to self-describe') ? (
-              singleValue ? <button className="ok ghost" onClick={() => next()}>Next →</button> : <span className="mono grey">Tap one to continue</span>
-            ) : (
-              <>
-                <button className="ok" onClick={() => next()}>
-                  {cur.optional && !(cur.id === 'about' ? f.about : textValue) ? 'Skip →' : 'OK →'}
-                </button>
-                {cur.type === 'text' || cur.type === 'photos' ? <span className="mono grey enter">press Enter ↵</span> : null}
-              </>
-            )}
-          </div>
         </div>
       </div>
+      <footer className="qfoot">
+        <div className="qnav">
+          {cur.type === 'confirm' ? (
+            <button className="ok" onClick={submit} disabled={busy}>{busy ? 'Sending…' : 'Count me in →'}</button>
+          ) : cur.type === 'single' && !(cur.id === 'gender' && f.actor.gender === 'Prefer to self-describe') ? (
+            singleValue ? <button className="ok ghost" onClick={() => next()}>Next →</button> : <span className="mono grey">Tap one to continue</span>
+          ) : (
+            <>
+              <button className="ok" onClick={() => next()}>
+                {cur.optional && !(cur.id === 'about' ? f.about : textValue) ? 'Skip →' : 'OK →'}
+              </button>
+              {cur.type === 'text' || cur.type === 'photos' ? <span className="mono grey enter">press Enter ↵</span> : null}
+            </>
+          )}
+        </div>
+      </footer>
     </main>
   );
 }
