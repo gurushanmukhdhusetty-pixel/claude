@@ -1,0 +1,190 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Why 24 FPS</title>
+<style>
+@font-face{font-family:IS;src:url(../../launch-video/fonts/instrument-serif-latin-400-normal.woff2)}
+@font-face{font-family:IS;font-style:italic;src:url(../../launch-video/fonts/instrument-serif-latin-400-italic.woff2)}
+@font-face{font-family:Geist;font-weight:400;src:url(../../launch-video/fonts/geist-sans-latin-400-normal.woff2)}
+@font-face{font-family:Geist;font-weight:500;src:url(../../launch-video/fonts/geist-sans-latin-500-normal.woff2)}
+@font-face{font-family:Geist;font-weight:600;src:url(../../launch-video/fonts/geist-sans-latin-600-normal.woff2)}
+@font-face{font-family:GM;src:url(../../launch-video/fonts/geist-mono-latin-400-normal.woff2)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#888;width:1080px}
+.s{position:relative;width:1080px;height:1350px;overflow:hidden;margin-bottom:20px}
+.ink{background:#000;color:#fff}.paper{background:#fff;color:#000}
+.serif{font-family:IS;font-weight:400;line-height:.98;letter-spacing:-.01em}
+.sans{font-family:Geist}
+.mono{font-family:GM;text-transform:uppercase;letter-spacing:.14em}
+.a{position:absolute}
+i{font-style:italic}
+.grey{color:#6B6B6B}.ink .grey{color:#8A8A8A}
+.top{position:absolute;left:72px;right:72px;top:64px;display:flex;justify-content:space-between;font-family:GM;font-size:19px;letter-spacing:.16em;text-transform:uppercase;opacity:.65}
+.bot{position:absolute;left:72px;right:72px;bottom:60px;display:flex;justify-content:space-between;align-items:center;font-family:GM;font-size:19px;letter-spacing:.16em;text-transform:uppercase}
+.bot .sw{display:flex;align-items:center;gap:14px}
+.bot .sw span{display:inline-block;width:46px;height:2px;background:currentColor;position:relative}
+.bot .sw span:after{content:'';position:absolute;right:0;top:-6px;width:12px;height:12px;border-top:2px solid currentColor;border-right:2px solid currentColor;transform:rotate(45deg)}
+.kick{font-family:GM;font-size:20px;letter-spacing:.16em;text-transform:uppercase}
+.body{font-family:Geist;font-size:34px;line-height:1.42}
+.pill{display:inline-flex;align-items:center;padding:8px 18px;border-radius:999px;border:2px solid currentColor;font-family:GM;font-size:18px;letter-spacing:.1em;text-transform:uppercase}
+.pill.red{background:#D92D20;border-color:#D92D20;color:#fff}
+.strip{position:absolute;background:#111;display:flex;gap:12px;padding:30px 14px;border-radius:6px}
+.strip:before,.strip:after{content:'';position:absolute;left:0;right:0;height:16px;background:repeating-linear-gradient(90deg,transparent 0 10px,#fff 10px 26px,transparent 26px 38px)}
+.strip:before{top:7px}.strip:after{bottom:7px}
+.fr{flex:none;background:#2b2b2b;border-radius:4px;display:flex;align-items:flex-end;justify-content:flex-start;padding:6px 8px;font-family:GM;font-size:14px;color:#B3B3B3}
+.card{background:#fff;color:#000;border:1.5px solid #E8E8E8;border-radius:24px}
+</style></head><body>
+
+<!-- 1 COVER -->
+<section class="s ink" id="s1">
+ <div class="top"><span>Cinematy · Frame by Frame</span><span>01 / 10</span></div>
+ <div class="a serif" style="left:64px;top:170px;font-size:560px;line-height:.8">24</div>
+ <div class="a mono" style="left:76px;top:640px;font-size:22px;opacity:.7">Frames per second</div>
+ <div class="a serif" style="left:72px;top:720px;font-size:104px;width:940px">Why cinema runs at 24 frames a second.</div>
+ <div class="a serif" style="left:72px;top:950px;font-size:104px"><i>And why not more?</i></div>
+ <div class="strip" id="cstrip" style="left:-20px;top:1110px;width:1200px;height:150px"></div>
+ <div class="bot" style="bottom:40px"><span></span><span class="sw">Swipe <span></span></span></div>
+</section>
+
+<!-- 2 SILENT ERA -->
+<section class="s paper" id="s2">
+ <div class="top"><span>Cinematy · Frame by Frame</span><span>02 / 10</span></div>
+ <div class="a kick grey" style="left:72px;top:170px">Before the 1920s</div>
+ <div class="a serif" style="left:72px;top:220px;font-size:120px;width:940px">Films had no fixed speed.</div>
+ <div class="a body" style="left:72px;top:500px;width:900px">Silent-era cameras were <b>cranked by hand</b>. Most ran somewhere around 16–20 frames a second, and it changed from shot to shot. Projectionists sped films up or slowed them down to suit the show.</div>
+ <svg class="a" style="left:72px;top:840px" width="936" height="340" viewBox="0 0 936 340">
+  <line x1="0" y1="300" x2="936" y2="300" stroke="#E8E8E8" stroke-width="2"/>
+  <line x1="0" y1="60" x2="936" y2="60" stroke="#E8E8E8" stroke-width="2" stroke-dasharray="6 8"/>
+  <text x="0" y="45" font-family="GM" font-size="18" fill="#6B6B6B" letter-spacing="2">24 FPS</text>
+  <polyline fill="none" stroke="#000" stroke-width="5" stroke-linejoin="round" points="0,190 70,150 140,215 210,170 280,240 350,160 420,205 490,135 560,225 630,180 700,150 770,230 840,170 936,200"/>
+  <text x="0" y="335" font-family="GM" font-size="18" fill="#6B6B6B" letter-spacing="2">HAND-CRANKED · ROUGHLY 16–20 FPS · NEVER STEADY</text>
+ </svg>
+ <div class="bot"><span class="grey">Cinematy</span><span class="sw">Swipe <span></span></span></div>
+</section>
+
+<!-- 3 SOUND -->
+<section class="s ink" id="s3">
+ <div class="top"><span>Cinematy · Frame by Frame</span><span>03 / 10</span></div>
+ <div class="a kick grey" style="left:72px;top:170px">Then sound arrived</div>
+ <div class="a serif" style="left:60px;top:200px;font-size:380px;line-height:.85">1927</div>
+ <div class="a body" style="left:72px;top:560px;width:600px">Talkies needed sound to stay <b>in perfect sync</b> with the picture, and audio only plays back right at one steady speed. So the speed had to be locked.</div>
+ <div class="a body" style="left:72px;top:930px;width:600px">The industry settled on <b>24 fps</b>: about the slowest speed that gave decent sound, without burning through expensive film stock.</div>
+ <div class="a" style="left:760px;top:520px;width:250px;height:640px;background:#111;border-radius:8px;overflow:hidden">
+  <div class="a" style="left:10px;top:0;bottom:0;width:18px;background:repeating-linear-gradient(180deg,transparent 0 12px,#fff 12px 30px,transparent 30px 42px)"></div>
+  <div class="a" id="frames3" style="left:40px;top:10px;width:150px"></div>
+  <svg class="a" style="left:200px;top:0" width="40" height="720" id="wave"></svg>
+ </div>
+ <div class="a mono" style="left:760px;top:1180px;font-size:15px;opacity:.6">Soundtrack on film</div>
+ <div class="bot" style="bottom:60px"><span class="grey"></span><span class="sw">Swipe <span></span></span></div>
+</section>
+
+<!-- 4 BRAIN -->
+<section class="s paper" id="s4">
+ <div class="top"><span>Cinematy · Frame by Frame</span><span>04 / 10</span></div>
+ <div class="a kick grey" style="left:72px;top:170px">Your brain does the rest</div>
+ <div class="a serif" style="left:72px;top:220px;font-size:120px;width:940px">24 still pictures. <i>One moving world.</i></div>
+ <div class="a body" style="left:72px;top:520px;width:900px">Show still images fast enough and your brain stitches them into motion. But 24 flashes a second <b>flickers</b>, so projectors flash every frame 2–3 times: 48 or 72 flashes a second.</div>
+ <div class="a" id="flash4" style="left:72px;top:870px;width:936px;height:330px"></div>
+ <div class="bot"><span class="grey">Cinematy</span><span class="sw">Swipe <span></span></span></div>
+</section>
+
+<!-- 5 MOTION BLUR -->
+<section class="s ink" id="s5">
+ <div class="top"><span>Cinematy · Frame by Frame</span><span>05 / 10</span></div>
+ <div class="a kick grey" style="left:72px;top:170px">The secret ingredient</div>
+ <div class="a serif" style="left:72px;top:220px;font-size:130px;width:940px"><i>Motion blur.</i></div>
+ <div class="a body" style="left:72px;top:400px;width:900px">The classic <b>180° shutter</b> rule: at 24 fps, each frame is exposed for <b>1/48 of a second</b>. Anything moving leaves a soft smear. That blur is a big part of the dreamy “film look”.</div>
+ <div class="a" style="left:72px;top:760px;width:936px;height:420px;border:1.5px solid #2b2b2b;border-radius:24px;overflow:hidden">
+  <div class="a mono" style="left:30px;top:26px;font-size:17px;opacity:.6">24 fps · 1/48 s</div>
+  <div class="a" style="left:120px;top:110px;width:330px;height:110px;border-radius:55px;background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.35) 45%,#fff 85%);filter:blur(4px)"></div>
+  <div class="a mono" style="left:30px;top:236px;font-size:17px;opacity:.6">120 fps · 1/240 s</div>
+  <div class="a" style="left:340px;top:300px;width:110px;height:110px;border-radius:50%;background:#fff;opacity:.35"></div>
+  <div class="a" style="left:300px;top:300px;width:110px;height:110px;border-radius:50%;background:#fff;opacity:.18"></div>
+  <div class="a" style="left:380px;top:300px;width:110px;height:110px;border-radius:50%;background:#fff"></div>
+  <div class="a sans" style="left:560px;top:130px;font-size:26px;width:340px;line-height:1.4">Smooth, painterly movement.</div>
+  <div class="a sans" style="left:560px;top:320px;font-size:26px;width:340px;line-height:1.4;color:#B3B3B3">Crisp, stuttery-sharp. Feels like live video.</div>
+ </div>
+ <div class="bot"><span></span><span class="sw">Swipe <span></span></span></div>
+</section>
+
+<!-- 6 HFR FILMS -->
+<section class="s paper" id="s6">
+ <div class="top"><span>Cinematy · Frame by Frame</span><span>06 / 10</span></div>
+ <div class="a kick grey" style="left:72px;top:170px">So why not more frames?</div>
+ <div class="a serif" style="left:72px;top:220px;font-size:120px;width:940px">Hollywood <i>tried.</i></div>
+ <div class="a" id="hfr" style="left:72px;top:470px;width:936px"></div>
+ <div class="a body" style="left:72px;top:1120px;width:900px">Many viewers said the same thing: <b>“It looks like TV.”</b></div>
+ <div class="bot"><span class="grey">Cinematy</span><span class="sw">Swipe <span></span></span></div>
+</section>
+
+<!-- 7 SOAP OPERA -->
+<section class="s ink" id="s7">
+ <div class="top"><span>Cinematy · Frame by Frame</span><span>07 / 10</span></div>
+ <div class="a kick grey" style="left:72px;top:170px">The soap opera effect</div>
+ <div class="a serif" style="left:72px;top:220px;font-size:120px;width:940px">Too smooth feels <i>too real.</i></div>
+ <div class="a body" style="left:72px;top:500px;width:900px">For decades, news, sport and TV dramas ran at higher motion rates. So our brains link <b>smooth motion with real life</b>, and 24 fps with stories.</div>
+ <div class="a body" style="left:72px;top:760px;width:900px">With less blur, sets look like sets, makeup looks like makeup, and VFX look like VFX.</div>
+ <div class="a row" style="left:72px;top:1010px;display:flex;gap:24px">
+  <div style="width:444px;height:200px;border:2px solid #fff;border-radius:22px;padding:28px"><div class="pill red">● Live TV</div><div class="serif" style="font-size:58px;margin-top:22px">Feels <i>real.</i></div></div>
+  <div style="width:444px;height:200px;background:#fff;color:#000;border-radius:22px;padding:28px"><div class="pill">24 fps</div><div class="serif" style="font-size:58px;margin-top:22px">Feels like <i>cinema.</i></div></div>
+ </div>
+ <div class="bot"><span></span><span class="sw">Swipe <span></span></span></div>
+</section>
+
+<!-- 8 COST -->
+<section class="s paper" id="s8">
+ <div class="top"><span>Cinematy · Frame by Frame</span><span>08 / 10</span></div>
+ <div class="a kick grey" style="left:72px;top:170px">And then there’s the bill</div>
+ <div class="a serif" style="left:72px;top:220px;font-size:120px;width:940px">More frames, <i>more everything.</i></div>
+ <div class="a" id="cost" style="left:72px;top:520px;width:936px"></div>
+ <div class="a body" style="left:72px;top:1060px;width:900px">Double the frame rate and you roughly double the data, the VFX rendering and the work in post. Shorter exposures also need <b>more light</b> on set.</div>
+ <div class="bot"><span class="grey">Cinematy</span><span class="sw">Swipe <span></span></span></div>
+</section>
+
+<!-- 9 WHERE HFR WINS -->
+<section class="s ink" id="s9">
+ <div class="top"><span>Cinematy · Frame by Frame</span><span>09 / 10</span></div>
+ <div class="a kick grey" style="left:72px;top:170px">Where high frame rates win</div>
+ <div class="a serif" style="left:72px;top:220px;font-size:120px;width:940px">Slow motion.</div>
+ <div class="a serif" style="left:72px;top:400px;font-size:150px">120 <span style="opacity:.5">÷</span> 24 <span style="opacity:.5">=</span> <i>5×</i></div>
+ <div class="a body" style="left:72px;top:600px;width:900px">Shoot at 120 fps, play back at 24, and one second becomes five. Same trick behind every slo-mo hero walk.</div>
+ <div class="a" style="left:72px;top:860px;width:936px;border-top:1.5px solid #2b2b2b">
+  <div class="sans" style="font-size:30px;padding:26px 0;border-bottom:1.5px solid #2b2b2b;display:flex;justify-content:space-between"><span>Sports & gaming</span><span class="mono" style="font-size:18px;opacity:.6;padding-top:8px">Smoothness = clarity</span></div>
+  <div class="sans" style="font-size:30px;padding:26px 0;border-bottom:1.5px solid #2b2b2b;display:flex;justify-content:space-between"><span>Avatar: The Way of Water</span><span class="mono" style="font-size:18px;opacity:.6;padding-top:8px">Switched 48 ↔ 24 by scene</span></div>
+ </div>
+ <div class="bot"><span></span><span class="sw">Swipe <span></span></span></div>
+</section>
+
+<!-- 10 CTA -->
+<section class="s paper" id="s10">
+ <div class="top"><span>Cinematy · Frame by Frame</span><span>10 / 10</span></div>
+ <div class="a" id="logo10" style="left:390px;top:150px;width:300px"></div>
+ <div class="a serif" style="left:0;right:0;top:370px;text-align:center;font-size:104px">24 frames. One crew.<br><i>Your film.</i></div>
+ <div class="a body" style="left:120px;right:120px;top:620px;text-align:center">Talk lenses, frame rates and 2 a.m. edits with Hyderabad’s filmmakers.</div>
+ <div class="a" style="left:0;right:0;top:770px;display:flex;justify-content:center;align-items:center;gap:56px">
+  <div id="qr10" style="width:300px;height:300px;padding:22px;border:2px solid #000;border-radius:24px"></div>
+  <div>
+   <div class="kick">Coming soon</div>
+   <div class="serif" style="font-size:72px;margin:14px 0 22px">Join the <i>waitlist.</i></div>
+   <div style="display:inline-flex;align-items:center;gap:16px;border:2px solid #000;border-radius:999px;padding:14px 28px"><span style="width:16px;height:16px;border-radius:50%;background:#D92D20;display:inline-block"></span><span class="mono" style="font-size:30px;text-transform:none;letter-spacing:.06em">cinematy.in</span></div>
+  </div>
+ </div>
+ <div class="a sans grey" style="left:0;right:0;top:1170px;text-align:center;font-size:28px">What frame rate do you shoot at? Tell us below 👇</div>
+ <div class="bot"><span class="grey">Save · Share with your crew</span><span class="grey">Link in bio</span></div>
+</section>
+
+<script>
+function E(p,tag,css,html){const e=document.createElement(tag);if(css)e.style.cssText=css;if(html!=null)e.innerHTML=html;p.appendChild(e);return e}
+// cover strip: 24 numbered frames
+const cs=document.getElementById('cstrip');for(let i=1;i<=24;i++){E(cs,'div','','').className='fr';cs.lastChild.style.cssText='width:110px;height:90px';cs.lastChild.textContent=String(i).padStart(2,'0')}
+// slide 3 frames + wave
+const f3=document.getElementById('frames3');for(let i=0;i<6;i++){const f=E(f3,'div',`height:104px;margin-bottom:14px;border-radius:4px;background:${['#4a4a4a','#3a3a3a','#555','#333','#4a4a4a','#3d3d3d'][i]}`)}
+const wv=document.getElementById('wave');let d='M20 0';for(let y=0;y<=720;y+=6){d+=` L${20+Math.sin(y*.11)*Math.sin(y*.023)*14} ${y}`}wv.innerHTML=`<path d="${d}" stroke="#fff" stroke-width="3" fill="none"/>`;
+// slide 4 flashes
+const f4=document.getElementById('flash4');E(f4,'div','font-family:GM;font-size:17px;letter-spacing:.14em;color:#6B6B6B;margin-bottom:22px','1 SECOND OF FILM · 24 FRAMES · 48 FLASHES');
+const row=E(f4,'div','display:flex;gap:6px');for(let i=0;i<24;i++){const c=E(row,'div','flex:1');E(c,'div','height:120px;background:#000;border-radius:3px');const fl=E(c,'div','display:flex;gap:3px;margin-top:10px');for(let k=0;k<2;k++)E(fl,'div','flex:1;height:44px;background:#D1D1D1;border-radius:2px')}
+E(f4,'div','display:flex;justify-content:space-between;font-family:GM;font-size:16px;letter-spacing:.12em;color:#6B6B6B;margin-top:16px','<span>FRAMES</span><span>FLASHES ON SCREEN</span>');
+// slide 6 hfr table
+const h=document.getElementById('hfr');[['24','Almost every film you love','Since the late 1920s'],['48','The Hobbit: An Unexpected Journey','2012'],['120','Billy Lynn’s Long Halftime Walk · Gemini Man','Ang Lee · 2016, 2019']].forEach(([n,t,y],i)=>{const r=E(h,'div',`display:flex;align-items:center;gap:40px;padding:30px 0;border-top:1.5px solid #E8E8E8`);E(r,'div','font-family:IS;font-size:140px;width:240px;line-height:.9',n);const c=E(r,'div','');E(c,'div','font-family:Geist;font-size:32px;font-weight:500;line-height:1.25',t);E(c,'div','font-family:GM;font-size:17px;letter-spacing:.12em;color:#6B6B6B;margin-top:10px;text-transform:uppercase',y)});
+// slide 8 cost bars
+const cb=document.getElementById('cost');[['24 fps',1],['48 fps',2],['120 fps',5]].forEach(([l,m])=>{const r=E(cb,'div','display:flex;align-items:center;gap:26px;margin-bottom:34px');E(r,'div','font-family:GM;font-size:20px;letter-spacing:.12em;width:150px',l.toUpperCase());E(r,'div',`height:80px;width:${m*140}px;background:#000;border-radius:10px`);E(r,'div','font-family:IS;font-size:64px',m+'×')});
+window.init=(logo,qr)=>{document.getElementById('logo10').innerHTML=logo.replace(/style="color:[^"]*"/,'').replace(/width="[^"]*"/,'width="100%"').replace(/height="[^"]*"/,'height="auto"');document.getElementById('qr10').innerHTML=qr};
+</script></body></html>
