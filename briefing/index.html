@@ -102,6 +102,16 @@ section.ch{padding-block:44px 8px}
 .voice .yes{border-color:var(--ink)}
 .voice .nope p{text-decoration:line-through;text-decoration-color:var(--signal);color:var(--graphite)}
 
+/* unit lead */
+.list.check li{grid-template-columns:22px minmax(0,1fr)}
+.lead{margin-top:26px;display:flex;flex-wrap:wrap;gap:18px 28px;align-items:center;justify-content:space-between;border:1.5px solid var(--ink);border-radius:18px;padding:20px 22px;break-inside:avoid}
+.lead>div{min-width:0}
+.lead .mono{color:var(--graphite);font-size:11px}
+.lead h3{font-size:34px;margin:6px 0 6px}
+.lead p{font-size:15.5px;max-width:340px}
+.lead-contact{display:flex;flex-direction:column;gap:8px;align-items:stretch}
+.lead-contact a{display:block;text-align:center;padding:11px 18px;border-radius:999px;border:1.5px solid var(--ink);text-decoration:none;font-weight:500;white-space:nowrap}
+.lead-contact .ph{background:var(--ink);color:var(--paper);font-family:var(--f-mono);letter-spacing:.04em;user-select:all}
 /* end */
 .end{margin-top:56px;background:var(--card-ink);color:#fff}
 .end .wrap{padding-block:52px}
@@ -119,14 +129,14 @@ html{scroll-behavior:smooth}
 <header class="cover">
   <div class="perf" style="top:0"></div>
   <div class="wrap">
-    <div class="mono eyebrow">Cinematy @ Mahindra University · Crew briefing</div>
-    <h1>Welcome to the <i>unit.</i></h1>
-    <p class="lede">The essentials for day one: what Cinematy is, what the Content Unit is, and what your role involves.</p>
+    <div class="mono eyebrow">Cinematy @ Mahindra University · Member briefing</div>
+    <h1>You’re in. Welcome to the <i>unit.</i></h1>
+    <p class="lede">Thanks for joining. Here’s what Cinematy is, what the Content Unit is, and what you’ll be doing with us.</p>
     <div class="slate">
       <div><span class="mono">Unit</span><b>Cinematy Content Unit</b></div>
       <div><span class="mono">Location</span><b>Mahindra University, Hyderabad</b></div>
       <div><span class="mono">Makes</span><b>Films, reels, skits, BTS</b></div>
-      <div><span class="mono">Terms</span><b>Pro bono · full credit</b></div>
+      <div><span class="mono">Your unit lead</span><b>Sanhitha Reddy<br>+91 96528 51912</b></div>
     </div>
   </div>
   <div class="perf" style="bottom:0"></div>
@@ -159,7 +169,7 @@ html{scroll-behavior:smooth}
 
   <section class="ch wrap" id="unit">
     <div class="ch-head"><span class="mono">02</span><h2>What the <i>unit</i> is</h2></div>
-    <p>The <b>Cinematy Content Unit at MU</b> is a small student crew that makes the content Cinematy posts on <b>YouTube, Instagram</b> and our other channels. You are the people behind the camera, in front of it, and running the shoot.</p>
+    <p>The <b>Cinematy Content Unit at MU</b> is a small student crew that makes the content Cinematy posts on <b>YouTube, Instagram</b> and our other channels. That’s you now: the people behind the camera, in front of it, and running the shoot.</p>
     <p class="pull">It’s a crew, not a job.</p>
     <div class="grid2">
       <div class="box solid"><div class="mono">The deal</div><h4>Pro bono, not a paid gig</h4><p>This isn’t a job or an internship. Nobody is paid, including the people who run it.</p></div>
@@ -177,29 +187,36 @@ html{scroll-behavior:smooth}
 
   <section class="ch wrap" id="roles">
     <div class="ch-head"><span class="mono">03</span><h2>What <i>you</i> do</h2></div>
-    <p>Most pieces need several of these roles. You can hold more than one, and we encourage trying a new one once you’re settled.</p>
-    <div class="roles">
-      <article class="role"><div><h3>Writing</h3><div class="mono tag">Words first</div></div><div><ul><li>Pitch ideas and turn approved ones into scripts, hooks and on-screen text.</li><li>Write reel scripts that land in the first two seconds.</li><li>Draft captions in the Cinematy voice.</li></ul><p class="deliv"><b>You hand over:</b> a locked script and caption before the shoot.</p></div></article>
-      <article class="role"><div><h3>Directing</h3><div class="mono tag">Owns the vision</div></div><div><ul><li>Shape the script into shots: plan the shot list and the look.</li><li>Run the set creatively and direct the actors.</li><li>Give notes in the edit until the piece is right.</li></ul><p class="deliv"><b>You hand over:</b> a shot list before the shoot, and sign-off on the final cut.</p></div></article>
-      <article class="role"><div><h3>Acting</h3><div class="mono tag">On camera</div></div><div><ul><li>Prepare lines and character before the shoot.</li><li>Show up on time, camera-ready, and take direction.</li><li>Host explainers and appear in skits, shorts and reels.</li></ul><p class="deliv"><b>You hand over:</b> your performance, and a signed OK for us to post it.</p></div></article>
-      <article class="role"><div><h3>Shooting</h3><div class="mono tag">Camera &amp; light</div></div><div><ul><li>Plan the camera, lenses and lighting with the director.</li><li>Shoot clean, well-exposed footage and good audio.</li><li>Grab extra B-roll and behind-the-scenes clips on every shoot.</li></ul><p class="deliv"><b>You hand over:</b> organised footage in the shared drive the same day.</p></div></article>
-      <article class="role"><div><h3>Editing</h3><div class="mono tag">Makes it move</div></div><div><ul><li>Cut to the beat of licensed music, with captions on screen.</li><li>Deliver vertical (9:16) and horizontal (16:9) versions where needed.</li><li>Apply the Cinematy look: type, colour and the end card.</li></ul><p class="deliv"><b>You hand over:</b> a review cut, then the final export.</p></div></article>
-      <article class="role"><div><h3>Shoot management</h3><div class="mono tag">Runs the day</div></div><div><ul><li>Build the call sheet: who, where, when and what to bring.</li><li>Keep the shoot on schedule and everyone fed and safe.</li><li>Handle the location, the kit checklist and getting permission to film.</li></ul><p class="deliv"><b>You hand over:</b> a call sheet the day before, and a wrap note after.</p></div></article>
-      <article class="role"><div><h3>Line production</h3><div class="mono tag">Makes it possible</div></div><div><ul><li>Work out what each piece needs: people, kit, props, locations.</li><li>Arrange borrowed or rented gear and keep any small costs tracked.</li><li>Spot problems before they reach the set.</li></ul><p class="deliv"><b>You hand over:</b> a needs list and a go or no-go before each shoot.</p></div></article>
-      <article class="role"><div><h3>Planning</h3><div class="mono tag">Keeps the calendar</div></div><div><ul><li>Maintain the content calendar: what posts when, on which channel.</li><li>Schedule shoots around classes, exams and weekends.</li><li>Track every piece from pitch to published.</li></ul><p class="deliv"><b>You hand over:</b> an up-to-date calendar and tracker every week.</p></div></article>
+    <p>Whatever role you joined for, every member of the unit does the same five things.</p>
+    <ul class="list check">
+      <li><span><b>Pitch ideas.</b> Anyone can pitch a reel, skit, short or explainer. One line on the idea and why our audience would care is enough.</span></li>
+      <li><span><b>Make things.</b> Write, direct, act, shoot, edit, manage shoots, line-produce or plan: the role you signed up for, and others if you want to try them.</span></li>
+      <li><span><b>Show up.</b> Be on time for the shoots and meetings you’ve said yes to. If you can’t make it, tell your unit lead early so the shoot isn’t left short.</span></li>
+      <li><span><b>Credit and respect the crew.</b> Everyone who works on a piece gets credited, and nobody is filmed without their OK.</span></li>
+      <li><span><b>Let Cinematy post first.</b> Share your work as much as you like once it’s live on Cinematy’s channels, but not before.</span></li>
+    </ul>
+    <div class="lead">
+      <div>
+        <div class="mono">Your unit lead</div>
+        <h3>Sanhitha <i>Reddy</i></h3>
+        <p class="grey">Your first stop for shoots, schedules, ideas and anything in this packet.</p>
+      </div>
+      <div class="lead-contact">
+        <a class="ph" href="tel:+919652851912">+91 96528 51912</a>
+        <a class="wa" href="https://wa.me/919652851912" target="_blank" rel="noreferrer">Message on WhatsApp</a>
+      </div>
     </div>
   </section>
-
 </main>
 
 <section class="end">
   <div class="wrap">
     <div class="mono" style="color:#9a9a9a">That’s the briefing</div>
     <h2>Lights. Camera. <i>MU.</i></h2>
-    <p>Questions about your role, your first shoot or anything in this packet? Ask your unit lead. We’re glad you’re here.</p>
+    <p>Questions about your first shoot or anything in this packet? Ask Sanhitha Reddy, your unit lead, on +91 96528 51912. We’re glad you’re here.</p>
     <div class="links">
       <a class="solid" href="https://cinematy.in" target="_blank" rel="noreferrer"><span class="dot"></span>cinematy.in</a>
-      <a href="https://cinematy-mu.vercel.app" target="_blank" rel="noreferrer">Unit application form</a>
+      <a href="https://wa.me/919652851912" target="_blank" rel="noreferrer">WhatsApp Sanhitha</a>
     </div>
   </div>
 </section>
