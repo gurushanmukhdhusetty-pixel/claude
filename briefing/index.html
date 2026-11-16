@@ -1,0 +1,300 @@
+<title>Cinematy Unit Briefing</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single reading column of numbered chapters, like a production call-sheet packet; the cover is a black title card. */
+:root{
+  --paper:#ffffff; --ink:#0a0a0a; --graphite:#5e5e5e; --fog:#e8e8e8; --mist:#f5f5f5; --signal:#d92d20;
+  --card-ink:#0a0a0a; --card-paper:#ffffff;
+  --f-display:"Instrument Serif",Georgia,"Times New Roman",serif;
+  --f-body:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#0b0b0b;--ink:#f2f2f2;--graphite:#a3a3a3;--fog:#262626;--mist:#151515;--signal:#ff5a4d;--card-ink:#000;--card-paper:#f2f2f2;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#0b0b0b;--ink:#f2f2f2;--graphite:#a3a3a3;--fog:#262626;--mist:#151515;--signal:#ff5a4d;--card-ink:#000;--card-paper:#f2f2f2;color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6;margin:0;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-underline-offset:3px}
+.wrap{max-width:760px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.grey{color:var(--graphite)}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;letter-spacing:-.01em;line-height:1.02;margin:0;text-wrap:balance}
+h1 i,h2 i{font-style:italic}
+p{margin:0}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+
+/* cover */
+.cover{background:var(--card-ink);color:#fff;position:relative;overflow:hidden}
+.cover .wrap{padding-block:64px 56px}
+.perf{position:absolute;left:0;right:0;height:12px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.26) 0 16px,transparent 16px 36px)}
+.cover .eyebrow{color:#9a9a9a}
+.cover h1{font-size:clamp(48px,10vw,92px);margin:14px 0 18px}
+.cover .lede{color:#d4d4d4;font-size:19px;max-width:560px}
+.slate{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;margin-top:36px;border:1px solid #333;border-radius:14px;overflow:hidden;background:#333}
+.slate div{background:var(--card-ink);padding:12px 14px}
+.slate .mono{color:#8a8a8a;font-size:10.5px}
+.slate b{display:block;font-weight:500;color:#fff;margin-top:2px}
+
+/* contents */
+.toc{padding-block:36px 8px}
+.toc ol{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:6px 24px}
+.toc li a{display:flex;gap:12px;align-items:baseline;text-decoration:none;padding:6px 0;border-bottom:1px solid var(--fog)}
+.toc li a:hover{border-color:var(--ink)}
+.toc .n{font-family:var(--f-mono);font-size:12px;color:var(--graphite)}
+
+/* chapters */
+section.ch{padding-block:44px 8px}
+.ch-head{display:flex;align-items:baseline;gap:14px;border-bottom:1.5px solid var(--ink);padding-bottom:12px;margin-bottom:22px}
+.ch-head .mono{color:var(--graphite);flex:none}
+.ch-head h2{font-size:clamp(36px,6vw,50px)}
+.ch p+p{margin-top:14px}
+.ch h3{font-size:28px;margin:30px 0 10px}
+.pull{font-family:var(--f-display);font-size:clamp(26px,4.4vw,34px);line-height:1.15;margin:24px 0;padding-left:18px;border-left:3px solid var(--ink)}
+
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:12px;margin-top:18px}
+.box{border:1.5px solid var(--fog);border-radius:16px;padding:16px 18px;min-width:0}
+.box .mono{color:var(--graphite);font-size:11px}
+.box h4{font-size:17px;margin:6px 0 4px;font-weight:600;font-family:var(--f-body)}
+.box p{font-size:15.5px;color:var(--graphite)}
+.box.solid{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.box.solid .mono,.box.solid p{color:var(--paper);opacity:.75}
+
+.list{list-style:none;padding:0;margin:14px 0 0;display:flex;flex-direction:column;gap:10px}
+.list li{display:grid;grid-template-columns:22px 1fr;gap:10px}
+.list li::before{content:"—";color:var(--graphite)}
+.list.check li::before{content:"✓";color:var(--ink);font-weight:600}
+.list.no li::before{content:"✕";color:var(--signal);font-weight:600}
+
+/* roles */
+.roles{display:flex;flex-direction:column;gap:12px;margin-top:6px}
+.role{display:grid;grid-template-columns:minmax(0,190px) minmax(0,1fr);gap:8px 22px;border:1.5px solid var(--fog);border-radius:16px;padding:18px}
+.role h3{font-size:30px;margin:0}
+.role .tag{margin-top:6px;color:var(--graphite)}
+.role ul{margin:0;padding-left:18px;font-size:15.5px}
+.role ul li+li{margin-top:4px}
+.role .deliv{margin-top:10px;font-size:14px;color:var(--graphite)}
+.role .deliv b{color:var(--ink);font-weight:500}
+@media (max-width:620px){.role{grid-template-columns:1fr}}
+
+/* pipeline */
+.pipe{list-style:none;padding:0;margin:18px 0 0;counter-reset:s;display:flex;flex-direction:column}
+.pipe li{counter-increment:s;display:grid;grid-template-columns:48px minmax(0,1fr);gap:14px;padding:14px 0;border-top:1px solid var(--fog)}
+.pipe li:last-child{border-bottom:1px solid var(--fog)}
+.pipe li::before{content:counter(s,decimal-leading-zero);font-family:var(--f-mono);font-size:13px;color:var(--graphite);padding-top:4px}
+.pipe b{display:block;font-weight:600}
+.pipe span{color:var(--graphite);font-size:15.5px}
+.pipe .who{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);margin-top:4px;display:block}
+
+/* brand */
+.swatches{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:16px}
+.sw{border:1.5px solid var(--fog);border-radius:14px;overflow:hidden}
+.sw div:first-child{height:58px}
+.sw div:last-child{padding:10px 12px;font-size:14px}
+.sw .mono{display:block;color:var(--graphite);font-size:10.5px;margin-top:2px}
+.type{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:12px}
+.type .box .sample{color:var(--ink);font-size:28px;margin-top:4px}
+
+.voice{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:12px;margin-top:14px}
+.voice .box p{color:var(--ink);font-size:16px}
+.voice .yes{border-color:var(--ink)}
+.voice .nope p{text-decoration:line-through;text-decoration-color:var(--signal);color:var(--graphite)}
+
+/* end */
+.end{margin-top:56px;background:var(--card-ink);color:#fff}
+.end .wrap{padding-block:52px}
+.end h2{font-size:clamp(40px,8vw,64px)}
+.end p{color:#cfcfcf;margin-top:14px;max-width:520px}
+.links{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.links a{display:inline-flex;align-items:center;gap:10px;padding:12px 20px;border-radius:999px;border:1.5px solid #fff;text-decoration:none;font-weight:500}
+.links a.solid{background:#fff;color:#000}
+.dot{width:9px;height:9px;border-radius:50%;background:#d92d20;display:inline-block}
+footer{padding-block:20px 36px}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+html{scroll-behavior:smooth}
+</style>
+
+<header class="cover">
+  <div class="perf" style="top:0"></div>
+  <div class="wrap">
+    <div class="mono eyebrow">Cinematy @ Mahindra University · Crew briefing</div>
+    <h1>Welcome to the <i>unit.</i></h1>
+    <p class="lede">Everything you need on day one: what Cinematy is, what the Content Unit makes, what your role involves, and how we work together.</p>
+    <div class="slate">
+      <div><span class="mono">Unit</span><b>Cinematy Content Unit</b></div>
+      <div><span class="mono">Location</span><b>Mahindra University, Hyderabad</b></div>
+      <div><span class="mono">Makes</span><b>Films, reels, skits, BTS</b></div>
+      <div><span class="mono">Terms</span><b>Pro bono · full credit</b></div>
+    </div>
+  </div>
+  <div class="perf" style="bottom:0"></div>
+</header>
+
+<main>
+  <nav class="wrap toc" aria-label="Contents">
+    <div class="mono grey">In this packet</div>
+    <ol>
+      <li><a href="#cinematy"><span class="n">01</span>What Cinematy is</a></li>
+      <li><a href="#unit"><span class="n">02</span>What the unit is</a></li>
+      <li><a href="#makes"><span class="n">03</span>What we make</a></li>
+      <li><a href="#roles"><span class="n">04</span>What you do</a></li>
+      <li><a href="#process"><span class="n">05</span>How a project runs</a></li>
+      <li><a href="#brand"><span class="n">06</span>The Cinematy look</a></li>
+      <li><a href="#rules"><span class="n">07</span>Ground rules</a></li>
+      <li><a href="#you"><span class="n">08</span>What you get</a></li>
+    </ol>
+  </nav>
+
+  <section class="ch wrap" id="cinematy">
+    <div class="ch-head"><span class="mono">01</span><h2>What <i>Cinematy</i> is</h2></div>
+    <p><b>Cinematy is a home for Hyderabad’s filmmakers</b>: one place where writers, directors, actors, crew and film lovers find each other and get work made. Our line is <i>“Where Hyderabad’s films begin.”</i></p>
+    <p>Today most of the city’s indie film work runs on forwarded WhatsApp messages: “anyone know a DOP free this weekend?”, “need a sound recordist urgent”. Cinematy replaces that with a proper platform.</p>
+    <div class="grid2">
+      <div class="box"><div class="mono">Find people</div><h4>Discover &amp; profiles</h4><p>Cast and crew by craft, kit and neighbourhood, with credits that collaborators verify.</p></div>
+      <div class="box"><div class="mono">Find work</div><h4>Crewing Board</h4><p>Paid, deferred, portfolio and collab-split roles, with the terms shown before the title.</p></div>
+      <div class="box"><div class="mono">Make films</div><h4>Projects</h4><p>Start a project, list the roles it needs, and build a team around it.</p></div>
+      <div class="box"><div class="mono">Show films</div><h4>Screening Room</h4><p>Finished films with their credits and festival runs.</p></div>
+      <div class="box"><div class="mono">Grow</div><h4>Festivals, events &amp; mentors</h4><p>Festival deadlines, screenings and meetups, and experienced members who take mentorship requests.</p></div>
+      <div class="box"><div class="mono">Shoot</div><h4>Regional resources</h4><p>Rental houses, post suites, locations and permit offices around the city.</p></div>
+    </div>
+    <p style="margin-top:18px">Cinematy is <b>launching soon</b>. Anyone can join the waitlist at <a href="https://cinematy.in" target="_blank" rel="noreferrer">cinematy.in</a>.</p>
+  </section>
+
+  <section class="ch wrap" id="unit">
+    <div class="ch-head"><span class="mono">02</span><h2>What the <i>unit</i> is</h2></div>
+    <p>The <b>Cinematy Content Unit at MU</b> is a small student crew that makes the content Cinematy posts on <b>YouTube, Instagram</b> and our other channels. You are the people behind the camera, in front of it, and running the shoot.</p>
+    <p class="pull">It’s a crew, not a job.</p>
+    <div class="grid2">
+      <div class="box solid"><div class="mono">The deal</div><h4>Pro bono, not a paid gig</h4><p>This isn’t a job or an internship. Nobody is paid, including the people who run it.</p></div>
+      <div class="box"><div class="mono">In return</div><h4>Credit, portfolio, crew</h4><p>Your name on everything you make, real work you can show, and people to make it with.</p></div>
+    </div>
+    <h3>Why it exists</h3>
+    <ul class="list">
+      <li>Cinematy needs content that sounds like the people it’s for, and filmmakers telling filmmakers’ stories does that better than an agency could.</li>
+      <li>Students who want to make films need a reason, a team and an audience. The unit gives you all three.</li>
+      <li>Every piece you make doubles as proof of what Cinematy stands for: finding your people and getting work made.</li>
+    </ul>
+  </section>
+
+  <section class="ch wrap" id="makes">
+    <div class="ch-head"><span class="mono">03</span><h2>What we <i>make</i></h2></div>
+    <p>Short, sharp pieces for social, plus the occasional bigger film. Expect a mix of these formats:</p>
+    <div class="grid2">
+      <div class="box"><div class="mono">Reels · under 30 s</div><h4>Feature spotlights</h4><p>One Cinematy feature per reel (the Crewing Board, Festivals, Mentorship), ending on “Coming soon · join the waitlist”.</p></div>
+      <div class="box"><div class="mono">Carousels &amp; reels</div><h4>Frame by Frame</h4><p>Our film-explainer series: why cinema runs at 24 fps, why movies have black bars. Easy to save, easy to share.</p></div>
+      <div class="box"><div class="mono">Short films &amp; skits</div><h4>Stories</h4><p>Original shorts and comedy skits written and shot by the unit, about filmmaking, campus life and the city.</p></div>
+      <div class="box"><div class="mono">BTS &amp; interviews</div><h4>Behind the scenes</h4><p>How our shoots come together, and conversations with Hyderabad filmmakers and the crafts behind the credits.</p></div>
+    </div>
+    <p style="margin-top:18px" class="grey">Every piece speaks to two audiences at once: people who make films, and people who simply love them.</p>
+  </section>
+
+  <section class="ch wrap" id="roles">
+    <div class="ch-head"><span class="mono">04</span><h2>What <i>you</i> do</h2></div>
+    <p>Most pieces need several of these roles. You can hold more than one, and we encourage trying a new one once you’re settled.</p>
+    <div class="roles">
+      <article class="role"><div><h3>Writing</h3><div class="mono tag">Words first</div></div><div><ul><li>Pitch ideas and turn approved ones into scripts, hooks and on-screen text.</li><li>Write reel scripts that land in the first two seconds.</li><li>Draft captions in the Cinematy voice.</li></ul><p class="deliv"><b>You hand over:</b> a locked script and caption before the shoot.</p></div></article>
+      <article class="role"><div><h3>Directing</h3><div class="mono tag">Owns the vision</div></div><div><ul><li>Shape the script into shots: plan the shot list and the look.</li><li>Run the set creatively and direct the actors.</li><li>Give notes in the edit until the piece is right.</li></ul><p class="deliv"><b>You hand over:</b> a shot list before the shoot, and sign-off on the final cut.</p></div></article>
+      <article class="role"><div><h3>Acting</h3><div class="mono tag">On camera</div></div><div><ul><li>Prepare lines and character before the shoot.</li><li>Show up on time, camera-ready, and take direction.</li><li>Host explainers and appear in skits, shorts and reels.</li></ul><p class="deliv"><b>You hand over:</b> your performance, and a signed OK for us to post it.</p></div></article>
+      <article class="role"><div><h3>Shooting</h3><div class="mono tag">Camera &amp; light</div></div><div><ul><li>Plan the camera, lenses and lighting with the director.</li><li>Shoot clean, well-exposed footage and good audio.</li><li>Grab extra B-roll and behind-the-scenes clips on every shoot.</li></ul><p class="deliv"><b>You hand over:</b> organised footage in the shared drive the same day.</p></div></article>
+      <article class="role"><div><h3>Editing</h3><div class="mono tag">Makes it move</div></div><div><ul><li>Cut to the beat of licensed music, with captions on screen.</li><li>Deliver vertical (9:16) and horizontal (16:9) versions where needed.</li><li>Apply the Cinematy look: type, colour and the end card.</li></ul><p class="deliv"><b>You hand over:</b> a review cut, then the final export.</p></div></article>
+      <article class="role"><div><h3>Shoot management</h3><div class="mono tag">Runs the day</div></div><div><ul><li>Build the call sheet: who, where, when and what to bring.</li><li>Keep the shoot on schedule and everyone fed and safe.</li><li>Handle the location, the kit checklist and getting permission to film.</li></ul><p class="deliv"><b>You hand over:</b> a call sheet the day before, and a wrap note after.</p></div></article>
+      <article class="role"><div><h3>Line production</h3><div class="mono tag">Makes it possible</div></div><div><ul><li>Work out what each piece needs: people, kit, props, locations.</li><li>Arrange borrowed or rented gear and keep any small costs tracked.</li><li>Spot problems before they reach the set.</li></ul><p class="deliv"><b>You hand over:</b> a needs list and a go or no-go before each shoot.</p></div></article>
+      <article class="role"><div><h3>Planning</h3><div class="mono tag">Keeps the calendar</div></div><div><ul><li>Maintain the content calendar: what posts when, on which channel.</li><li>Schedule shoots around classes, exams and weekends.</li><li>Track every piece from pitch to published.</li></ul><p class="deliv"><b>You hand over:</b> an up-to-date calendar and tracker every week.</p></div></article>
+    </div>
+  </section>
+
+  <section class="ch wrap" id="process">
+    <div class="ch-head"><span class="mono">05</span><h2>How a project <i>runs</i></h2></div>
+    <p>Every piece, from a 20-second reel to a short film, moves through the same six steps.</p>
+    <ol class="pipe">
+      <li><div><b>Pitch</b><span>Anyone can pitch. One line on the idea, the format and why our audience would care.</span><span class="who">Everyone</span></div></li>
+      <li><div><b>Script &amp; plan</b><span>The script is written and locked, then turned into a shot list. The calendar gets a slot.</span><span class="who">Writing · Directing · Planning</span></div></li>
+      <li><div><b>Prep</b><span>Cast, crew, kit, location and permission are confirmed, and the call sheet goes out the day before.</span><span class="who">Line production · Shoot management</span></div></li>
+      <li><div><b>Shoot</b><span>We start on time, stay on schedule, capture BTS, and back up footage the same day.</span><span class="who">Directing · Shooting · Acting · Shoot management</span></div></li>
+      <li><div><b>Edit &amp; review</b><span>A review cut goes to the director and unit lead, notes come back, and the cut is finished with captions and the end card.</span><span class="who">Editing · Directing</span></div></li>
+      <li><div><b>Publish</b><span>Cinematy posts from its official accounts, with credits for everyone who worked on it.</span><span class="who">Planning · Cinematy team</span></div></li>
+    </ol>
+    <p style="margin-top:18px" class="grey">Your unit lead shares the meeting rhythm, the shared drive and the content calendar when you join.</p>
+  </section>
+
+  <section class="ch wrap" id="brand">
+    <div class="ch-head"><span class="mono">06</span><h2>The Cinematy <i>look</i></h2></div>
+    <p>Cinematy is <b>ink on paper</b>. The interface stays black and white so the films themselves can be the colourful thing on screen.</p>
+    <div class="swatches">
+      <div class="sw"><div style="background:#000"></div><div>Ink<span class="mono">#000000 · type, logo</span></div></div>
+      <div class="sw"><div style="background:#fff;border-bottom:1px solid var(--fog)"></div><div>Paper<span class="mono">#FFFFFF · the page</span></div></div>
+      <div class="sw"><div style="background:#6B6B6B"></div><div>Graphite<span class="mono">#6B6B6B · secondary</span></div></div>
+      <div class="sw"><div style="background:#D92D20"></div><div>Signal Red<span class="mono">#D92D20 · LIVE, deadlines only</span></div></div>
+    </div>
+    <div class="type">
+      <div class="box"><div class="mono">Display · Instrument Serif</div><div class="sample" style="font-family:var(--f-display)">Last take <i>tonight.</i></div><p>Headlines. Never bold, often one word in italic.</p></div>
+      <div class="box"><div class="mono">Body · Geist</div><div class="sample" style="font-family:var(--f-body);font-size:22px">Find your crew.</div><p>Captions, body text and buttons.</p></div>
+      <div class="box"><div class="mono">Labels · Geist Mono</div><div class="sample mono" style="font-size:15px;color:var(--ink)">Scene 01 · Take 03</div><p>Small uppercase labels, counts and timecodes.</p></div>
+    </div>
+    <h3>The logo</h3>
+    <ul class="list">
+      <li>CINEMATY over HYDERABAD between two laurel branches, used exactly as supplied, in ink on light and paper on dark.</li>
+      <li>Never recolour, stretch, crop, redraw or add glows and shadows.</li>
+      <li>Give it clear space equal to the height of the CINEMATY letters on every side.</li>
+    </ul>
+    <h3>The voice</h3>
+    <p>Talk like the best person on a shoot: specific, warm, fair, and a little funny at 4 a.m.</p>
+    <div class="voice">
+      <div class="box yes"><div class="mono">Like this</div><p>“Night shoot at Tank Bund. We’ll feed you at midnight and drop you home after.”</p></div>
+      <div class="box nope"><div class="mono">Not this</div><p>“Exciting opportunity for passionate individuals to gain exposure!”</p></div>
+    </div>
+    <p style="margin-top:14px" class="grey">Every piece ends on the Cinematy end card: logo, “Coming soon”, “Join the waitlist” and cinematy.in.</p>
+  </section>
+
+  <section class="ch wrap" id="rules">
+    <div class="ch-head"><span class="mono">07</span><h2>Ground <i>rules</i></h2></div>
+    <div class="grid2">
+      <div class="box"><div class="mono">Always</div>
+        <ul class="list check">
+          <li>Credit everyone who worked on a piece, by name and role.</li>
+          <li>Get a clear OK from anyone who appears on camera before we post.</li>
+          <li>Ask permission before filming on campus or at any location.</li>
+          <li>Use music and footage we have the rights to.</li>
+          <li>Keep sets safe: no risky stunts, nobody left stranded after a late shoot.</li>
+          <li>Tell your lead early if you can’t make it. It happens, and early notice saves the shoot.</li>
+        </ul>
+      </div>
+      <div class="box"><div class="mono">Never</div>
+        <ul class="list no">
+          <li>Post unit work on personal accounts before Cinematy publishes it. Share it once it’s live.</li>
+          <li>Speak for Cinematy publicly or make promises on its behalf.</li>
+          <li>Share applicants’ or members’ phone numbers or details outside the team.</li>
+          <li>Use AI-generated people or footage in Cinematy content.</li>
+          <li>Film anyone who has asked not to be filmed.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="ch wrap" id="you">
+    <div class="ch-head"><span class="mono">08</span><h2>What you <i>get</i></h2></div>
+    <ul class="list check">
+      <li><b>Credit on everything you make</b>, on the post and in the description.</li>
+      <li><b>Portfolio work</b> made to a real brief, for a real audience, that you can show anywhere.</li>
+      <li><b>A crew</b>: writers, directors, actors and producers to make your own ideas with.</li>
+      <li><b>Early access to Cinematy</b> and a front-row seat as it launches in Hyderabad.</li>
+      <li><b>Room to try new roles.</b> Writers can direct, editors can shoot, anyone can pitch.</li>
+    </ul>
+    <p style="margin-top:16px" class="grey">And because it’s pro bono, you can step back any time. Just give your lead a heads-up so no shoot is left short.</p>
+  </section>
+</main>
+
+<section class="end">
+  <div class="wrap">
+    <div class="mono" style="color:#9a9a9a">That’s the briefing</div>
+    <h2>Lights. Camera. <i>MU.</i></h2>
+    <p>Questions about your role, your first shoot or anything in this packet? Ask your unit lead. We’re glad you’re here.</p>
+    <div class="links">
+      <a class="solid" href="https://cinematy.in" target="_blank" rel="noreferrer"><span class="dot"></span>cinematy.in</a>
+      <a href="https://cinematy-mu.vercel.app" target="_blank" rel="noreferrer">Unit application form</a>
+    </div>
+  </div>
+</section>
+<footer class="wrap"><div class="mono grey">Cinematy · Where Hyderabad’s films begin</div></footer>
