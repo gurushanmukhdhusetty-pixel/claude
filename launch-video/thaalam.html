@@ -624,25 +624,84 @@ NB(26,40,'ink',(w,c)=>{
   el.style.color=inv?'#000':'#fff';op(el,cl(ein*2)*(1-eout));tf(el,`scale(${lerp(.25,1,ein)*(1+eout*3)+(lt-a)*.03})`);el.style.filter=(ein<1||eout>0)?`blur(${(1-ein)*12+eout*16}px)`:'none'});
 },{noIn:1,noOut:1});
 
-// ---------- 40–56 · first cuts through the app (4 beats each) ----------
-RE(4,40,44,{noIn:1,noOut:1,wipe:1},1.3,1.1);   // feed
-RE(6,44,48,{noIn:1,noOut:1,wipe:1},0.9,1.15);  // crewing: find work / find crew
-RE(7,48,52,{noIn:1,noOut:1,wipe:1},1.4,1.2);   // projects
-RE(8,52,56,{noIn:1,noOut:1,wipe:1},0.2,1.1);   // screening room
+// ---------- 40–48 · split panels: 1 → 2 → 3 → 4, then shuffle ----------
+NB(40,48,'paper',(w,c)=>{
+ c.F=[['Crewing Board','Paid · deferred · split'],['Projects','Build a team'],['Screening Room','Films on screen'],['Festivals','Never miss a deadline']];
+ c.p=c.F.map(([a,b],i)=>{const el=E(w,'div','a',`top:0;bottom:0;overflow:hidden;background:${i%2?'#fff':'#000'};color:${i%2?'#000':'#fff'};border-right:2px solid ${i%2?'#000':'#fff'}`);
+  const inner=E(el,'div','a','left:0;right:0;top:0;bottom:0;display:flex;flex-direction:column;justify-content:center;padding:0 60px');
+  E(inner,'div','mono','font-size:18px;opacity:.6',String(i+1).padStart(2,'0')+' / 04');E(inner,'div','serif','font-size:110px;line-height:.95;margin:16px 0',a.replace(' ','<br>'));E(inner,'div','mono','font-size:16px;opacity:.7',b);return{el,inner}});
+},(lt,c,t)=>{
+ const n=Math.min(4,1+Math.floor(lt)), sh=lt>=4?Math.floor((lt-4)*2):0;
+ c.p.forEach((p,i)=>{
+  const vis=i<n; if(!vis){op(p.el,0);return} op(p.el,1);
+  const order=lt>=4?(i+sh)%4:i; const wpx=1920/n, e=tw(lt,Math.max(0,i),.35,'expo');
+  const L=lerp(i===0?0:1920,order*wpx,lt>=4?1:e); p.el.style.left=L+'px'; p.el.style.width=Math.ceil(wpx)+'px';
+  tf(p.inner,`scale(${[2.1,1.45,1.05,.85][n-1]}) translateY(${Math.sin(lt*3+i)*6}px)`);
+  p.inner.style.transformOrigin='0 50%';
+ });
+},{noIn:1,noOut:1});
 
-// ---------- 56–80 · drop 2: two-beat cuts, invert strobes on the hits ----------
-RE(10,56,58,{noIn:1,noOut:1,wipe:1},2.5,1.3);  // events card + RSVP
-RE(11,58,60,{noIn:1,noOut:1,wipe:1},0.4,1.3);  // festivals countdown
-RE(12,60,62,{noIn:1,noOut:1,wipe:1},0.5,1.3);  // profiles
-RE(5,62,64,{noIn:1,noOut:1,wipe:1},2.1,1.3);   // discover people
-RE(6,64,66,{noIn:1,noOut:1,wipe:1},3.95,1.3);  // pay tags slam
-RE(16,66,68,{noIn:1,noOut:1,wipe:1},0.1,1.4);  // mentorship quote
-RE(17,68,70,{noIn:1,noOut:1,wipe:1},0.3,1.4);  // resources map
-RE(18,70,72,{noIn:1,noOut:1,wipe:1},0.4,1.3);  // create
-RE(13,72,74,{noIn:1,noOut:1,wipe:1},1.4,1.3);  // rooms
-RE(14,74,76,{noIn:1,noOut:1,wipe:1},0.7,1.4);  // inbox
-RE(15,76,78,{noIn:1,noOut:1,wipe:1},0.4,1.4);  // notifications
-RE(9,78,80,{noIn:1,noOut:1,wipe:1},5.0,1.3);   // every credit, verified
+// ---------- 48–56 · slot machine of features ----------
+NB(48,56,'ink',(w,c)=>{
+ c.L=['Crewing Board','Projects','Screening Room','Festivals','Events','Mentorship','Resources','Rooms','Discover','Profiles','Inbox','Create'];
+ c.win=E(w,'div','a','left:0;right:0;top:390px;height:300px;overflow:hidden;border-top:2px solid #fff;border-bottom:2px solid #fff');
+ c.col=E(c.win,'div','a','left:0;right:0;top:0');
+ const all=[...c.L,...c.L,...c.L];all.forEach(s=>E(c.col,'div','serif','height:300px;display:flex;align-items:center;justify-content:center;font-size:200px;color:#fff;white-space:nowrap',s));
+ c.n=E(w,'div','mono a','left:0;right:0;top:300px;text-align:center;font-size:20px;color:#8A8A8A;letter-spacing:.4em','Now spinning');
+ c.marks=[E(w,'div','a','left:120px;top:520px;width:0;height:0;border-top:20px solid transparent;border-bottom:20px solid transparent;border-left:30px solid #D92D20'),E(w,'div','a','right:120px;top:520px;width:0;height:0;border-top:20px solid transparent;border-bottom:20px solid transparent;border-right:30px solid #D92D20')];
+},(lt,c,t)=>{
+ // each beat: spin fast then hard stop on the next feature
+ const k=Math.floor(lt),f=lt-k;const target=k+1;const e=ez.expo(cl(f/.55));
+ const pos=lerp(k*5,(k+1)*5,e);
+ const idx=(pos%12)+12;tf(c.col,`translateY(${-idx*300}px)`);
+ c.col.style.filter=f<.3?`blur(${(1-f/.3)*10}px)`:'none';
+ const bump=Math.exp(-Math.max(0,f-.55)*14);tf(c.win,`scaleY(${1+(f>.55?bump*.06:0)})`);
+ c.n.textContent=String((((k+1)*5)%12)+1).padStart(2,'0')+' / 12';
+},{noIn:1,noOut:1});
+
+// ---------- 56–80 · fragments: twelve fresh graphics, two beats each ----------
+NB(56,80,'paper',(w,c)=>{
+ c.bg=E(w,'div','a','inset:0');
+ const FR=[];const add=(title,sub,build)=>{const el=E(w,'div','a','inset:0;opacity:0');const g=E(el,'div','a','left:960px;top:150px;width:840px;height:780px');const t=E(el,'div','a','left:120px;top:380px;width:760px');
+  E(t,'div','mono','font-size:18px;opacity:.6',sub);const h=E(t,'div','serif','font-size:140px;line-height:.92;margin-top:14px',title);FR.push({el,g,t,h,...build(g)})};
+ const card='background:#fff;color:#000;border-radius:22px;box-shadow:0 30px 60px -20px rgba(0,0,0,.35);border:2px solid #000';
+ // 1 job card + PAID stamp
+ add('Crewing <i>Board</i>','01 · Find work',g=>{const cd=E(g,'div','a',`left:40px;top:250px;width:760px;height:280px;padding:36px;${card}`);E(cd,'div','mono','font-size:16px;opacity:.6','Camera & lighting · Gachibowli');E(cd,'div','serif','font-size:62px;margin-top:12px','DOP · Telugu short');E(cd,'div','mono','font-size:18px;margin-top:20px','6 shoot days · apply by 30 Nov');
+   const st=E(g,'div','a','left:420px;top:180px;padding:18px 34px;border:6px solid #D92D20;color:#D92D20;border-radius:14px;font-family:GM;font-size:56px;letter-spacing:.06em;transform:rotate(-10deg)','PAID ₹4,500/day');return{u:(f)=>{const e=tw(f,0,.4,'back');tf(cd,`translateY(${(1-e)*400}px) rotate(${(1-e)*-6}deg)`);const s=tw(f,.8,.25,'expo');op(st,f<.8?0:1);tf(st,`rotate(-10deg) scale(${lerp(2.6,1,s)})`)}}});
+ // 2 calendar lighting up
+ add('<i>Events</i>','02 · Every screening, meetup and workshop',g=>{const cells=[];for(let i=0;i<35;i++){cells.push(E(g,'div','a',`left:${(i%7)*116}px;top:${100+Math.floor(i/7)*116}px;width:104px;height:104px;border-radius:14px;border:2px solid #000;font-family:GM;font-size:16px;padding:10px`,String(i+1<=30?i+1:'')))}return{u:(f)=>{const n=Math.floor(f*22);cells.forEach((el,i)=>{const on=[2,5,9,12,13,16,20,23,26,27].indexOf(i)>=0&&[2,5,9,12,13,16,20,23,26,27].indexOf(i)<n/2;el.style.background=on?'#000':'transparent';el.style.color=on?'#fff':'#000';op(el,tw(f,i*.012,.2))})}}});
+ // 3 red countdown
+ add('<i>Festivals</i>','03 · Never miss a deadline',g=>{const n=E(g,'div','a','left:0;right:0;top:120px;text-align:center;font-family:IS;font-size:520px;line-height:1;color:#D92D20');E(g,'div','mono a','left:0;right:0;top:680px;text-align:center;font-size:24px','Days left · Hyderabad Short Film Days');return{u:(f)=>{const v=Math.round(lerp(30,11,ez.quart(cl(f/1.3))));n.textContent=v;tf(n,`scale(${1+.08*Math.exp(-((f*4)%1)*6)})`)}}});
+ // 4 map pins
+ add('<i>Resources</i>','04 · Gear, post, locations, permits',g=>{const sv=E(g,'svg','a','left:0;top:60px;width:840px;height:680px');sv.setAttribute('viewBox','0 0 840 680');const r=rng(77);for(let i=0;i<14;i++){const p=document.createElementNS('http://www.w3.org/2000/svg','path');let x=r()*840,y=r()*680,d=`M${x} ${y}`;for(let j=0;j<4;j++){x+=(r()-.5)*400;y+=(r()-.5)*400;d+=` L${x} ${y}`}p.setAttribute('d',d);p.setAttribute('stroke','#B3B3B3');p.setAttribute('stroke-width','3');p.setAttribute('fill','none');sv.appendChild(p)}
+   const P=[[140,180,'Film Nagar'],[420,120,'Ameerpet'],[620,300,'Banjara Hills'],[260,420,'Golconda'],[560,560,'Charminar'],[700,140,'Kondapur']].map(([x,y,n])=>{const pe=E(g,'div','a',`left:${x}px;top:${y}px`);E(pe,'div','a','left:-18px;top:-48px;width:36px;height:36px;border-radius:50% 50% 50% 0;background:#000;transform:rotate(-45deg)');E(pe,'div','a','left:28px;top:-58px;background:#fff;border:2px solid #000;border-radius:10px;padding:6px 12px;font-family:Geist;font-size:20px;white-space:nowrap',n);return pe});
+   return{u:(f)=>{P.forEach((pe,i)=>{const s=.15+i*.25,e=tw(f,s,.35,'back');op(pe,f<s?0:1);tf(pe,`translateY(${(1-cl(e))*-120}px) scale(${e})`)})}}});
+ // 5 chat bubbles stacking
+ add('<i>Rooms</i>','05 · Talk shop, any hour',g=>{const M=['Who has a gimbal this weekend?','Shoot it log, expose for skin.','Render cache on smart 🙏','Need a sound recordist, Fri','Night shoot at Tank Bund?','I’m in. 🎬'];const B=M.map((m,i)=>E(g,'div','a',`${i%2?'right':'left'}:20px;top:${60+i*112}px;padding:20px 28px;border-radius:26px;font-family:Geist;font-size:30px;white-space:nowrap;${i%2?'background:#000;color:#fff':'background:#F0F0F0;color:#000'}`,m));return{u:(f)=>{B.forEach((b,i)=>{const s=i*.28,e=tw(f,s,.3,'back');op(b,f<s?0:1);tf(b,`scale(${lerp(.5,1,e)}) translateY(${(1-cl(e))*40}px)`)})}}});
+ // 6 verified stamp
+ add('Verified <i>credits</i>','06 · Credits you can trust',g=>{const ring=E(g,'div','a','left:220px;top:190px;width:400px;height:400px;border-radius:50%;border:4px solid #000');const ck=E(g,'div','a','left:220px;top:190px;width:400px;height:400px;border-radius:50%;background:#000;color:#fff;display:flex;align-items:center;justify-content:center;font-size:220px;font-family:Geist','✓');const rp=[0,1,2].map(()=>E(g,'div','a','left:420px;top:390px;width:10px;height:10px;border-radius:50%;border:3px solid #000'));
+   return{u:(f)=>{const e=tw(f,.35,.3,'back');tf(ck,`scale(${f<.35?0:e}) rotate(${(1-cl(e))*-30}deg)`);rp.forEach((r,i)=>{const d=cl((f-.45-i*.15)/.9),R2=10+ez.out(d)*900;r.style.width=r.style.height=R2+'px';r.style.margin=(-R2/2)+'px 0 0 '+(-R2/2)+'px';op(r,d>0?1-d:0)})}}});
+ // 7 poster wall
+ add('Screening <i>Room</i>','07 · Put your film on screen',g=>{const T=[['Midnight at Tank Bund','#191919'],['Four in the Morning','#2b2b2b'],['Pathar ki Deewar','#111']];const P=T.map(([n,bg],i)=>{const pe=E(g,'div','a',`left:${i*270}px;top:${110+(i%2)*60}px;width:250px;height:380px;border-radius:12px;background:${bg};color:#fff;padding:22px;display:flex;align-items:flex-end;font-family:IS;font-size:42px;line-height:.95;box-shadow:0 30px 60px -20px rgba(0,0,0,.5)`,n);return pe});return{u:(f)=>{P.forEach((p,i)=>{const s=i*.3,e=tw(f,s,.45,'expo');op(p,f<s?0:1);tf(p,`translateY(${(1-e)*600}px) rotate(${(1-e)*(i-1)*12}deg)`)})}}});
+ // 8 RSVP counter
+ add('<i>RSVP</i>','08 · First Friday Shorts',g=>{const n=E(g,'div','a','left:0;right:0;top:140px;text-align:center;font-family:IS;font-size:300px;line-height:1');E(g,'div','mono a','left:0;right:0;top:460px;text-align:center;font-size:24px','Going');const bar=E(g,'div','a','left:80px;right:80px;top:560px;height:22px;border-radius:22px;border:3px solid #000;overflow:hidden');const fill=E(bar,'div','','height:100%;background:#000;width:0');return{u:(f)=>{const v=Math.round(lerp(0,120,ez.quart(cl(f/1.4))));n.textContent=v;fill.style.width=(v/120*100)+'%'}}});
+ // 9 crew assembling
+ add('Find your <i>crew</i>','09 · Writers, DOPs, editors, actors',g=>{const r=rng(5);const A=Array.from({length:24},(_,i)=>{const el=E(g,'div','a',`left:${(i%6)*130+20}px;top:${120+Math.floor(i/6)*130}px;width:110px;height:110px;border-radius:50%;background:${['#000','#2b2b2b','#4a4a4a','#6B6B6B'][i%4]};color:#fff;display:flex;align-items:center;justify-content:center;font-family:GM;font-size:22px`,['DP','ED','AC','WR','SD','PR'][i%6]);return{el,dx:(r()-.5)*1600,dy:(r()-.5)*1200}});return{u:(f)=>{A.forEach((a,i)=>{const e=tw(f,i*.03,.6,'expo');tf(a.el,`translate(${(1-e)*a.dx}px,${(1-e)*a.dy}px) scale(${lerp(.3,1,e)})`);op(a.el,cl(e*2))})}}});
+ // 10 project pipeline
+ add('<i>Projects</i>','10 · Development → post',g=>{const S=['Development','Pre-production','In production','Post'];const line=E(g,'div','a','left:60px;top:390px;width:720px;height:6px;background:#E8E8E8');const fl=E(g,'div','a','left:60px;top:390px;width:720px;height:6px;background:#000;transform-origin:0 50%;transform:scaleX(0)');const N=S.map((s,i)=>{const n=E(g,'div','a',`left:${40+i*240}px;top:370px;width:46px;height:46px;border-radius:50%;border:5px solid #000;background:#fff`);E(g,'div','mono a',`left:${i*240}px;top:440px;width:150px;font-size:16px`,s);return n});return{u:(f)=>{const p=ez.inOut(cl(f/1.5));tf(fl,`scaleX(${p})`);N.forEach((n,i)=>{const on=p>=i/3-.001;n.style.background=on?'#000':'#fff';tf(n,`scale(${on?1+.3*Math.exp(-(f-i*.5)*8)*(f>i*.5?1:0):1})`)})}}});
+ // 11 mentor quote typing
+ add('<i>Mentorship</i>','11 · 28 years · 40+ features',g=>{const q=E(g,'div','serif a','left:0;top:60px;font-size:400px;line-height:1','“');const tx=E(g,'div','serif a','left:40px;top:300px;width:760px;font-size:76px;line-height:1.05');const full='Light it like you mean it.';return{u:(f)=>{tx.textContent=full.slice(0,Math.floor(cl(f/1.3)*full.length));tf(q,`scale(${1+.1*Math.exp(-((f*2)%1)*6)})`)}}});
+ // 12 create burst
+ add('<i>Create</i>','12 · Post · Project · Opportunity · Event',g=>{const plus=E(g,'div','a','left:340px;top:310px;width:160px;height:160px;border-radius:50%;background:#000;color:#fff;font-family:Geist;font-size:110px;font-weight:300;display:flex;align-items:center;justify-content:center;line-height:1','+');const O=['Post','Project','Opportunity','Event'].map(s=>E(g,'div','a','left:420px;top:390px;padding:16px 28px;border-radius:999px;border:3px solid #000;background:#fff;font-family:IS;font-size:48px;white-space:nowrap;transform:translate(-50%,-50%)',s));
+   return{u:(f)=>{const r=tw(f,.2,.3,'back');tf(plus,`rotate(${r*135}deg) scale(${1+.15*Math.exp(-Math.max(0,f-.2)*8)})`);O.forEach((o,i)=>{const e=tw(f,.3+i*.08,.6,'expo'),a=(-60+i*120/3)*Math.PI/180*1.6-1.2;const R2=e*330;tf(o,`translate(calc(-50% + ${Math.cos(a+i*.9)*R2}px), calc(-50% + ${Math.sin(a+i*.9)*R2}px)) scale(${lerp(.3,1,e)})`);op(o,cl(e*2))})}}});
+ c.FR=FR;
+},(lt,c,t)=>{
+ const i=Math.min(11,Math.floor(lt/2)),f=lt-i*2;const inv=i%2===1;
+ c.bg.style.background=inv?'#000':'#fff';
+ c.FR.forEach((fr,j)=>{if(j!==i){op(fr.el,0);return}op(fr.el,1);fr.el.style.color=inv?'#fff':'#000';
+  const e=tw(f,0,.3,'expo');tf(fr.t,`translateX(${(1-e)*-500}px)`);fr.t.style.filter=e<.95?`blur(${(1-e)*12}px)`:'none';fr.u(f);
+  if(inv){fr.g.style.filter='invert(1)'}else fr.g.style.filter='none'});
+},{noIn:1,noOut:1,wipe:1});
 
 // ---------- 80–108 · data stamps, two beats each ----------
 NB(80,108,'paper',(w,c)=>{
