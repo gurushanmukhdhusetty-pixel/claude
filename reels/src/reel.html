@@ -1,0 +1,231 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Cinematy Founders Reel</title>
+<style>
+@font-face{font-family:IS;src:url(/home/user/claude/launch-video/fonts/instrument-serif-latin-400-normal.woff2)}
+@font-face{font-family:IS;font-style:italic;src:url(/home/user/claude/launch-video/fonts/instrument-serif-latin-400-italic.woff2)}
+@font-face{font-family:Geist;font-weight:400;src:url(/home/user/claude/launch-video/fonts/geist-sans-latin-400-normal.woff2)}
+@font-face{font-family:Geist;font-weight:500;src:url(/home/user/claude/launch-video/fonts/geist-sans-latin-500-normal.woff2)}
+@font-face{font-family:GM;src:url(/home/user/claude/launch-video/fonts/geist-mono-latin-400-normal.woff2)}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#cam{position:absolute;inset:0;overflow:hidden;transform-origin:50% 45%}
+.a{position:absolute}
+.serif{font-family:IS;font-weight:400;letter-spacing:-.01em;line-height:.95}
+.mono{font-family:GM;text-transform:uppercase;letter-spacing:.18em}
+i{font-style:italic}
+.layer{position:absolute;inset:0;display:none}
+.perf{position:absolute;top:0;bottom:0;width:22px;background:repeating-linear-gradient(180deg,rgba(255,255,255,.3) 0 26px,transparent 26px 58px)}
+.pill{display:inline-block;padding:14px 30px;border-radius:999px;border:3px solid currentColor;font-family:GM;font-size:34px;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap}
+.pill.solid{background:#fff;color:#000;border-color:#fff}
+.pill.dark{background:#000;color:#fff;border-color:#000}
+.outline{color:transparent;-webkit-text-stroke:2px currentColor}
+#flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+#grain{position:absolute;inset:-40px;opacity:.07;pointer-events:none}
+#vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(0,0,0,.35) 100%)}
+.cut{position:absolute;filter:drop-shadow(0 30px 60px rgba(0,0,0,.45))}
+</style></head><body>
+<div id="cam">
+
+ <!-- DIALOGUE COLD OPEN -->
+ <div class="layer" id="L_dia" style="background:#000;color:#fff">
+  <div class="a" id="d_spot" style="left:40px;top:250px;width:1000px;height:1500px;background:radial-gradient(ellipse at 50% 55%,rgba(255,255,255,.18),transparent 62%)"></div>
+  <img class="cut" id="d_s" src="shanmukh_cut.png" style="left:270px;top:430px;height:1350px">
+  <img class="cut" id="d_r" src="raagin_cut.png" style="left:-60px;bottom:-60px;width:1200px">
+  <div class="a" style="left:0;right:0;top:0;height:150px;background:#000"></div><div class="a" style="left:0;right:0;bottom:0;height:150px;background:#000"></div>
+  <div class="a mono" id="d_tag" style="left:0;right:0;top:200px;text-align:center;font-size:24px;color:#9a9a9a">Cinematy · Episode 01</div>
+  <div class="a" id="d_cap" style="left:60px;right:60px;bottom:250px;text-align:center"></div>
+ </div>
+ <!-- INTRO -->
+ <div class="layer" id="L_intro" style="background:#000;color:#fff">
+  <div class="perf" style="left:0"></div><div class="perf" style="right:0"></div>
+  <div class="a" id="vf" style="left:90px;top:150px;right:90px;bottom:150px"></div>
+  <div class="a mono" id="rec" style="left:120px;top:180px;font-size:26px"><span style="display:inline-block;width:18px;height:18px;border-radius:50%;background:#D92D20;margin-right:14px;vertical-align:-2px"></span>REC</div>
+  <div class="a mono" id="tc" style="right:120px;top:180px;font-size:26px"></div>
+  <div class="a" id="ilogo" style="left:290px;top:420px;width:500px;color:#fff"></div>
+  <div class="a serif" id="iw" style="left:0;right:0;top:800px;text-align:center;font-size:150px"></div>
+  <div class="a mono" id="isub" style="left:0;right:0;top:1500px;text-align:center;font-size:26px;color:#8a8a8a">Shanmukh · Raagin</div>
+ </div>
+
+ <!-- SHANMUKH -->
+ <div class="layer" id="L_s" style="background:#000;color:#fff">
+  <div class="a" id="s_spot" style="left:40px;top:200px;width:1000px;height:1500px;background:radial-gradient(ellipse at 50% 55%,rgba(255,255,255,.22),transparent 62%)"></div>
+  <div class="a serif outline" id="s_big" style="left:-40px;top:250px;font-size:400px;white-space:nowrap;color:#fff;opacity:.35;transform-origin:0 0">SHANMUKH</div>
+  <img class="cut" id="s_img" src="shanmukh_cut.png" style="left:360px;top:640px;height:1290px">
+  <div class="a" id="s_tags" style="left:60px;top:760px;display:flex;flex-direction:column;gap:20px;align-items:flex-start"></div>
+  <div class="a serif" id="s_name" style="left:70px;top:150px;font-size:150px">Shanmukh<br><i>Dhusetty</i></div>
+  <div class="a" id="s_line" style="left:60px;right:40px;top:470px;text-align:left"></div>
+  <div class="a" id="s_float" style="inset:0"></div>
+ </div>
+
+ <!-- BREAK SWAP -->
+ <div class="layer" id="L_swap">
+  <img class="a" id="sw_s" src="shanmukh_cut.png" style="left:270px;top:500px;height:1400px">
+  <img class="a" id="sw_r" src="raagin_cut.png" style="left:0;bottom:0;width:1080px">
+  <div class="a serif" id="sw_t" style="left:0;right:0;top:300px;text-align:center;font-size:260px"><i>and</i></div>
+ </div>
+
+ <!-- RAAGIN -->
+ <div class="layer" id="L_r" style="background:#fff;color:#000">
+  <div class="a serif outline" id="r_big" style="left:-30px;top:560px;font-size:440px;white-space:nowrap;color:#000;opacity:.18">RAAGIN</div>
+  <img class="cut" id="r_img" src="raagin_cut.png" style="left:-60px;bottom:-140px;width:1200px">
+  <div class="a serif" id="r_name" style="left:70px;top:150px;font-size:180px">Raagin</div>
+  <div class="a" id="r_tags" style="right:60px;top:180px;display:flex;flex-direction:column;gap:20px;align-items:flex-end"></div>
+  <div class="a" id="r_line" style="left:60px;right:40px;top:420px;text-align:left"></div>
+ </div>
+
+ <!-- BOTH -->
+ <div class="layer" id="L_both" style="background:#000">
+  <div class="a" id="b_white" style="right:0;top:0;bottom:0;width:540px;background:#fff"></div>
+  <img class="cut" id="b_s" src="shanmukh_cut.png" style="left:60px;bottom:0;height:1250px">
+  <img class="cut" id="b_r" src="raagin_cut.png" style="left:420px;bottom:0;width:820px">
+  <div class="a serif" id="b_l" style="left:40px;top:180px;width:500px;text-align:center;font-size:120px;color:#fff">Business</div>
+  <div class="a serif" id="b_x" style="left:0;right:0;top:330px;text-align:center;font-size:160px;color:#D92D20">×</div>
+  <div class="a serif" id="b_rt" style="right:40px;top:180px;width:500px;text-align:center;font-size:120px;color:#000"><i>Chemistry</i></div>
+  <div class="a" id="b_eq" style="left:0;right:0;top:470px;text-align:center"></div>
+ </div>
+
+ <!-- TENSION -->
+ <div class="layer" id="L_ten" style="background:#000;color:#fff">
+  <div class="a serif" id="t_w" style="left:0;right:0;top:820px;text-align:center;font-size:120px"></div>
+ </div>
+
+ <!-- FINALE -->
+ <div class="layer" id="L_fin" style="background:#000;color:#fff">
+  <div class="perf" style="left:0"></div><div class="perf" style="right:0"></div>
+  <div class="a" id="f_beam" style="left:40px;top:-200px;width:1000px;height:1500px;background:linear-gradient(180deg,rgba(255,255,255,.2),transparent 80%);clip-path:polygon(44% 0,56% 0,100% 100%,0 100%)"></div>
+  <div class="a" id="f_logo" style="left:190px;top:260px;width:700px;color:#fff"></div>
+  <img class="cut" id="f_s" src="shanmukh_cut.png" style="left:40px;bottom:0;height:880px">
+  <img class="cut" id="f_r" src="raagin_cut.png" style="right:-80px;bottom:0;width:640px">
+  <div class="a" id="f_cap" style="left:0;right:0;top:700px;text-align:center"></div>
+  <div class="a" id="f_cta" style="left:0;right:0;top:860px;text-align:center"></div>
+ </div>
+</div>
+<div id="grain"></div><div id="vig"></div><div id="flash"></div>
+<script>
+const FPS=30,DUR=33.12;
+const BEATS=[0.28,0.95,1.63,2.3,2.995,3.68,4.354,5.039,5.712,6.385,7.07,7.755,8.44,9.102,9.799,10.484,11.169,11.842,12.516,13.212,13.886,14.571,15.256,15.952,16.625,17.299,17.995,18.669,19.354,20.039,20.712,21.444,22.071,22.756,23.441,24.126,24.811,25.484,26.18,26.854,27.539,28.201,28.897,29.582,30.267,30.941,31.61,32.28];
+const HITS=[0.06,5.71,7.07,7.63,8.12,8.43,8.78,9.1,9.8,10.34,11.16,12.71,13.05,13.2,14.57,15.12,15.26,15.45,15.6,15.81,15.95,16.61,18.32,18.67,19.02,19.2,19.35,19.69,19.89,20.03,20.71,22.07,22.27,22.43,22.76,23.29,23.44,23.78,24.46,24.66,24.81,25.33,25.47,25.81,26.18,26.35,26.85,27.09,27.86,28.2,29.23,29.93,30.26,30.6,30.93,31.61,31.96];
+const D1=6.385,BR1=15.0,D2=16.625,BR2=21.444,D3=22.071,BR3=26.0,D4=28.201;
+const DROPS=[D1,D2,D3,D4];
+const cl=(x,a=0,b=1)=>x<a?a:x>b?b:x,lerp=(a,b,x)=>a+(b-a)*x;
+const ez={expo:x=>x>=1?1:1-Math.pow(2,-10*x),back:x=>{const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)},inOut:x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2,out:x=>1-Math.pow(1-x,3),inn:x=>x*x*x};
+const tw=(t,a,d,e='expo')=>ez[e](cl((t-a)/d));
+const $=id=>document.getElementById(id);
+const tf=(el,s)=>{el.style.transform=s},op=(el,o)=>{el.style.opacity=o};
+const kick=t=>{let b=-1;for(const x of BEATS){if(x<=t)b=x;else break}if(b<0)return 0;return Math.exp(-(t-b)*12)};
+const hitk=t=>{let b=-9;for(const x of HITS){if(x<=t)b=x;else break}return Math.exp(-(t-b)*14)};
+function rng(s){return()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function E(p,tag,css,html){const e=document.createElement(tag);if(css)e.style.cssText=css;if(html!=null)e.innerHTML=html;p.appendChild(e);return e}
+// word reveal helper: [time, html, extra-css]
+function words(host,list,base){return list.map(([t,h,css])=>({t,el:E(host,'div',base+(css||''),h)}))}
+const G=[];
+function init(logo){
+ const L=logo.replace(/style="color:[^"]*"/,'').replace(/width="[^"]*"/,'width="100%"').replace(/height="[^"]*"/,'height="auto"');
+ $('ilogo').innerHTML=L;$('f_logo').innerHTML=L;
+ for(let i=0;i<6;i++){const c=document.createElement('canvas');c.width=c.height=256;const x=c.getContext('2d'),d=x.createImageData(256,256),r=rng(i+3);for(let j=0;j<d.data.length;j+=4){const v=r()*255;d.data[j]=d.data[j+1]=d.data[j+2]=v;d.data[j+3]=255}x.putImageData(d,0,0);G.push(c.toDataURL())}
+ const vf=$('vf');[[0,0,'left','top'],[1,0,'right','top'],[0,1,'left','bottom'],[1,1,'right','bottom']].forEach(([x,y,a,b])=>E(vf,'div',`position:absolute;${a}:0;${b}:0;width:100px;height:100px;border-${a}:5px solid #fff;border-${b}:5px solid #fff`));
+ window.SW=words($('iw'),[[3.95,'Introducing'],[4.354,'the founders'],[5.039,'of'],[5.712,'<i>Cinematy.</i>']],'position:absolute;left:0;right:0;top:0;opacity:0;');
+ const cap=$('d_cap');window.DL=[[[0.00,'You'],[0.86,'know'],[1.04,'the'],[1.20,'<i>business.</i>']],[[2.24,'And'],[2.88,'I'],[3.16,'know'],[3.34,'the'],[3.52,'<i>chemistry.</i>']]].map((line,li)=>{const row=E(cap,'div','position:absolute;left:0;right:0;bottom:0;opacity:0','');const inner=E(row,'span','display:inline;font-family:IS;font-size:110px;line-height:1.05;color:#fff;background:rgba(0,0,0,.72);padding:4px 22px 14px;box-decoration-break:clone;-webkit-box-decoration-break:clone','');return{row,w:line.map(([t,h])=>({t,el:E(inner,'span','opacity:.18',h+' ')}))}});
+ window.STAG=[[7.07,'Entrepreneur','solid'],[7.755,'Founder',''],[8.44,'Writer','']].map(([t,s,k])=>({t,el:E($('s_tags'),'div','opacity:0',`<span class="pill ${k}">${s}</span>`)}));
+ window.SL=words($('s_line'),[[10.484,'Knows'],[11.169,'the'],[11.842,'<i>business.</i>']],'display:inline-block;margin:0 .22em 0 0;opacity:0;font-family:IS;font-size:100px;color:#fff;');
+ const fl=$('s_float');window.SF=[[12.71,'Plan',160,1150],[13.05,'Pitch',720,1000],[13.2,'Build',140,1420],[13.886,'Scale',740,1360],[14.571,'Ship',420,880]].map(([t,s,x,y])=>({t,el:E(fl,'div',`position:absolute;left:${x}px;top:${y}px;opacity:0`,`<span class="pill dark" style="font-size:28px;border-color:#fff">${s}</span>`)}));
+ window.RTAG=[[17.299,'Co-founder','dark'],[17.995,'Actor',''],[18.669,'Filmmaker','']].map(([t,s,k])=>({t,el:E($('r_tags'),'div','opacity:0',`<span class="pill ${k}">${s}</span>`)}));
+ window.RL=words($('r_line'),[[19.354,'Knows'],[20.039,'the'],[20.712,'<i>chemistry.</i>']],'display:inline-block;margin:0 .22em 0 0;opacity:0;font-family:IS;font-size:100px;color:#000;');
+ window.BEQ=E($('b_eq'),'div','opacity:0','<span class="serif" style="font-size:104px;color:#fff;background:#000;padding:4px 30px 16px;border-radius:24px;border:3px solid #fff">= <i>Cinematy.</i></span>');
+ window.TW=[[26.18,'Building'],[26.854,'Hyderabad’s'],[27.539,'film <i>community.</i>']];
+ window.FCAP=E($('f_cap'),'div','opacity:0','<span class="mono" style="font-size:30px">Shanmukh · Founder&nbsp;&nbsp;&nbsp;Raagin · Co-founder</span>');
+ window.FCTA=E($('f_cta'),'div','opacity:0','<span class="pill" style="font-size:30px"><span style="display:inline-block;width:16px;height:16px;border-radius:50%;background:#D92D20;margin-right:14px;vertical-align:1px"></span>Coming soon · cinematy.in</span>');
+}
+function show(id,on){$(id).style.display=on?'block':'none'}
+function slam(el,t,s,d=.35,from=1.5){const e=tw(t,s,d,'expo');op(el,t<s?0:1);tf(el,`scale(${lerp(from,1,e)})`);el.style.filter=(t>=s&&e<1)?`blur(${(1-e)*16}px)`:'none';return e}
+function render(t){
+ // which layer
+ const lay=t<3.84?'L_dia':t<D1?'L_intro':t<BR1?'L_s':t<D2?'L_swap':t<BR2?'L_r':t<D3?'L_swap':t<BR3?'L_both':t<D4?'L_ten':'L_fin';
+ ['L_dia','L_intro','L_s','L_swap','L_r','L_both','L_ten','L_fin'].forEach(id=>show(id,id===lay));
+ // ---------- DIALOGUE ----------
+ if(lay==='L_dia'){
+  const li=t<2.0?0:1;const sh=li===0;
+  op($('d_s'),sh?1:0);op($('d_r'),sh?0:1);
+  const e=tw(t,sh?0:2.0,.5);tf(sh?$('d_s'):$('d_r'),`scale(${lerp(1.08,1,e)+(t-(sh?0:2.0))*.02})`);
+  $('L_dia').style.background='#000';op($('d_spot'),.7+.3*Math.sin(t*3));op($('d_tag'),tw(t,.2,.6));
+  DL.forEach((L,i)=>{op(L.row,i===li?1:0);L.w.forEach(w=>{w.el.style.opacity=t>=w.t?1:.18})});
+ }
+ // ---------- INTRO ----------
+ if(lay==='L_intro'){
+  const f=Math.floor(t*30);$('tc').textContent=`00:00:${String(Math.floor(t)).padStart(2,'0')}:${String(f%30).padStart(2,'0')}`;op($('rec'),Math.floor(t*2)%2?1:.35);
+  const le=tw(t,3.84,.5);op($('ilogo'),le);tf($('ilogo'),`scale(${lerp(1.2,1,le)})`);
+  let cur=-1;SW.forEach((w,i)=>{if(t>=w.t)cur=i});SW.forEach((w,i)=>{const on=i===cur;op(w.el,on?1:0);if(on){const e=tw(t,w.t,.3);tf(w.el,`scale(${lerp(1.4,1,e)})`);w.el.style.filter=e<1?`blur(${(1-e)*12}px)`:'none'}});
+  op($('isub'),tw(t,4.6,.6));
+  const sq=tw(t,5.75,.6,'inn');tf($('vf'),`scale(${1-sq*.25})`);
+ }
+ // ---------- SHANMUKH ----------
+ if(lay==='L_s'){
+  const lt=t-D1;const e=tw(t,D1,.55,'expo');
+  tf($('s_img'),`translateY(${(1-e)*700}px) scale(${1+.02*kick(t)})`);
+  op($('s_spot'),.6+.4*kick(t));
+  tf($('s_big'),`translateX(${-lt*60}px)`);
+  STAG.forEach(s=>{const k=tw(t,s.t,.3,'back');op(s.el,t<s.t?0:1);tf(s.el,`translateX(${(1-cl(k))*-400}px)`)});
+  slam($('s_name'),t,9.102,.45,1.25);
+  SL.forEach(w=>{const k=tw(t,w.t,.35);op(w.el,t<w.t?0:1);tf(w.el,`translateY(${(1-k)*80}px)`);w.el.style.filter=t>=w.t&&k<1?`blur(${(1-k)*10}px)`:'none'});
+  SF.forEach(s=>{const k=tw(t,s.t,.3,'back');op(s.el,t<s.t?0:1-tw(t,14.75,.25,'out'));tf(s.el,`scale(${cl(k)}) rotate(${(1-cl(k))*-12}deg)`)});
+  const push=tw(t,12.5,2.5,'inOut');$('s_img').style.transformOrigin='50% 20%';
+  if(push>0)tf($('s_img'),`scale(${1+push*.18+.02*kick(t)})`);
+  // fade tags & line away during push for clean face
+ }
+ // ---------- SWAP (both breaks) ----------
+ if(lay==='L_swap'){
+  const br1=t<D2;const hits=HITS.filter(h=>br1?(h>=BR1&&h<D2):(h>=BR2&&h<D3));
+  let n=0;hits.forEach(h=>{if(t>=h)n++});const sRaagin=n%2===1;
+  $('L_swap').style.background=sRaagin?'#fff':'#000';
+  op($('sw_s'),sRaagin?0:1);op($('sw_r'),sRaagin?1:0);
+  $('sw_s').style.filter='brightness(0) invert(1)';$('sw_r').style.filter='brightness(0)';
+  const tt=$('sw_t');tt.style.color=sRaagin?'#000':'#fff';tt.innerHTML=br1?'<i>and</i>':'+';
+  tf(tt,`scale(${1+.15*hitk(t)})`);
+  const z=1+.06*hitk(t);tf($('sw_s'),`scale(${z})`);tf($('sw_r'),`scale(${z})`);
+ }
+ // ---------- RAAGIN ----------
+ if(lay==='L_r'){
+  const lt=t-D2;const e=tw(t,D2,.55,'expo');
+  tf($('r_img'),`translateX(${(1-e)*900}px) scale(${1+.02*kick(t)})`);
+  tf($('r_big'),`translateX(${-200+lt*70}px)`);
+  slam($('r_name'),t,D2+.1,.45,1.3);
+  RTAG.forEach(s=>{const k=tw(t,s.t,.3,'back');op(s.el,t<s.t?0:1);tf(s.el,`translateX(${(1-cl(k))*400}px)`)});
+  RL.forEach(w=>{const k=tw(t,w.t,.35);op(w.el,t<w.t?0:1);tf(w.el,`translateY(${(1-k)*80}px)`);w.el.style.filter=t>=w.t&&k<1?`blur(${(1-k)*10}px)`:'none'});
+ }
+ // ---------- BOTH ----------
+ if(lay==='L_both'){
+  const e=tw(t,D3,.5);tf($('b_white'),`translateX(${(1-e)*540}px)`);
+  const es=tw(t,D3,.55),er=tw(t,D3+.12,.55);tf($('b_s'),`translateY(${(1-es)*900}px) scale(${1+.02*kick(t)})`);tf($('b_r'),`translateY(${(1-er)*900}px) scale(${1+.02*kick(t)})`);
+  slam($('b_l'),t,22.756,.35,1.4);slam($('b_x'),t,23.441,.3,2);slam($('b_rt'),t,24.126,.35,1.4);
+  const q=slam(BEQ,t,24.811,.4,1.5);
+  tf($('b_x'),`scale(${(t<23.441?0:1)*(1+.25*kick(t))}) rotate(${t*30}deg)`);
+ }
+ // ---------- TENSION ----------
+ if(lay==='L_ten'){
+  let cur=-1;TW.forEach((w,i)=>{if(t>=w[0])cur=i});
+  const el=$('t_w');if(cur<0){el.innerHTML='';}else{el.innerHTML=TW.slice(0,cur+1).map(w=>w[1]).join('<br>');const e=tw(t,TW[cur][0],.5);op(el,1);el.style.filter=e<1?`blur(${(1-e)*6}px)`:'none'}
+  tf(el,`translateY(${-(cur<0?0:cur)*60}px) scale(${1+(t-BR3)*.03})`);
+  op($('t_w'),1-tw(t,D4-.15,.15,'inn'));
+ }
+ // ---------- FINALE ----------
+ if(lay==='L_fin'){
+  const e=tw(t,D4,.5);tf($('f_logo'),`scale(${lerp(1.9,1,e)*(1+.03*kick(t))})`);$('f_logo').style.filter=e<1?`blur(${(1-e)*18}px)`:'none';
+  op($('f_beam'),.6+.25*Math.sin(t*20)+.15*kick(t));
+  const es=tw(t,28.897,.5,'back'),er=tw(t,28.897+.15,.5,'back');tf($('f_s'),`translateX(${(1-cl(es))*-700}px)`);tf($('f_r'),`translateX(${(1-cl(er))*700}px)`);
+  const c=tw(t,29.582,.45);op(FCAP,c);tf(FCAP,`translateY(${(1-c)*40}px)`);
+  const k=tw(t,30.267,.45,'back');op(FCTA,t<30.267?0:1);tf(FCTA,`scale(${cl(k)})`);
+  op($('L_fin'),1-tw(t,32.6,.5,'inOut'));
+ }
+ // ---------- global camera / flash / grain ----------
+ let sx=0,sy=0;for(const d of DROPS){const dd=t-d;if(dd>=0&&dd<.6){const a=Math.exp(-dd*8)*26;sx+=Math.sin(dd*95)*a;sy+=Math.cos(dd*80)*a}}
+ const punch=(t>=D1&&t<32.4)?.014*kick(t):0;
+ $('cam').style.transform=`translate(${sx}px,${sy}px) scale(${1+punch})`;
+ let fl=0;for(const d of DROPS){const dd=t-d;if(dd>=-.06&&dd<.45)fl=Math.max(fl,dd<0?1+dd/.06:Math.exp(-dd*9))}
+ if(t<.3)fl=Math.max(fl,Math.exp(-t*10)*.8);
+ $('flash').style.opacity=fl;
+ let inv=false;for(const h of HITS){if(((h>=7&&h<9.2)||(h>=22.2&&h<24.9))&&t>=h&&t<h+.067){inv=true;break}}
+ $('cam').style.filter=inv?'invert(1)':'none';
+ $('grain').style.backgroundImage=`url(${G[Math.floor(t*FPS)%6]})`;
+}
+window.render=render;window.init=init;
+</script></body></html>
