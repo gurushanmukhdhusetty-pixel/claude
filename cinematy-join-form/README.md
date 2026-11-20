@@ -11,22 +11,22 @@ Live: **https://cinematy-join.vercel.app** · Team directory: **https://cinematy
   - export exactly what's filtered to CSV; ↻ Refresh to pull new applications
 
 ## Where data lives
-A **private** Vercel Blob store, `cinematy-join-applicants` (team `cin16`, region sin1), connected to the Vercel project `cinematy-join`.
-Nothing is publicly readable; only the server (with `BLOB_READ_WRITE_TOKEN`) can read it.
+Neon Postgres database `cinematy-forms-db` (Vercel Marketplace, free plan, region sin1), table `join_applications`, shared with the other Cinematy form but in its own table. The waitlist (cinematy.in) uses a separate database and is not touched.
+The table is created automatically on first use. Applications submitted before 20 Nov 2026 were copied from the old private Blob store `cinematy-join-applicants` (kept as a read-only backup) with `POST /api/admin/migrate`, which is idempotent.
 
 ## Settings (Vercel → cinematy-join → Settings → Environment Variables)
 | Variable | What |
 |---|---|
 | `ADMIN_PASSWORD` | The shared team password for `/admin`. Change it here, then redeploy. |
 | `SESSION_SECRET` | Signs admin login cookies. Changing it signs everyone out. |
-| `BLOB_READ_WRITE_TOKEN` | Added automatically by the Blob store connection. |
+| `DATABASE_URL` | Added automatically by the Neon store connection. (`BLOB_READ_WRITE_TOKEN` is only used by the one-time migrate route.) |
 
 ## Local development
 ```bash
 npm install
 ADMIN_PASSWORD=dev npm run dev
 ```
-Without `BLOB_READ_WRITE_TOKEN`, applications are saved to `.data/` on disk.
+Set `DATABASE_URL` to any Postgres (e.g. a Neon dev branch) to run locally.
 
 ## Deploy
 ```bash

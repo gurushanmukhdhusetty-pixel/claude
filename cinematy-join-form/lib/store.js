@@ -1,134 +1,67 @@
-// Storage for applications.
-// Production: a PRIVATE Vercel Blob store (BLOB_READ_WRITE_TOKEN is set when the store is connected).
-// Local development: JSON files under .data/ (no token needed).
-import { createHash, randomUUID } from 'node:crypto';
-import { promises as fs } from 'node:fs';
-import path from 'node:path';
+// Storage for applications: Neon Postgres (DATABASE_URL is set by the Vercel integration).
+// One row per applicant; the full form answers live in a JSONB column.
+import { randomUUID } from 'node:crypto';
+import { neon } from '@neondatabase/serverless';
 
-const useBlob = !!process.env.BLOB_READ_WRITE_TOKEN;
-const LOCAL_DIR = path.join(process.cwd(), '.data');
-
-async function blobApi() {
-  return await import('@vercel/blob');
+export const TABLE = 'join_applications';
+let _sql;
+let _ready;
+function db() {
+  if (!_sql) _sql = neon(process.env.DATABASE_URL);
+  return _sql;
 }
 
-async function readText(pathname) {
-  if (useBlob) {
-    const { get } = await blobApi();
-    const res = await get(pathname, { access: 'private', useCache: false });
-    if (!res || res.statusCode !== 200) return null;
-    return await new Response(res.stream).text();
+async function ready() {
+  if (!_ready) {
+    _ready = db().query(`CREATE TABLE IF NOT EXISTS ${TABLE} (
+      id uuid PRIMARY KEY,
+      created_at timestamptz NOT NULL DEFAULT now(),
+      phone text NOT NULL UNIQUE,
+      data jsonb NOT NULL,
+      status text NOT NULL DEFAULT 'new',
+      notes text NOT NULL DEFAULT '',
+      meta_updated_at timestamptz
+    )`).catch((e) => { _ready = undefined; throw e; });
   }
-  try {
-    return await fs.readFile(path.join(LOCAL_DIR, pathname), 'utf8');
-  } catch {
-    return null;
-  }
+  return _ready;
 }
 
-async function writeJSON(pathname, data, { overwrite = true } = {}) {
-  const body = JSON.stringify(data);
-  if (useBlob) {
-    const { put } = await blobApi();
-    await put(pathname, body, {
-      access: 'private',
-      addRandomSuffix: false,
-      allowOverwrite: overwrite,
-      contentType: 'application/json',
-    });
-    return;
-  }
-  const file = path.join(LOCAL_DIR, pathname);
-  await fs.mkdir(path.dirname(file), { recursive: true });
-  if (!overwrite) {
-    try {
-      await fs.writeFile(file, body, { flag: 'wx' });
-    } catch (e) {
-      if (e.code === 'EEXIST') throw Object.assign(new Error('exists'), { exists: true });
-      throw e;
-    }
-    return;
-  }
-  await fs.writeFile(file, body);
+export async function q(text, params = []) {
+  await ready();
+  return db().query(text, params);
 }
 
-async function remove(pathnames) {
-  if (useBlob) {
-    const { del } = await blobApi();
-    await del(pathnames);
-    return;
-  }
-  await Promise.all(pathnames.map((n) => fs.rm(path.join(LOCAL_DIR, n), { force: true })));
-}
-
-async function listPathnames(prefix) {
-  if (useBlob) {
-    const { list } = await blobApi();
-    const out = [];
-    let cursor;
-    do {
-      const r = await list({ prefix, cursor, limit: 1000 });
-      out.push(...r.blobs.map((b) => b.pathname));
-      cursor = r.hasMore ? r.cursor : undefined;
-    } while (cursor);
-    return out;
-  }
-  try {
-    const dir = path.join(LOCAL_DIR, prefix);
-    return (await fs.readdir(dir)).map((f) => prefix + f);
-  } catch {
-    return [];
-  }
-}
-
-export const phoneKey = (phone) => createHash('sha256').update('cinematy-join:' + phone).digest('hex').slice(0, 40);
+const toRow = (r) => ({
+  ...r.data,
+  id: r.id,
+  createdAt: new Date(r.created_at).toISOString(),
+  meta: { status: r.status, notes: r.notes, updatedAt: r.meta_updated_at ? new Date(r.meta_updated_at).toISOString() : null },
+});
 
 // Saves an application. Returns { ok: true, id } or { duplicate: true }.
 export async function saveApplication(data) {
   const id = randomUUID();
-  try {
-    await writeJSON(`index/${phoneKey(data.phone)}.json`, { id }, { overwrite: false });
-  } catch (e) {
-    const msg = String(e && (e.message || e));
-    if (e.exists || /already exists|exists/i.test(msg)) return { duplicate: true };
-    throw e;
-  }
-  const record = { id, createdAt: new Date().toISOString(), ...data };
-  await writeJSON(`applicants/${id}.json`, record, { overwrite: false });
-  return { ok: true, id };
-}
-
-const DEFAULT_META = { status: 'new', notes: '', updatedAt: null };
-
-export async function getMeta(id) {
-  const t = await readText(`meta/${id}.json`);
-  return t ? { ...DEFAULT_META, ...JSON.parse(t) } : { ...DEFAULT_META };
+  const rows = await q(
+    `INSERT INTO ${TABLE} (id, phone, data) VALUES ($1, $2, $3::jsonb) ON CONFLICT (phone) DO NOTHING RETURNING id`,
+    [id, data.phone, JSON.stringify(data)]
+  );
+  return rows.length ? { ok: true, id } : { duplicate: true };
 }
 
 export async function setMeta(id, meta) {
-  const exists = await readText(`applicants/${id}.json`);
-  if (!exists) return false;
-  await writeJSON(`meta/${id}.json`, { ...meta, updatedAt: new Date().toISOString() });
-  return true;
+  const rows = await q(
+    `UPDATE ${TABLE} SET status = $2, notes = $3, meta_updated_at = now() WHERE id = $1 RETURNING id`,
+    [id, meta.status, meta.notes || '']
+  );
+  return rows.length > 0;
 }
 
 export async function listApplications() {
-  const names = await listPathnames('applicants/');
-  const rows = await Promise.all(
-    names.map(async (n) => {
-      const t = await readText(n);
-      if (!t) return null;
-      const a = JSON.parse(t);
-      return { ...a, meta: await getMeta(a.id) };
-    })
-  );
-  return rows.filter(Boolean).sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+  const rows = await q(`SELECT * FROM ${TABLE} ORDER BY created_at DESC`);
+  return rows.map(toRow);
 }
 
 export async function deleteApplication(id) {
-  const t = await readText(`applicants/${id}.json`);
-  if (!t) return false;
-  const a = JSON.parse(t);
-  await remove([`applicants/${id}.json`, `meta/${id}.json`, `index/${phoneKey(a.phone)}.json`]);
-  return true;
+  const rows = await q(`DELETE FROM ${TABLE} WHERE id = $1 RETURNING id`, [id]);
+  return rows.length > 0;
 }
