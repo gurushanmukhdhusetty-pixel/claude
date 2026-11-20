@@ -1,5 +1,7 @@
 // Shared form options and server-side validation for the Campus Lead & Team form.
 export const INTERESTS = ['Campus lead', 'Join the team', 'Both'];
+export const STATUS = ['Student', 'Not a student'];
+export const OCCUPATIONS = ['Working professional', 'Freelancer', 'Filmmaker / creator', 'Recent graduate', 'Other'];
 export const YEARS = ['1st year', '2nd year', '3rd year', '4th year', '5th year', 'Postgrad', 'Graduated'];
 export const CLUB = ['Yes', 'No', 'Not sure'];
 export const CREW_SIZE = ['1–5', '5–15', '15–30', '30+'];
@@ -61,12 +63,20 @@ export function validate(input) {
   d.instagram = normalizeInstagram(input.instagram);
   if (d.instagram === null) e.instagram = 'Enter a valid Instagram handle.';
 
-  d.college = str(input.college, 160);
-  if (d.college.length < 2) e.college = 'Which college or university are you at?';
+  d.status = STATUS.includes(input.status) ? input.status : '';
+  if (!d.status) e.status = 'Pick one.';
+  const student = d.status === 'Student';
   d.city = str(input.city, 80) || 'Hyderabad';
-  d.year = YEARS.includes(input.year) ? input.year : '';
-  if (!d.year) e.year = 'Pick one.';
-  d.programme = str(input.programme, 120);
+  d.college = student ? str(input.college, 160) : '';
+  if (student && d.college.length < 2) e.college = 'Which college or university are you at?';
+  d.year = student && YEARS.includes(input.year) ? input.year : '';
+  if (student && !d.year) e.year = 'Pick one.';
+  d.programme = student ? str(input.programme, 120) : '';
+  d.occupation = !student && OCCUPATIONS.includes(input.occupation) ? input.occupation : '';
+  if (d.status === 'Not a student' && !d.occupation) e.occupation = 'Pick one.';
+  d.occupationDetail = !student ? str(input.occupationDetail, 160) : '';
+  // campus leads must be students
+  if (!student && (input.interest === 'Campus lead' || input.interest === 'Both')) input = { ...input, interest: 'Join the team' };
 
   d.interest = INTERESTS.includes(input.interest) ? input.interest : '';
   if (!d.interest) e.interest = 'Pick one.';

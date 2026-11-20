@@ -1,4 +1,4 @@
-/* Cinematy @ MU: fluid, device-sized layout.
+/* Cinematy: fluid, device-sized layout.
    One root size scales with BOTH width and height, so every rem-based size fits the screen. */
 :root{--ink:#000;--paper:#fff;--graphite:#6B6B6B;--fog:#E8E8E8;--mist:#F6F6F6;--red:#D92D20;
   --gutter:clamp(16px,5vw,64px);--col:min(40rem,100%)}

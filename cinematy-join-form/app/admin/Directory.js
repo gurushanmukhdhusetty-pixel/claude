@@ -21,9 +21,9 @@ const initials = (n) => n.split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toU
 const areasOf = (p) => (p.team ? [...p.team.areas.filter((x) => x !== 'Other'), p.team.areaOther].filter(Boolean) : []);
 const kickOf = (p) => (p.lead ? [...p.lead.kickoff.filter((x) => x !== 'Other'), p.lead.kickoffOther].filter(Boolean) : []);
 const rolesOf = (p) => (p.interest === 'Both' ? ['Campus lead', 'Join the team'] : [p.interest]);
-const sub = (p) => [p.college, p.year].filter(Boolean).join(' · ');
+const sub = (p) => (p.status === 'Not a student' ? [p.occupation, p.occupationDetail, p.city].filter(Boolean).join(' · ') : [p.college, p.year].filter(Boolean).join(' · '));
 const waText = (p) =>
-  `Hi ${p.name.split(/\s+/)[0]}! This is the Cinematy team 🎬 Thanks for applying to ${p.interest === 'Join the team' ? 'join the Cinematy team' : 'bring Cinematy to ' + p.college}. Do you have a few minutes for a quick chat this week?`;
+  `Hi ${p.name.split(/\s+/)[0]}! This is the Cinematy team 🎬 Thanks for applying to ${p.interest === 'Join the team' ? 'join the Cinematy team' : 'bring Cinematy to ' + (p.college || 'your campus')}. Do you have a few minutes for a quick chat this week?`;
 const waLink = (p) => `https://wa.me/91${p.phone}?text=${encodeURIComponent(waText(p))}`;
 
 function toCSV(rows) {
@@ -32,8 +32,8 @@ function toCSV(rows) {
     if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;
     return '"' + s.replace(/"/g, '""') + '"';
   };
-  const head = ['Applied', 'Name', 'WhatsApp (+91)', 'Email', 'Instagram', 'College', 'City', 'Year', 'Programme', 'Interest', 'Film club', 'Club name', 'Crew size', 'Would start with', 'Team areas', 'Hours/week', 'Work link', 'Why', 'Status', 'Notes'];
-  const lines = rows.map((r) => [r.createdAt, r.name, r.phone, r.email, r.instagram ? 'https://instagram.com/' + r.instagram : '', r.college, r.city, r.year, r.programme, r.interest,
+  const head = ['Applied', 'Name', 'WhatsApp (+91)', 'Email', 'Instagram', 'Student?', 'Occupation', 'Occupation detail', 'College', 'City', 'Year', 'Programme', 'Interest', 'Film club', 'Club name', 'Crew size', 'Would start with', 'Team areas', 'Hours/week', 'Work link', 'Why', 'Status', 'Notes'];
+  const lines = rows.map((r) => [r.createdAt, r.name, r.phone, r.email, r.instagram ? 'https://instagram.com/' + r.instagram : '', r.status, r.occupation, r.occupationDetail, r.college, r.city, r.year, r.programme, r.interest,
       r.lead?.club, r.lead?.clubName, r.lead?.crew, kickOf(r).join('; '), areasOf(r).join('; '), r.team?.hours, r.workLink, r.why, ST[r.meta.status] || r.meta.status, r.meta.notes].map(esc).join(','));
   return '﻿' + [head.map(esc).join(','), ...lines].join('\r\n');
 }
@@ -114,7 +114,7 @@ function Drawer({ p, onClose, onSaved, onDeleted }) {
         </div>
 
         <div className="d-sec grid2">
-          <div><div className="mono grey">College</div><div>{p.college}</div></div>
+          <div><div className="mono grey">{p.status === 'Not a student' ? 'Does' : 'College'}</div><div>{p.status === 'Not a student' ? [p.occupation, p.occupationDetail].filter(Boolean).join(' · ') : p.college}</div></div>
           <div><div className="mono grey">City</div><div>{p.city}</div></div>
           {p.email && <div><div className="mono grey">Email</div><div style={{ wordBreak: 'break-all' }}>{p.email}</div></div>}
           {p.instagram && <div><div className="mono grey">Instagram</div><a className="lnk" href={`https://instagram.com/${p.instagram}`} target="_blank" rel="noreferrer">📸 @{p.instagram}</a></div>}
@@ -244,7 +244,7 @@ export default function Directory({ initial, error: initialError }) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `cinematy-mu-${anyFilter ? 'filtered' : 'all'}-${new Date().toISOString().slice(0, 10)}.csv`;
+    a.download = `cinematy-join-${anyFilter ? 'filtered' : 'all'}-${new Date().toISOString().slice(0, 10)}.csv`;
     document.body.appendChild(a);
     a.click();
     a.remove();

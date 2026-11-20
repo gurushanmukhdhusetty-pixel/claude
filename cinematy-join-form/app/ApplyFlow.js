@@ -1,10 +1,10 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
-import { INTERESTS, YEARS, CLUB, CREW_SIZE, KICKOFF, TEAM_AREAS, HOURS, validate, wantsLead, wantsTeam } from '@/lib/schema';
+import { STATUS, OCCUPATIONS, INTERESTS, YEARS, CLUB, CREW_SIZE, KICKOFF, TEAM_AREAS, HOURS, validate, wantsLead, wantsTeam } from '@/lib/schema';
 import { LOGO_SVG } from '@/lib/logo-svg';
 
 const EMPTY = {
-  name: '', phone: '', email: '', instagram: '', college: '', city: 'Hyderabad', year: '', programme: '',
+  name: '', phone: '', email: '', instagram: '', status: '', occupation: '', occupationDetail: '', college: '', city: 'Hyderabad', year: '', programme: '',
   interest: '',
   lead: { club: '', clubName: '', crew: '', kickoff: [], kickoffOther: '' },
   team: { areas: [], areaOther: '', hours: '' },
@@ -65,18 +65,17 @@ function Intro({ onStart }) {
         <div className="intro-main">
           <div className="logo" dangerouslySetInnerHTML={{ __html: LOGO_SVG }} />
           <div className="mono" style={{ color: '#8A8A8A' }}>Cinematy · Campus leads &amp; team</div>
-          <h1 className="serif">Bring Cinematy to <i>your campus.</i></h1>
+          <h1 className="serif">Help build <i>Cinematy.</i></h1>
           <p>
-            We’re <b>Cinematy</b>, a community for student filmmakers and film lovers in Hyderabad. We started with the
-            {' '}<b>Cinematy Content Unit at Mahindra University</b>, and now we want to go further: <b>campus leads</b> who kickstart
-            Cinematy at their college, and people who want to <b>join the core team</b>.
+            We’re <b>Cinematy</b>, a community for filmmakers and film lovers in Hyderabad. We’re growing across the city, on campuses
+            and beyond: <b>campus leads</b> who kickstart Cinematy at their college, and anyone in Hyderabad who wants to <b>join the core team</b>.
           </p>
           <div className="go-wrap"><button className="go" onClick={onStart}>Let’s go <span aria-hidden>→</span></button></div>
         </div>
         <div className="facts">
           <div className="fact hl"><div className="mono">Heads up</div><div>This is <b>pro bono, not a paid gig.</b> It’s a chance to build something from the start.</div></div>
           <div className="fact"><div className="mono">Campus lead</div><div>Start a Cinematy crew at your college: screenings, meetups, content and shoots.</div></div>
-          <div className="fact"><div className="mono">Core team</div><div>Help build Cinematy itself: content, community, events, design and more.</div></div>
+          <div className="fact"><div className="mono">Core team</div><div>Students or not: help build Cinematy itself across content, community, events, design and more.</div></div>
           <div className="fact"><div className="mono">Experience</div><div>None needed. Just the passion. About 2 minutes to apply.</div></div>
         </div>
       </div>
@@ -104,8 +103,8 @@ export default function ApplyFlow() {
 
   const S = [
     { id: 'about', t: ['About', 'you'], sub: 'The basics, so we can reach you.', keys: ['name', 'phone', 'email', 'instagram'] },
-    { id: 'campus', t: ['Your', 'campus'], sub: first ? `Where are you studying, ${first}?` : 'Where are you studying?', keys: ['college', 'city', 'year', 'programme'] },
-    { id: 'interest', t: ['How do you want to', 'help?'], sub: 'Pick the one that fits. You can choose both.', keys: ['interest'] },
+    { id: 'campus', t: ['Where you', 'are'], sub: first ? `Tell us a little about where you are, ${first}.` : 'Tell us a little about where you are.', keys: ['status', 'college', 'year', 'occupation', 'city', 'programme'] },
+    { id: 'interest', t: ['How do you want to', 'help?'], sub: f.status === 'Not a student' ? 'Campus leads are students, so the core team is your path in.' : 'Pick the one that fits. You can choose both.', keys: ['interest'] },
     ...(lead ? [{ id: 'lead', t: ['Cinematy at', 'your campus'], sub: 'Tell us about the film scene at your college.', keys: ['lead.club', 'lead.crew', 'lead.kickoff'] }] : []),
     ...(team ? [{ id: 'team', t: ['Join the', 'team'], sub: 'Where would you like to help build Cinematy?', keys: ['team.areas', 'team.hours'] }] : []),
     { id: 'last', t: ['Last', 'bit'], sub: 'Almost there.', keys: ['workLink', 'proBono', 'consent'] },
@@ -211,28 +210,45 @@ export default function ApplyFlow() {
 
             {cur.id === 'campus' && (
               <>
-                <Q label="College or university" req error={E.college}>
-                  <input autoFocus type="text" placeholder="e.g. Mahindra University" value={f.college} onChange={(e) => set('college', e.target.value)} onKeyDown={enter} />
+                <Q label="Are you a student?" req error={E.status}>
+                  <Pills name="status" options={STATUS} value={f.status} onPick={(v) => { set('status', v); if (v === 'Not a student' && f.interest !== 'Join the team') set('interest', f.interest ? 'Join the team' : ''); }} />
                 </Q>
-                <Q label="Year" req error={E.year}>
-                  <Pills name="year" options={YEARS} value={f.year} onPick={(v) => set('year', v)} />
-                </Q>
-                <div className="qrow">
-                  <Q label="City" error={E.city}>
-                    <input type="text" value={f.city} onChange={(e) => set('city', e.target.value)} onKeyDown={enter} />
+                {f.status === 'Student' && (
+                  <>
+                    <Q label="College or university" req error={E.college}>
+                      <input type="text" placeholder="Your college or university" value={f.college} onChange={(e) => set('college', e.target.value)} onKeyDown={enter} />
+                    </Q>
+                    <Q label="Year" req error={E.year}>
+                      <Pills name="year" options={YEARS} value={f.year} onPick={(v) => set('year', v)} />
+                    </Q>
+                  </>
+                )}
+                {f.status === 'Not a student' && (
+                  <Q label="What do you do?" req error={E.occupation}>
+                    <Pills name="occupation" options={OCCUPATIONS} value={f.occupation} onPick={(v) => set('occupation', v)} />
+                    <input style={{ marginTop: '.8rem' }} type="text" placeholder="Role or company (optional)" value={f.occupationDetail} onChange={(e) => set('occupationDetail', e.target.value)} onKeyDown={enter} />
                   </Q>
-                  <Q label="Programme" hint="Optional">
-                    <input type="text" placeholder="B.Tech CSE, BA Media…" value={f.programme} onChange={(e) => set('programme', e.target.value)} onKeyDown={enter} />
-                  </Q>
-                </div>
+                )}
+                {f.status && (
+                  <div className="qrow">
+                    <Q label="City" error={E.city}>
+                      <input type="text" value={f.city} onChange={(e) => set('city', e.target.value)} onKeyDown={enter} />
+                    </Q>
+                    {f.status === 'Student' && (
+                      <Q label="Programme" hint="Optional">
+                        <input type="text" placeholder="B.Tech CSE, BA Media…" value={f.programme} onChange={(e) => set('programme', e.target.value)} onKeyDown={enter} />
+                      </Q>
+                    )}
+                  </div>
+                )}
               </>
             )}
 
             {cur.id === 'interest' && (
               <Q label="I’d like to…" req error={E.interest}>
-                <Choices name="interest" options={['Campus lead', 'Join the team', 'Both']} value={f.interest} onPick={(v) => set('interest', v)} />
+                <Choices name="interest" options={f.status === 'Not a student' ? ['Join the team'] : ['Campus lead', 'Join the team', 'Both']} value={f.interest} onPick={(v) => set('interest', v)} />
                 <div className="hint" style={{ marginTop: '.8rem' }}>
-                  <b>Campus lead:</b> kickstart Cinematy activities at your college. <b>Join the team:</b> help build Cinematy itself.
+                  {f.status !== 'Not a student' && <><b>Campus lead:</b> kickstart Cinematy activities at your college. </>}<b>Join the team:</b> help build Cinematy itself.
                 </div>
               </Q>
             )}
