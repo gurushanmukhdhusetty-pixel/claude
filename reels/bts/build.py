@@ -14,9 +14,8 @@ def cx(k):
     return e
 T=[0,1.65,3.30,4.97,6.62,8.27,9.94,11.59,13.24,14.89,15.30,15.72,16.14,16.56]
 # (clip, src_in, src_out, edit_start, edit_end, extra)
-SEG=[('D',0.30,2.50,0,3.30,''),('E',0.30,2.16,3.30,4.97,''),('C',0.0,3.76,4.97,8.27,''),('B',0.0,1.556,8.27,9.94,''),
-     ('D',2.50,4.69,9.94,11.59,''),('A',0.90,3.92,11.59,14.89,'flash'),
-     ('C',1.30,1.72,14.89,15.30,''),('B',0.95,1.40,15.30,15.72,''),('A',2.35,2.80,15.72,16.14,''),('D',0.75,1.20,16.14,16.56,'')]
+SEG=[('E',0.30,2.16,0,1.65,''),('D',0.30,4.69,1.65,6.62,''),('C',0.0,3.76,6.62,9.94,''),('B',0.0,1.556,9.94,11.59,''),
+     ('A',0.90,3.92,11.59,14.89,'flash')]
 grade=("curves=master='0/0.045 0.25/0.23 0.75/0.79 1/0.965',"
        "colorbalance=rs=-0.03:bs=0.035:rm=0.02:bm=-0.01:rh=0.045:gh=0.012:bh=-0.04,"
        "eq=contrast=1.04:saturation=1.07")
@@ -40,12 +39,12 @@ fcj=''.join(f'[{i}:v]fps=24,setpts=PTS-STARTPTS,setsar=1,format=yuv420p[s{i}];' 
 subprocess.run(['ffmpeg','-v','error','-y',*ins,'-filter_complex',fcj,'-map','[v]','-c:v','libx264','-crf','10','-preset','fast','-r','24','seg/joined.mp4'],check=True)
 
 fc=("[0:v]fps=24,setpts=PTS-STARTPTS[c0];"
-    "[2:v]format=rgba,fade=t=in:st=0.25:d=0.45:alpha=1,fade=t=out:st=16.2:d=0.3:alpha=1[cap];"
+    "[2:v]format=rgba,fade=t=in:st=0.25:d=0.45:alpha=1,fade=t=out:st=14.55:d=0.3:alpha=1[cap];"
     "[c0][cap]overlay=0:0:shortest=1,"
     "noise=c0s=17:c0f=t+u:c1s=4:c1f=t:c2s=4:c2f=t,vignette=angle=PI/4.6,format=yuv420p[v];"
-    "[1:a]atrim=140.78:159.68,asetpts=PTS-STARTPTS,afade=t=in:st=0:d=0.12,afade=t=out:st=18.1:d=0.8[a]")
+    "[1:a]atrim=140.78:158.0,asetpts=PTS-STARTPTS,afade=t=in:st=0:d=0.12,afade=t=out:st=16.4:d=0.8[a]")
 subprocess.run(['ffmpeg','-v','error','-y','-i','seg/joined.mp4','-i',U+'3f932e9f-Ritviz_-_Udd_Gaye_Official_AudioMP3_160K.mp3',
-    '-loop','1','-t','18.9','-framerate','24','-i','caption.png','-filter_complex',fc,'-map','[v]','-map','[a]',
-    '-c:v','libx264','-crf','21','-preset','slow','-tune','grain','-maxrate','16M','-bufsize','32M','-profile:v','high','-r','24','-c:a','aac','-b:a','256k','-movflags','+faststart','-t','18.9',
+    '-loop','1','-t','17.22','-framerate','24','-i','caption.png','-filter_complex',fc,'-map','[v]','-map','[a]',
+    '-c:v','libx264','-crf','21','-preset','slow','-tune','grain','-maxrate','16M','-bufsize','32M','-profile:v','high','-r','24','-c:a','aac','-b:a','256k','-movflags','+faststart','-t','17.22',
     'Cinematy_BTS_UddGaye.mp4'],check=True)
 print('done')
