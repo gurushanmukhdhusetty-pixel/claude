@@ -1,0 +1,180 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Choose Your Character</title>
+<style>
+@font-face{font-family:AN;src:url(fonts/anton-latin-400-normal.woff2)}
+@font-face{font-family:IS;font-style:italic;src:url(../../launch-video/fonts/instrument-serif-latin-400-italic.woff2)}
+@font-face{font-family:Geist;font-weight:400;src:url(../../launch-video/fonts/geist-sans-latin-400-normal.woff2)}
+@font-face{font-family:Geist;font-weight:600;src:url(../../launch-video/fonts/geist-sans-latin-600-normal.woff2)}
+@font-face{font-family:GM;src:url(../../launch-video/fonts/geist-mono-latin-400-normal.woff2)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#333;width:1080px}
+.s{position:relative;width:1080px;height:1350px;overflow:hidden;margin-bottom:20px;color:#fff;background:#07061a}
+.a,.s>div{position:absolute}
+.sky{position:absolute;inset:0}
+.sun{position:absolute;border-radius:50%;
+ -webkit-mask:linear-gradient(#000 0 52%,transparent 52% 56%,#000 56% 64%,transparent 64% 69%,#000 69% 75%,transparent 75% 81%,#000 81% 85%,transparent 85% 92%,#000 92%);}
+.haze{position:absolute;left:0;right:0;height:420px;background:radial-gradient(ellipse at 60% 100%,rgba(255,140,120,.45),transparent 70%)}
+.grain{position:absolute;inset:0;pointer-events:none;opacity:.22;mix-blend-mode:overlay;
+ background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 40%,transparent 55%,rgba(0,0,0,.55))}
+.top{position:absolute;left:64px;right:64px;top:56px;display:flex;justify-content:space-between;font-family:GM;font-size:18px;letter-spacing:.18em;text-transform:uppercase;opacity:.85;z-index:5}
+.an{font-family:AN;text-transform:uppercase;line-height:.9;letter-spacing:.005em}
+.grad{background:linear-gradient(180deg,#ffe08a 0%,#ff9d5c 30%,#ff4f8b 62%,#b23ad8 100%);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 5px 0 #1b0733) drop-shadow(0 10px 30px rgba(10,0,30,.55))}
+.name{position:absolute;left:64px;bottom:640px;width:720px;z-index:4;text-shadow:0 6px 30px rgba(0,0,0,.45)}
+.name .the{font-size:46px;letter-spacing:.06em;opacity:.95}
+.name .r{font-size:150px}
+.fig{position:absolute;z-index:3}
+.panel{position:absolute;left:0;right:0;bottom:0;height:650px;z-index:4;
+ background:linear-gradient(180deg,rgba(6,5,20,0) 0,rgba(6,5,20,.88) 70px,rgba(6,5,20,.96) 100%)}
+.rows{position:absolute;left:64px;right:64px;top:92px}
+.row{display:grid;grid-template-columns:170px 1fr;gap:18px;padding:15px 0;border-top:1px solid rgba(255,255,255,.14)}
+.row:first-child{border-top:0}
+.lab{font-family:GM;font-size:17px;letter-spacing:.16em;text-transform:uppercase;padding-top:7px;color:#ff9db8}
+.txt{font-family:Geist;font-size:28px;line-height:1.36;color:#f3eef7}
+.stats{position:absolute;left:64px;right:64px;bottom:62px;display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.st .k{font-family:GM;font-size:16px;letter-spacing:.12em;text-transform:uppercase;display:flex;justify-content:space-between;color:#d8d0e4}
+.st .k b{font-weight:400;color:#fff}
+.bar{height:12px;margin-top:10px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#ff4f8b,#ffb25c)}
+.serif{font-family:IS;font-style:italic;font-weight:400}
+.body{font-family:Geist;font-size:32px;line-height:1.42}
+</style></head><body>
+<div id="root"></div>
+<script>
+const E=(p,tag,css,html)=>{const e=document.createElement(tag);if(css)e.style.cssText=css;if(html!=null)e.innerHTML=html;p.appendChild(e);return e};
+const PAL=[
+ {sky:'linear-gradient(180deg,#140832 0%,#4a1468 30%,#c13a7c 58%,#ff7f63 78%,#ffb36b 100%)',sun:'linear-gradient(#ffe7a3,#ff8a5c 60%,#ff4f8b)',rim:'#ff7fb4',sx:700,sy:380},
+ {sky:'linear-gradient(180deg,#06132a 0%,#10385a 32%,#2b7c8c 58%,#f08a6a 82%,#ffc27a 100%)',sun:'linear-gradient(#fff1b8,#ffb066 55%,#ff6f7d)',rim:'#7ff0ff',sx:260,sy:400},
+ {sky:'linear-gradient(180deg,#0b0624 0%,#2c1260 30%,#7d2a9e 55%,#ff5aa0 78%,#ff9f7a 100%)',sun:'linear-gradient(#ffd6f0,#ff7ac0 55%,#c03ad8)',rim:'#ffa0e0',sx:760,sy:330},
+ {sky:'linear-gradient(180deg,#1d0716 0%,#6a1631 32%,#d23e3e 58%,#ff8a3d 80%,#ffd27a 100%)',sun:'linear-gradient(#fff3b0,#ffb347 55%,#ff5a3d)',rim:'#ffc07a',sx:300,sy:360},
+];
+// city skyline across the horizon
+function skyline(p,y,col){const s=E(p,'div',`position:absolute;left:0;right:0;top:${y}px;height:260px;z-index:2`);
+ let x=0,h='';const seed=[60,140,90,200,120,70,170,110,230,80,150,100,190,60,130,210,90,160,120,70];let i=0;
+ while(x<1080){const w=40+(seed[i%20]%5)*14,ht=seed[(i*7)%20]+20;h+=`<rect x="${x}" y="${260-ht}" width="${w}" height="${ht}"/>`;
+  for(let wy=260-ht+14;wy<250;wy+=22)for(let wx=x+8;wx<x+w-8;wx+=16)if((wx*wy+i)%7<2)h+=`<rect x="${wx}" y="${wy}" width="5" height="8" fill="#ffcf8a" opacity=".55"/>`;
+  x+=w+4;i++}
+ s.innerHTML=`<svg width="1080" height="260" viewBox="0 0 1080 260"><g fill="${col}">${h}</g></svg>`;}
+function scene(sec,pal,{noSun,sx,sy}={}){if(sx!=null)pal={...pal,sx,sy};E(sec,'div','background:'+pal.sky).className='sky';
+ if(!noSun){const sun=E(sec,'div',`left:${pal.sx-190}px;top:${pal.sy-190}px;width:380px;height:380px;background:${pal.sun};box-shadow:0 0 120px rgba(255,140,120,.6)`);sun.className='sun'}
+ E(sec,'div','top:300px').className='haze';skyline(sec,440,'#0c0a22');}
+const C='#0a0a1c';
+// generic chest-up silhouette, props layered by role
+function bust(extra='',hair='',under=''){return `${under}
+ <path d="M30 760 C40 560 120 430 300 412 C480 430 560 560 570 760 Z"/>
+ <rect x="250" y="300" width="100" height="130" rx="30"/>
+ <ellipse cx="300" cy="225" rx="92" ry="112"/><ellipse cx="208" cy="236" rx="16" ry="26"/><ellipse cx="392" cy="236" rx="16" ry="26"/>
+ ${hair||'<path d="M204 210 C200 110 260 96 300 96 C360 96 404 120 398 214 C380 160 330 150 300 152 C260 150 222 166 204 210Z"/>'}${extra}`}
+const ARM=(d,w=64)=>`<path d="${d}" fill="none" stroke="${C}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round"/>`;
+const PROPS={
+ writer:()=>bust(
+  ARM('M110 760 L170 610 L250 560')+ARM('M500 760 L450 610 L380 560')+
+  `<g transform="rotate(-8 300 560)"><rect x="196" y="470" width="210" height="250" rx="10" fill="#f4ece0"/>${[0,1,2,3,4,5,6].map(i=>`<rect x="220" y="${510+i*28}" width="${150-(i%3)*30}" height="5" fill="#9a8fa8"/>`).join('')}<rect x="196" y="470" width="22" height="250" fill="#d9cbb8"/></g>
+  <rect x="352" y="455" width="12" height="150" rx="5" transform="rotate(32 358 530)" fill="#ffcf8a"/>
+  <ellipse cx="250" cy="562" rx="34" ry="30"/><ellipse cx="385" cy="566" rx="34" ry="30"/>`,
+  '<path d="M206 220 C190 120 250 90 306 92 C372 94 408 130 396 222 C386 176 352 140 296 146 C250 150 222 176 206 220Z"/>'),
+ director:()=>bust(
+  ARM('M470 520 L540 380 L520 250')+ARM('M130 520 L70 380 L90 250')+
+  `<path d="M470 170 L560 170 L560 230" fill="none" stroke="${C}" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+   <path d="M140 330 L50 330 L50 270" fill="none" stroke="${C}" stroke-width="26" stroke-linecap="round" stroke-linejoin="round"/>
+   <rect x="64" y="182" width="482" height="134" fill="none" stroke="#fff" stroke-opacity=".35" stroke-width="3" stroke-dasharray="14 10"/>
+   <ellipse cx="520" cy="240" rx="36" ry="40"/><ellipse cx="90" cy="262" rx="36" ry="40"/>`,
+  '<path d="M200 200 C196 110 250 80 304 82 C370 84 410 112 402 200 C400 150 200 150 200 200Z"/><rect x="196" y="176" width="210" height="40" rx="18"/><path d="M196 196 L120 214 L196 214Z"/>'),
+ actor:()=>bust(
+  ARM('M120 760 L90 600 L110 440')+
+  `<g transform="rotate(-12 120 380)"><rect x="40" y="270" width="170" height="230" rx="6" fill="#efe6da"/><rect x="54" y="258" width="170" height="230" rx="6" fill="#fff8ee"/>${[0,1,2,3,4,5].map(i=>`<rect x="74" y="${290+i*30}" width="${120-(i%2)*40}" height="6" fill="${i==2?'#ff6f9a':'#a79bb5'}"/>`).join('')}</g>
+  <ellipse cx="112" cy="436" rx="36" ry="34"/>`,
+  '<path d="M196 260 C170 120 240 84 306 86 C380 88 424 130 404 260 C400 190 380 150 300 150 C230 150 206 190 196 260Z"/>'),
+ dop:()=>bust(
+  ARM('M140 760 L130 560 L210 400')+
+  `<rect x="300" y="300" width="240" height="130" rx="14"/><rect x="330" y="270" width="150" height="34" rx="10"/>
+   <rect x="160" y="320" width="150" height="92" rx="10"/><rect x="120" y="306" width="54" height="120" rx="10"/>
+   <circle cx="146" cy="366" r="30" fill="#1a1838" stroke="#7ff0ff" stroke-opacity=".7" stroke-width="5"/>
+   <rect x="520" y="250" width="54" height="70" rx="8"/><ellipse cx="210" cy="402" rx="34" ry="30"/>`,
+  '<path d="M206 206 C200 120 250 100 300 100 C360 100 400 126 396 206Z"/><path d="M200 196 L360 196 L396 206 L200 214Z"/><path d="M200 200 C260 190 320 186 300 186 L120 214 L200 214Z"/>'),
+ editor:()=>bust(
+  `<path d="M210 380 C200 450 400 450 390 380" fill="none" stroke="${C}" stroke-width="26"/><ellipse cx="205" cy="390" rx="30" ry="40"/><ellipse cx="395" cy="390" rx="30" ry="40"/>
+   <ellipse cx="300" cy="600" rx="300" ry="160" fill="#56d8ff" opacity=".22" filter="url(#blur)"/>
+   <path d="M120 560 L480 560 L520 760 L80 760Z" fill="#14122c"/><rect x="120" y="560" width="360" height="8" fill="#9fe9ff"/>
+   <circle cx="300" cy="660" r="20" fill="#2a2850"/>`,
+  '<path d="M204 230 C186 120 244 88 302 90 C372 92 414 128 398 232 C392 160 350 136 300 136 C254 136 214 160 204 230Z"/>'),
+ sound:()=>bust(
+  ARM('M480 760 L520 560 L470 380')+ARM('M130 760 L110 600 L180 470')+
+  `<path d="M206 214 C206 70 394 70 394 214" fill="none" stroke="${C}" stroke-width="26"/><ellipse cx="200" cy="236" rx="34" ry="50"/><ellipse cx="400" cy="236" rx="34" ry="50"/>
+   <line x1="560" y1="600" x2="70" y2="70" stroke="${C}" stroke-width="16" stroke-linecap="round"/>
+   <ellipse cx="62" cy="62" rx="84" ry="38" transform="rotate(47 62 62)"/>
+   <ellipse cx="62" cy="62" rx="84" ry="38" transform="rotate(47 62 62)" fill="none" stroke="${C}" stroke-width="16" stroke-dasharray="2 7"/>
+   <ellipse cx="470" cy="382" rx="34" ry="32"/><ellipse cx="182" cy="472" rx="34" ry="32"/>`,
+  ''),
+};
+function figure(sec,role,pal,{left=330,top=150,w=680}={}){
+ const h=Math.round(w*760/600);
+ E(sec,'div',`left:${left}px;top:${top}px;width:${w}px;height:${h}px;filter:drop-shadow(-7px -4px 0 ${pal.rim}) drop-shadow(0 0 26px ${pal.rim}66)`,
+  `<svg viewBox="-20 0 640 760" width="${w}" height="${h}"><defs><filter id="blur"><feGaussianBlur stdDeviation="30"/></filter></defs><g fill="${C}">${PROPS[role]()}</g></svg>`).className='fig';}
+const TOTAL=9;
+function topbar(sec,n){E(sec,'div','',`<span>Cinematy · Character Select</span><span>${String(n).padStart(2,'0')} / ${String(TOTAL).padStart(2,'0')}</span>`).className='top'}
+function finish(sec){E(sec,'div','z-index:6').className='grain';E(sec,'div','z-index:6').className='vig'}
+
+const ROLES=[
+ ['writer','The','Writer',150,{job:'Writes the screenplay: scenes, dialogue, structure. Then rewrites it 14 times.',ab:'Overhears one line at an Irani café and builds a whole film around it.',wk:'“Just one more draft.”',lo:'Laptop at 3%, a Notes app full of half-ideas, cutting chai.',st:[['Ideas',95],['Sleep',15],['Deadlines met',20]]}],
+ ['director','The','Director',150,{job:'Owns the vision. Decides every shot, every performance, every “cut.”',ab:'Sees the final film while everyone else sees a hostel corridor.',wk:'“One more take.” (Said nine times.)',lo:'A viewfinder app, a shot list nobody follows, borrowed confidence.',st:[['Vision',98],['Patience',40],['Voice at pack-up',5]]}],
+ ['actor','The','Actor',150,{job:'Brings the character to life. Then does it again from a new angle. And again.',ab:'Cries on take one, take six and the close-up.',wk:'Watching themselves on the monitor.',lo:'A script with highlighted lines, a water bottle, three outfits “just in case.”',st:[['Range',90],['Lines remembered',85],['Time waiting',100]]}],
+ ['dop','The','DOP',150,{job:'Director of Photography. Light, lens and movement: how the film <i>looks</i>.',ab:'Makes a ₹200 LED look like golden hour.',wk:'A single cloud at 5:40 PM.',lo:'A camera, two lenses, a bedsheet as diffusion, a car sunshade as a reflector.',st:[['Eye',96],['Gear owned',30],['Gear borrowed',70]]}],
+ ['editor','The','Editor',150,{job:'Builds the film from hundreds of clips: picks the take, the rhythm, the ending.',ab:'Saves the scene everyone said was ruined.',wk:'Sunlight. And “can we try one more version?”',lo:'A screaming laptop fan, a 2 TB drive, auto-save on.',st:[['Patience',99],['Sunlight',0],['Render waiting',95]]}],
+ ['sound','The Sound','Recordist',150,{job:'Records clean dialogue on set with a boom, lapel mics and room tone.',ab:'Hears the AC unit nobody else noticed.',wk:'Horns, loudspeakers, the neighbour’s pressure cooker.',lo:'A boom pole, headphones, a recorder, a furry windshield.',st:[['Hearing',99],['Arm strength',80],['Silence achieved',12]]}],
+];
+const root=document.getElementById('root');
+
+// 1 COVER: character select grid
+(()=>{const s=E(root,'section');s.className='s';s.id='s1';const pal=PAL[0];scene(s,pal,{sx:540,sy:600});topbar(s,1);
+ E(s,'div','left:0;right:0;top:150px;text-align:center;z-index:4;font-family:GM;font-size:20px;letter-spacing:.3em;text-transform:uppercase','6 roles · 1 film set');
+ const t=E(s,'div','left:0;right:0;top:200px;text-align:center;z-index:4;filter:drop-shadow(0 10px 40px rgba(0,0,0,.45))');
+ E(t,'div','font-size:250px;letter-spacing:.01em','Cinematy').className='an grad';
+ E(t,'div','font-size:96px;margin-top:6px','Choose your character.').className='serif';
+ const g=E(s,'div','left:64px;right:64px;top:690px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;z-index:4');
+ ROLES.forEach(([role,a,b],i)=>{const p=PAL[i%4];const c=E(g,'div',`position:relative;height:258px;border-radius:14px;overflow:hidden;background:${p.sky};border:${i==1?'5px solid #fff':'2px solid rgba(255,255,255,.35)'};box-shadow:${i==1?'0 0 40px rgba(255,120,180,.8)':'none'}`);
+  E(c,'div',`position:absolute;left:50%;top:22px;width:300px;transform:translateX(-50%);filter:drop-shadow(-4px -2px 0 ${p.rim})`,`<svg viewBox="-20 0 640 760" width="300" height="380"><defs><filter id="blur${i}"><feGaussianBlur stdDeviation="30"/></filter></defs><g fill="${C}">${PROPS[role]().replace(/url\(#blur\)/g,`url(#blur${i})`)}</g></svg>`);
+  E(c,'div','position:absolute;left:0;right:0;bottom:0;padding:14px 16px;background:linear-gradient(transparent,rgba(5,4,18,.92));font-size:40px',(a=='The'?'':a.replace('The ','')+' ')+b).className='an';});
+ E(s,'div','left:0;right:0;bottom:56px;text-align:center;z-index:5;font-family:GM;font-size:19px;letter-spacing:.2em;text-transform:uppercase;opacity:.9','Swipe to pick yours  →');
+ finish(s);})();
+
+// 2–7 characters
+ROLES.forEach(([role,a,b,fs,d],i)=>{const s=E(root,'section');s.className='s';s.id='s'+(i+2);const pal=PAL[i%4];scene(s,pal);topbar(s,i+2);
+ figure(s,role,pal,i%2?{left:-20,top:150}:{left:400,top:150});
+ const n=E(s,'div',i%2?'left:auto;right:64px;text-align:right':'');n.className='name';
+ E(n,'div','',a).className='an the';E(n,'div',`font-size:${fs}px`,b).className='an r';
+ const pn=E(s,'div');pn.className='panel';const rows=E(pn,'div');rows.className='rows';
+ [['Job',d.job],['Ability',d.ab],['Weakness',d.wk],['Loadout',d.lo]].forEach(([k,v])=>{const r=E(rows,'div');r.className='row';E(r,'div','',k).className='lab';E(r,'div','',v).className='txt'});
+ const st=E(pn,'div');st.className='stats';d.st.forEach(([k,v])=>{const c=E(st,'div');c.className='st';E(c,'div','',`<span>${k}</span><b>${v}</b>`).className='k';E(c,'div','',`<i style="width:${Math.max(v,2)}%"></i>`).className='bar'});
+ finish(s);});
+
+// 8 REALITY CHECK: the whole party
+(()=>{const s=E(root,'section');s.className='s';s.id='s8';const pal=PAL[2];scene(s,pal,{sx:780,sy:640});topbar(s,8);
+ const t=E(s,'div','left:64px;right:64px;top:150px;z-index:4');
+ E(t,'div','font-family:GM;font-size:20px;letter-spacing:.22em;text-transform:uppercase;opacity:.85','Reality check');
+ E(t,'div','font-size:150px;margin-top:22px','A film needs').className='an';
+ E(t,'div','font-size:190px','all of them.').className='an grad';
+ const order=['sound','writer','director','actor','dop','editor'];
+ order.forEach((r,i)=>{const p=PAL[i%4];const w=330;E(s,'div',`left:${-40+i*175}px;top:${640+(i%2)*40}px;width:${w}px;z-index:${3+(i%2)};filter:drop-shadow(-5px -3px 0 ${p.rim})`,`<svg viewBox="-20 0 640 760" width="${w}" height="${Math.round(w*760/600)}"><defs><filter id="bb${i}"><feGaussianBlur stdDeviation="30"/></filter></defs><g fill="${C}">${PROPS[r]().replace(/url\(#blur\)/g,`url(#bb${i})`)}</g></svg>`)});
+ const pn=E(s,'div','height:330px');pn.className='panel';
+ E(pn,'div','position:absolute;left:64px;right:64px;top:110px','Most student films have three people doing six jobs. That’s how you start. <b>The best ones find their crew.</b>').className='body';
+ finish(s);})();
+
+// 9 CTA
+(()=>{const s=E(root,'section');s.className='s';s.id='s9';const pal=PAL[0];scene(s,pal,{sx:540,sy:640});topbar(s,9);
+ E(s,'div','left:0;right:0;top:0;bottom:0;z-index:3;background:linear-gradient(180deg,rgba(7,6,26,.15),rgba(7,6,26,.7) 45%,rgba(7,6,26,.95))');
+ const t=E(s,'div','left:0;right:0;top:150px;text-align:center;z-index:4');
+ E(t,'div','font-size:120px','Pick your character.').className='an';
+ E(t,'div','font-size:150px;margin-top:8px','Find your squad.').className='an grad';
+ E(t,'div','margin:34px auto 0;width:860px','Writers, directors, actors, DOPs, editors, sound and more, in Hyderabad, on Cinematy.').className='body';
+ const b=E(s,'div','left:0;right:0;top:720px;display:flex;justify-content:center;align-items:center;gap:56px;z-index:4');
+ E(b,'div','width:330px;height:330px;padding:24px;background:#fff;border-radius:24px;box-shadow:0 0 60px rgba(255,120,180,.55)').id='qr';
+ const r=E(b,'div','');const lg=E(r,'div','width:280px;color:#fff');lg.id='logo';
+ E(r,'div','font-family:GM;font-size:20px;letter-spacing:.2em;text-transform:uppercase;margin-top:26px;opacity:.85','Coming soon');
+ E(r,'div','display:inline-flex;align-items:center;gap:16px;border:2px solid #fff;border-radius:999px;padding:14px 28px;margin-top:16px','<span style="width:16px;height:16px;border-radius:50%;background:#ff4f8b;display:inline-block"></span><span style="font-family:GM;font-size:30px;letter-spacing:.06em">cinematy.in</span>');
+ E(s,'div','left:0;right:0;top:1130px;text-align:center;z-index:4;font-family:Geist;font-weight:600;font-size:34px','Comment your character 👇');
+ E(s,'div','left:0;right:0;top:1182px;text-align:center;z-index:4;font-family:Geist;font-size:28px;opacity:.8','Tag the friend who’d be your director.');
+ finish(s);})();
+
+window.init=(logo,qr)=>{document.getElementById('logo').innerHTML=logo.replace(/style="color:[^"]*"/,'style="color:#fff"').replace(/width="[^"]*"/,'width="100%"').replace(/height="[^"]*"/,'height="auto"');document.getElementById('qr').innerHTML=qr};
+</script></body></html>
