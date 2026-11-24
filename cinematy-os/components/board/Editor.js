@@ -264,7 +264,7 @@ function Canvas({ board }) {
   const [saveErr, setSaveErr] = useState('');
   const [other, setOther] = useState(board.editing_by && board.editing_by !== me?.name ? board.editing_by : '');
   const [snap, setSnap] = useState(true);
-  const [mini, setMini] = useState(true);
+  const [mini, setMini] = useState(() => typeof window === 'undefined' || window.innerWidth > 860);
   const [panel, setPanel] = useState(''); // phone: 'objects' | 'inspect'
   const [focusTick, setFocusTick] = useState(0);
   const [, bump] = useState(0);
@@ -526,7 +526,7 @@ function Canvas({ board }) {
     const ne = built.edges.map((e) => ({ ...e, id: uid('e'), source: map.get(e.source), target: map.get(e.target) }));
     setNodes((ns) => order([...ns, ...nn]));
     setEdges((es) => [...es, ...ne]);
-    setTimeout(() => rf.fitView({ padding: 0.15, duration: 300 }), 50);
+    setTimeout(() => rf.fitView({ padding: 0.2, maxZoom: 1, duration: 300 }), 50);
   };
 
   const sel = nodes.filter((n) => n.selected);
@@ -563,7 +563,7 @@ function Canvas({ board }) {
           <button className="iconbtn" onClick={redo} disabled={!hist.current.future.length} title="Redo (⇧⌘Z)" aria-label="Redo">↷</button>
           <button className="iconbtn" aria-pressed={snap} onClick={() => setSnap(!snap)} title="Snap to grid" aria-label="Snap to grid">#</button>
           <button className="iconbtn" aria-pressed={mini} onClick={() => setMini(!mini)} title="Minimap" aria-label="Minimap">▣</button>
-          <button className="iconbtn" onClick={() => rf.fitView({ padding: 0.15, duration: 300 })} title="Fit to screen" aria-label="Fit to screen">⤢</button>
+          <button className="iconbtn" onClick={() => rf.fitView({ padding: 0.2, maxZoom: 1, duration: 300 })} title="Fit to screen" aria-label="Fit to screen">⤢</button>
           <div style={{ position: 'relative' }}>
             <button className="btn sm ghost" onClick={() => setTplOpen(!tplOpen)} aria-expanded={tplOpen}>+ Template</button>
             {tplOpen && (
@@ -593,7 +593,7 @@ function Canvas({ board }) {
             connectionMode={ConnectionMode.Loose} snapToGrid={snap} snapGrid={[10, 10]}
             selectionMode={SelectionMode.Partial} selectionOnDrag={false} panOnDrag multiSelectionKeyCode={['Shift', 'Meta', 'Control']}
             deleteKeyCode={['Backspace', 'Delete']} defaultViewport={init.viewport || undefined} fitView={!init.viewport}
-            fitViewOptions={{ padding: 0.15 }} minZoom={0.1} maxZoom={2.5} proOptions={{ hideAttribution: true }}
+            fitViewOptions={{ padding: 0.2, maxZoom: 1 }} minZoom={0.1} maxZoom={2.5} proOptions={{ hideAttribution: true }}
             connectionLineStyle={{ stroke: 'var(--accent)', strokeWidth: 2 }} colorMode="system"
           >
             <Background gap={20} size={1.2} color="var(--line)" />
