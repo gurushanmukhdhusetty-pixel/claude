@@ -1,0 +1,153 @@
+<!doctype html><html><head><meta charset="utf-8"><title>MU Film Festival Proposal</title><style>
+@font-face{font-family:IS;src:url(../../launch-video/fonts/instrument-serif-latin-400-normal.woff2)}
+@font-face{font-family:IS;font-style:italic;src:url(../../launch-video/fonts/instrument-serif-latin-400-italic.woff2)}
+@font-face{font-family:Geist;font-weight:400;src:url(../../launch-video/fonts/geist-sans-latin-400-normal.woff2)}
+@font-face{font-family:Geist;font-weight:500;src:url(../../launch-video/fonts/geist-sans-latin-500-normal.woff2)}
+@font-face{font-family:Geist;font-weight:600;src:url(../../launch-video/fonts/geist-sans-latin-600-normal.woff2)}
+@font-face{font-family:GM;src:url(../../launch-video/fonts/geist-mono-latin-400-normal.woff2)}
+@page{size:A4;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--ink:#0b0b0b;--red:#d92d20;--grey:#6b6b6b;--line:#e3e3e3;--paper:#ffffff;--wash:#f5f5f5}
+body{font-family:Geist;color:var(--ink);font-size:13px;line-height:1.55;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;height:297mm;position:relative;overflow:hidden;page-break-after:always;background:var(--paper)}
+.page:last-child{page-break-after:auto}
+.mono{font-family:GM;font-size:9px;letter-spacing:.2em;text-transform:uppercase}
+.serif{font-family:IS;font-weight:400;letter-spacing:-.015em;line-height:.95}
+i{font-style:italic}
+/* vertical film strip running down the left edge */
+.strip{position:absolute;left:0;top:0;bottom:0;width:17mm;background:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:6mm 0}
+.strip:before,.strip:after{content:"";position:absolute;top:0;bottom:0;width:3mm;background:repeating-linear-gradient(180deg,transparent 0 3mm,#fff 3mm 6mm,transparent 6mm 9mm)}
+.strip:before{left:1.6mm}.strip:after{right:1.6mm}
+.strip span{font-family:GM;font-size:7px;letter-spacing:.2em;color:#8a8a8a;writing-mode:vertical-rl;transform:rotate(180deg);align-self:center}
+.strip span.r{color:var(--red)}
+.main>*{flex-shrink:0}
+.main{position:absolute;left:17mm;right:0;top:0;bottom:0;padding:15mm 16mm 14mm 14mm;display:flex;flex-direction:column}
+/* cover */
+.kick{display:flex;justify-content:space-between;align-items:center;color:var(--grey)}
+.logo{width:120px;color:var(--ink)}
+.title{margin-top:26mm}
+.title .pre{color:var(--red)}
+.title h1{font-size:100px;margin-top:5mm}
+.title h1 em{font-style:italic;color:var(--red)}
+.credits{margin-top:16mm;display:grid;grid-template-columns:auto 1fr;gap:6px 18px;align-items:baseline;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);padding:6mm 0}
+.credits .mono{color:var(--grey);text-align:right}
+.credits b{font-family:IS;font-weight:400;font-size:26px;line-height:1}
+.who{margin-top:16mm;display:grid;grid-template-columns:44mm 1fr;gap:10mm}
+.who h2{font-size:34px}
+.who p{font-size:13.5px}
+.who p+p{margin-top:9px}
+.big{font-family:IS;font-size:22px;line-height:1.2;margin-top:auto;border-left:3px solid var(--red);padding-left:14px}
+.big i{color:var(--red)}
+.foot{display:flex;justify-content:space-between;color:#9a9a9a;margin-top:8mm}
+/* page 2 reels */
+.sechead{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1.5px solid var(--ink);padding-bottom:5px;margin-bottom:6mm}
+.sechead h2{font-size:38px}
+.reels{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.reel{border:1.5px solid var(--ink);border-radius:3px;padding:5mm 5mm 5mm;position:relative}
+.reel .num{position:absolute;right:5mm;top:3mm;font-family:IS;font-size:46px;line-height:1;color:var(--line)}
+.reel .lab{color:var(--red)}
+.reel h3{font-family:Geist;font-weight:600;font-size:15px;line-height:1.25;margin:2.5mm 0 2mm;max-width:62mm}
+.reel p{color:#444;font-size:12.5px;line-height:1.5}
+.reel.tech{grid-column:1/-1;background:var(--ink);color:#fff;border-color:var(--ink)}
+.reel.tech .num{color:#2a2a2a}
+.reel.tech h3{max-width:140mm}
+.techgrid{display:grid;grid-template-columns:1fr 1fr;gap:4mm 7mm;margin-top:3mm}
+.techgrid div{border-top:1px solid #333;padding-top:2.5mm}
+.techgrid b{display:block;font-weight:600;font-size:12.5px;color:#fff;margin-bottom:1mm}
+.techgrid span{color:#bdbdbd;font-size:12px;line-height:1.45}
+/* ticket */
+.ticket{margin-top:9mm;display:grid;grid-template-columns:1fr 46mm;border:1.5px solid var(--ink);border-radius:6px;position:relative;overflow:hidden}
+.ticket .l{padding:6mm 7mm}
+.ticket .l h3{font-family:IS;font-weight:400;font-size:30px;line-height:1;margin:2mm 0 3mm}
+.ticket .l p{font-size:12.5px;color:#333}
+.ticket .l ul{list-style:none;display:grid;grid-template-columns:1fr 1fr 1fr;gap:4mm;margin-top:4mm}
+.ticket .l li{font-size:11.5px;color:#444;line-height:1.4;border-top:1px solid var(--line);padding-top:2mm}
+.ticket .l li b{display:block;color:var(--ink);font-size:12px;margin-bottom:.5mm}
+.ticket .r{background:var(--red);color:#fff;padding:6mm 5mm;display:flex;flex-direction:column;justify-content:space-between;border-left:2px dashed #fff;position:relative}
+.ticket .r .mono{color:#ffd9d5}
+.ticket .r b{font-family:IS;font-weight:400;font-size:30px;line-height:1}
+.ticket .r small{font-family:GM;font-size:8px;letter-spacing:.18em;text-transform:uppercase}
+.ticket:before,.ticket:after{content:"";position:absolute;right:calc(46mm - 4mm);width:8mm;height:8mm;border-radius:50%;background:var(--paper);border:1.5px solid var(--ink);z-index:2}
+.ticket:before{top:-5mm}.ticket:after{bottom:-5mm}
+.end{margin-top:auto;text-align:center;padding-top:8mm}
+.end .serif{font-size:28px;line-height:1.1}
+.end .serif i{color:var(--red)}
+</style></head><body>
+
+<div class="page">
+ <div class="strip"><span>CINEMATY · PROPOSAL</span><span class="r">● REC</span><span>MU FILM FESTIVAL</span></div>
+ <div class="main">
+  <div class="kick"><div class="logo" id="logo"></div><span class="mono">Partnership proposal</span></div>
+  <div class="title">
+   <div class="mono pre">A proposal for the</div>
+   <h1 class="serif">Mahindra University <em>Film Festival</em></h1>
+  </div>
+  <div class="credits">
+   <span class="mono">Hosted by</span><b>Mastershot &amp; 7Screens</b>
+   <span class="mono">Proposed by</span><b><i>Cinematy</i></b>
+  </div>
+  <div class="who">
+   <h2 class="serif">Who we <i>are</i></h2>
+   <div>
+    <p>Cinematy is Hyderabad’s community for student filmmakers and film lovers, backed by a web app. Writers, directors, actors, DOPs, editors and crews find each other, make films together, and get them seen.</p>
+    <p>We’re building campus teams across the city and launching in <b>February</b>. Mastershot and 7Screens are bringing colleges from across Hyderabad to the <b>Mahindra University Film Festival</b>. We’d like to help make it the biggest student film festival in the city.</p>
+   </div>
+  </div>
+  <div class="big">Two clubs, one city, every campus. <i>Let’s make the Mahindra University Film Festival the one Hyderabad’s student filmmakers talk about.</i></div>
+  <div class="foot mono"><span>cinematy.in</span><span>01 / 02</span></div>
+ </div>
+</div>
+
+<div class="page p2">
+ <div class="strip"><span>CINEMATY · PROPOSAL</span><span class="r">● REC</span><span>MU FILM FESTIVAL</span></div>
+ <div class="main">
+  <div class="sechead"><h2 class="serif">What Cinematy <i>brings</i></h2><span class="mono" style="color:var(--grey)">Four reels</span></div>
+  <div class="reels">
+   <div class="reel"><span class="num">01</span><span class="mono lab">Reel 01 · Reach</span><h3>Bring clubs from across Hyderabad</h3><p>We reach out to film and media clubs at colleges across the city through our campus leads and network, and bring their teams in as participants and audience.</p></div>
+   <div class="reel"><span class="num">02</span><span class="mono lab">Reel 02 · Buzz</span><h3>Promote the festival and drive registrations</h3><p>A full campaign across Cinematy’s Instagram, waitlist community, WhatsApp groups and campus teams.</p></div>
+   <div class="reel"><span class="num">03</span><span class="mono lab">Reel 03 · Star power</span><h3>Coordinate celebrity outreach</h3><p>One shared plan with both clubs to shortlist, approach and coordinate a film-industry guest, with one point of contact and no duplicated calls.</p></div>
+   <div class="reel" style="display:flex;flex-direction:column;justify-content:center;background:var(--wash);border-style:dashed"><span class="mono lab">And the big one</span><h3 style="max-width:none">We run the festival’s tech, so the clubs can focus on the films.</h3></div>
+   <div class="reel tech"><span class="num">04</span><span class="mono lab">Reel 04 · Technology &amp; digital support</span><h3>A co-branded festival website, online submissions, and an organiser dashboard, built, hosted and managed by Cinematy.</h3>
+    <div class="techgrid">
+     <div><b>Festival website</b><span>Built, hosted and managed by us: schedule, categories, rules, guests and updates.</span></div>
+     <div><b>Online submissions</b><span>Colleges and teams register and drop the link to their film, then get an instant confirmation.</span></div>
+     <div><b>Submissions management</b><span>An organiser dashboard to track every entry, check eligibility, manage screening lists and share films with judges.</span></div>
+     <div><b>Tech on the day</b><span>Help with registrations and check-in, screening playlists and digital logistics.</span></div>
+    </div>
+   </div>
+  </div>
+
+  <div class="ticket">
+   <div class="l">
+    <span class="mono" style="color:var(--red)">Community partners</span>
+    <h3>Mastershot &amp; 7Screens, <i>first in line</i></h3>
+    <p>Both clubs become Cinematy’s first Community Partners. Their members get early access to the Cinematy app alongside our waitlist, before the public launch in February.</p>
+    <ul>
+     <li><b>Early access</b>Members are among the first on the app.</li>
+     <li><b>Featured clubs</b>Showcased on the app and in our launch content.</li>
+     <li><b>A city-wide stage</b>Your projects and members reach students across Hyderabad.</li>
+    </ul>
+   </div>
+   <div class="r">
+    <span class="mono">Admit · members</span>
+    <div><b>Early access</b><br><small>3rd week of January</small></div>
+    <small>Cinematy app</small>
+   </div>
+  </div>
+  <div class="foot mono" style="margin-top:auto"><span>cinematy.in</span><span>02 / 02</span></div>
+ </div>
+</div>
+</body></html>
+<style>
+.p2 .main{padding-top:11mm;padding-bottom:10mm}
+.p2 .sechead{margin-bottom:4.5mm}
+.p2 .reels{gap:4mm}
+.p2 .reel{padding:4mm 4.5mm}
+.p2 .reel p{font-size:12px;line-height:1.45}
+.p2 .techgrid{gap:3mm 7mm}
+.p2 .ticket{margin-top:6mm}
+.p2 .ticket .l{padding:5mm 6mm}
+.p2 .ticket .l h3{font-size:26px;margin:1.5mm 0 2mm}
+.p2 .ticket .l ul{margin-top:3mm}
+.p2 .foot{margin-top:5mm}
+</style>
