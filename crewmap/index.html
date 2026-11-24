@@ -1,0 +1,409 @@
+<title>Cinematy Crew Map</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a call-sheet style header with two tabs; the canvas (org tree or workflow chain) fills the page, an editor drawer slides in beside it. */
+:root{
+  --bg:#ffffff; --fg:#0a0a0a; --muted:#5e5e5e; --line:#e4e4e4; --panel:#f6f6f5; --card:#ffffff; --accent:#d92d20; --accent-fg:#ffffff;
+  --t1:#d92d20; --t2:#2563a8; --t3:#1f8a5b; --t4:#b8690f; --t5:#7a4cc2; --t6:#5e5e5e;
+  --f-display:"Instrument Serif",Georgia,"Times New Roman",serif;
+  --f-body:"Geist",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b0b0b;--fg:#f2f2f2;--muted:#a1a1a1;--line:#262626;--panel:#141414;--card:#111111;--accent:#ff5a4d;--accent-fg:#0b0b0b;--t1:#ff6b5e;--t2:#6aa6ec;--t3:#4cc28e;--t4:#e9a04a;--t5:#a98af0;--t6:#9a9a9a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0b0b0b;--fg:#f2f2f2;--muted:#a1a1a1;--line:#262626;--panel:#141414;--card:#111111;--accent:#ff5a4d;--accent-fg:#0b0b0b;--t1:#ff6b5e;--t2:#6aa6ec;--t3:#4cc28e;--t4:#e9a04a;--t5:#a98af0;--t6:#9a9a9a;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));max-width:1280px;margin:0 auto}
+.mono{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase}
+h1{font-family:var(--f-display);font-weight:400;font-size:clamp(34px,6vw,52px);line-height:1;margin:0;letter-spacing:-.01em}
+h1 i{font-style:italic}
+header{border-bottom:1.5px solid var(--fg)}
+header .wrap{padding-block:22px 0;display:flex;flex-direction:column;gap:14px}
+.toprow{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.status{color:var(--muted)}
+.tabs{display:flex;gap:4px}
+.tab{appearance:none;border:0;background:none;color:var(--muted);font:500 15px var(--f-body);padding:10px 14px 12px;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-1.5px}
+.tab[aria-selected="true"]{color:var(--fg);border-color:var(--accent)}
+.tab:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding-block:14px}
+.btn{appearance:none;border:1.5px solid var(--fg);background:var(--bg);color:var(--fg);font:500 14px var(--f-body);padding:8px 14px;border-radius:999px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.btn.primary{background:var(--fg);color:var(--bg)}
+.btn.ghost{border-color:var(--line)}
+.btn.danger{border-color:var(--accent);color:var(--accent)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.spacer{flex:1}
+.legend{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:13px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+main{min-height:60vh}
+.canvas{overflow:auto;border:1px solid var(--line);border-radius:14px;background:var(--panel);min-height:420px;position:relative}
+.canvas svg{display:block}
+.empty{padding:48px 24px;text-align:center;color:var(--muted)}
+.empty h3{font-family:var(--f-display);font-weight:400;font-size:28px;color:var(--fg);margin:0 0 6px}
+.node{cursor:pointer}
+.node:focus{outline:none}
+.node:focus .box,.node:hover .box{stroke-width:2.5}
+.layout{display:grid;grid-template-columns:minmax(0,1fr);gap:16px;padding-bottom:40px}
+.layout.editing{grid-template-columns:minmax(0,1fr) 340px}
+@media (max-width:860px){.layout.editing{grid-template-columns:minmax(0,1fr)}}
+aside{border:1.5px solid var(--fg);border-radius:14px;padding:16px;background:var(--card);align-self:start;display:flex;flex-direction:column;gap:12px;min-width:0}
+aside h2{font-family:var(--f-display);font-weight:400;font-size:28px;margin:0;line-height:1}
+label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
+input,select,textarea{font:15px var(--f-body);color:var(--fg);background:var(--bg);border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;width:100%}
+textarea{min-height:64px;resize:vertical}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+.hint{font-size:12.5px;color:var(--muted)}
+/* workflows */
+.flowtabs{display:flex;gap:6px;flex-wrap:wrap}
+.chip{appearance:none;border:1.5px solid var(--line);background:var(--bg);color:var(--fg);border-radius:999px;padding:6px 12px;font:500 13.5px var(--f-body);cursor:pointer}
+.chip[aria-pressed="true"]{border-color:var(--fg);background:var(--fg);color:var(--bg)}
+.chain{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:20px;max-width:720px;margin:0 auto}
+.step{display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;background:var(--card);border:1.5px solid var(--line);border-radius:14px;padding:14px 16px}
+.step .n{font-family:var(--f-mono);font-size:13px;color:var(--accent);padding-top:3px}
+.step h4{margin:0;font-size:16.5px;font-weight:600}
+.step p{margin:4px 0 0;color:var(--muted);font-size:14px}
+.owners{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.owner{font-size:12.5px;border-radius:999px;padding:2px 9px;border:1.5px solid currentColor;font-weight:500}
+.arrow{height:30px;display:flex;justify-content:center}
+.arrow svg{overflow:visible}
+.flowtitle{font-family:var(--f-display);font-size:30px;margin:0 0 2px;text-align:center}
+.steprow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;border-top:1px solid var(--line);padding-top:10px}
+.steprow .fields{display:flex;flex-direction:column;gap:6px;min-width:0}
+.steprow .ctl{display:flex;flex-direction:column;gap:4px}
+.icon{appearance:none;border:1.5px solid var(--line);background:var(--bg);color:var(--fg);width:32px;height:30px;border-radius:8px;cursor:pointer;font:14px var(--f-body)}
+.note{font-size:13px;color:var(--muted);padding-block:6px 0}
+@media (prefers-reduced-motion:no-preference){aside{animation:slide .18s ease-out}@keyframes slide{from{transform:translateX(8px);opacity:.6}to{transform:none;opacity:1}}}
+</style>
+
+<header>
+ <div class="wrap">
+  <div class="toprow">
+   <div>
+    <div class="mono status" id="status">Connecting…</div>
+    <h1>Crew <i>Map</i></h1>
+   </div>
+   <div class="legend" id="legend"></div>
+  </div>
+  <div class="tabs" role="tablist">
+   <button class="tab" role="tab" id="tab-org" aria-selected="true" aria-controls="view-org">Org chart</button>
+   <button class="tab" role="tab" id="tab-flow" aria-selected="false" aria-controls="view-flow">Workflows</button>
+  </div>
+ </div>
+</header>
+
+<main class="wrap">
+ <section id="view-org" role="tabpanel" aria-labelledby="tab-org">
+  <div class="bar">
+   <button class="btn primary" id="addPerson">+ Add person or team</button>
+   <span class="hint">Click any box to edit who it is and who they report to.</span>
+   <span class="spacer"></span>
+   <button class="btn ghost" id="exportOrg" hidden>Export PNG</button>
+  </div>
+  <div class="layout" id="orgLayout">
+   <div class="canvas" id="orgCanvas"></div>
+   <aside id="personEditor" hidden></aside>
+  </div>
+ </section>
+
+ <section id="view-flow" role="tabpanel" aria-labelledby="tab-flow" hidden>
+  <div class="bar">
+   <div class="flowtabs" id="flowTabs"></div>
+   <button class="btn primary" id="addFlow">+ New workflow</button>
+   <span class="spacer"></span>
+   <button class="btn ghost" id="editFlow" hidden>Edit steps</button>
+  </div>
+  <div class="layout" id="flowLayout">
+   <div class="canvas" id="flowCanvas"></div>
+   <aside id="flowEditor" hidden></aside>
+  </div>
+ </section>
+</main>
+
+<script>
+(() => {
+"use strict";
+const $ = (id) => document.getElementById(id);
+const SVGNS = "http://www.w3.org/2000/svg";
+const el = (tag, attrs = {}, text) => { const e = document.createElement(tag); for (const [k, v] of Object.entries(attrs)) { if (k === "class") e.className = v; else e.setAttribute(k, v); } if (text != null) e.textContent = text; return e; };
+const sv = (tag, attrs = {}, text) => { const e = document.createElementNS(SVGNS, tag); for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v); if (text != null) e.textContent = text; return e; };
+const clip = (s, n) => { s = String(s || ""); return s.length > n ? s.slice(0, n - 1) + "…" : s; };
+
+let db = null, canWrite = true, downloads = null;
+let people = [], flows = [], peopleReady = false, flowsReady = false;
+let editingPerson = null, activeFlow = null, editingFlow = null;
+
+// ---------- tabs ----------
+function showTab(which) {
+  const org = which === "org";
+  $("tab-org").setAttribute("aria-selected", org); $("tab-flow").setAttribute("aria-selected", !org);
+  $("view-org").hidden = !org; $("view-flow").hidden = org;
+  try { localStorage.setItem("crewmap-tab", which); } catch (e) {}
+}
+$("tab-org").onclick = () => showTab("org");
+$("tab-flow").onclick = () => showTab("flow");
+try { if (localStorage.getItem("crewmap-tab") === "flow") showTab("flow"); } catch (e) {}
+
+// ---------- team colours ----------
+function teamList() { const seen = []; for (const p of people) { const t = (p.team || "Other").trim() || "Other"; if (!seen.includes(t)) seen.push(t); } return seen; }
+function teamVar(team) { const i = teamList().indexOf((team || "Other").trim() || "Other"); return `var(--t${(i % 6) + 1})`; }
+function renderLegend() {
+  const lg = $("legend"); lg.textContent = "";
+  for (const t of teamList()) { const s = el("span"); const i = el("i"); i.style.background = teamVar(t); s.append(i, document.createTextNode(t)); lg.append(s); }
+}
+
+// ---------- org tree ----------
+const NW = 196, NH = 74, GX = 18, GY = 58, PAD = 28;
+function buildTree() {
+  const byId = new Map(people.map(p => [p.id, p]));
+  const kids = new Map(people.map(p => [p.id, []]));
+  const roots = [];
+  for (const p of people) {
+    if (p.reportsTo && byId.has(p.reportsTo) && p.reportsTo !== p.id) kids.get(p.reportsTo).push(p); else roots.push(p);
+  }
+  const sortFn = (a, b) => (a.order ?? 0) - (b.order ?? 0) || String(a.name).localeCompare(String(b.name));
+  for (const arr of kids.values()) arr.sort(sortFn); roots.sort(sortFn);
+  // guard cycles: anything unreachable from a root becomes a root
+  const seen = new Set(); const walk = (p) => { if (seen.has(p.id)) return; seen.add(p.id); kids.get(p.id).forEach(walk); };
+  roots.forEach(walk);
+  for (const p of people) if (!seen.has(p.id)) { roots.push(p); walk(p); }
+  return { kids, roots };
+}
+function layout() {
+  const { kids, roots } = buildTree();
+  const pos = new Map(); let maxDepth = 0;
+  const width = (p, guard = new Set()) => { if (guard.has(p.id)) return NW + GX; guard.add(p.id); const ks = kids.get(p.id); if (!ks.length) return NW + GX; return Math.max(NW + GX, ks.reduce((s, k) => s + width(k, guard), 0)); };
+  const place = (p, x0, depth, guard = new Set()) => {
+    if (guard.has(p.id)) return; guard.add(p.id);
+    maxDepth = Math.max(maxDepth, depth);
+    const w = width(p); const ks = kids.get(p.id);
+    pos.set(p.id, { x: x0 + w / 2 - NW / 2, y: PAD + depth * (NH + GY), p });
+    let x = x0 + (w - ks.reduce((s, k) => s + width(k), 0)) / 2;
+    for (const k of ks) { place(k, x, depth + 1, guard); x += width(k); }
+  };
+  let x = PAD; for (const r of roots) { place(r, x, 0); x += width(r) + 24; }
+  return { pos, kids, W: Math.max(x + PAD, 360), H: PAD * 2 + (maxDepth + 1) * NH + maxDepth * GY };
+}
+function renderOrg() {
+  renderLegend();
+  const c = $("orgCanvas"); c.textContent = "";
+  $("exportOrg").hidden = !(downloads && people.length);
+  if (!peopleReady) { c.append(emptyState("Loading the crew…", "Fetching the latest chart.")); return; }
+  if (!people.length) { c.append(emptyState("No one on the map yet", canWrite ? "Add the founders first, then add each person and set who they report to." : "Nothing has been added yet.")); return; }
+  const { pos, kids, W, H } = layout();
+  const svg = sv("svg", { width: W, height: H, viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Organisation chart" });
+  const edges = sv("g", { fill: "none", stroke: "var(--muted)", "stroke-width": "1.5" });
+  for (const [id, a] of pos) for (const k of kids.get(id)) {
+    const b = pos.get(k.id); if (!b) continue;
+    const x1 = a.x + NW / 2, y1 = a.y + NH, x2 = b.x + NW / 2, y2 = b.y, my = y1 + GY / 2;
+    edges.append(sv("path", { d: `M${x1} ${y1} V${my} H${x2} V${y2}` }));
+  }
+  svg.append(edges);
+  for (const [id, { x, y, p }] of pos) {
+    const g = sv("g", { class: "node", transform: `translate(${x} ${y})`, tabindex: "0", role: "button", "aria-label": `${p.name || "Untitled"}, ${p.role || ""}` });
+    const col = teamVar(p.team);
+    const isTeam = p.kind === "team";
+    g.append(sv("rect", { class: "box", width: NW, height: NH, rx: 12, fill: "var(--card)", stroke: col, "stroke-width": "1.5", "stroke-dasharray": isTeam ? "5 4" : "none" }));
+    g.append(sv("rect", { x: 0, y: 12, width: 4, height: NH - 24, rx: 2, fill: col }));
+    g.append(sv("text", { x: 16, y: 28, fill: "var(--fg)", "font-family": "var(--f-body)", "font-size": "15", "font-weight": "600" }, clip(p.name || "Untitled", 22)));
+    g.append(sv("text", { x: 16, y: 47, fill: "var(--muted)", "font-family": "var(--f-body)", "font-size": "13" }, clip(p.role, 26)));
+    g.append(sv("text", { x: 16, y: 63, fill: col, "font-family": "var(--f-mono)", "font-size": "9.5", "letter-spacing": "1.2" }, clip((p.team || "Other").toUpperCase(), 28)));
+    const open = () => openPerson(p.id);
+    g.addEventListener("click", open);
+    g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); open(); } });
+    svg.append(g);
+  }
+  c.append(svg);
+}
+function emptyState(title, body) { const d = el("div", { class: "empty" }); d.append(el("h3", {}, title), el("p", {}, body)); return d; }
+
+// descendants of id (to block cycles in the reports-to picker)
+function descendants(id) { const out = new Set([id]); let grew = true; while (grew) { grew = false; for (const p of people) if (p.reportsTo && out.has(p.reportsTo) && !out.has(p.id)) { out.add(p.id); grew = true; } } return out; }
+
+function openPerson(id) {
+  editingPerson = id; const p = people.find(x => x.id === id) || { id: null, name: "", role: "", team: "", reportsTo: "", note: "", kind: "person" };
+  const a = $("personEditor"); a.textContent = ""; a.hidden = false; $("orgLayout").classList.add("editing");
+  a.append(el("div", { class: "mono", style: "color:var(--muted)" }, p.id ? "Edit" : "New"), el("h2", {}, p.id ? (p.name || "Untitled") : "Add to the map"));
+  const f = el("form"); f.style.cssText = "display:flex;flex-direction:column;gap:10px";
+  const field = (labelText, input) => { const l = el("label", {}, labelText); l.append(input); return l; };
+  const kind = el("select", { id: "pf-kind" }); [["person", "A person"], ["team", "A team or open role"]].forEach(([v, t]) => { const o = el("option", { value: v }, t); if ((p.kind || "person") === v) o.selected = true; kind.append(o); });
+  const name = el("input", { id: "pf-name", maxlength: "60", placeholder: "e.g. Sanhitha Reddy" }); name.value = p.name || "";
+  const role = el("input", { id: "pf-role", maxlength: "60", placeholder: "e.g. Unit Lead" }); role.value = p.role || "";
+  const team = el("input", { id: "pf-team", maxlength: "40", list: "teamlist", placeholder: "e.g. MU Content Unit" }); team.value = p.team || "";
+  const dl = el("datalist", { id: "teamlist" }); teamList().forEach(t => dl.append(el("option", { value: t })));
+  const rep = el("select", { id: "pf-rep" }); rep.append(el("option", { value: "" }, "No one (top of a tree)"));
+  const blocked = p.id ? descendants(p.id) : new Set();
+  [...people].sort((x, y) => String(x.name).localeCompare(String(y.name))).forEach(o => { if (blocked.has(o.id)) return; const op = el("option", { value: o.id }, `${o.name || "Untitled"}${o.role ? " · " + o.role : ""}`); if (p.reportsTo === o.id) op.selected = true; rep.append(op); });
+  const note = el("textarea", { id: "pf-note", maxlength: "300", placeholder: "Contact, responsibilities, anything useful" }); note.value = p.note || "";
+  f.append(field("Type", kind), field("Name", name), field("Role", role), field("Team", team), dl, field("Reports to", rep), field("Notes", note));
+  const msg = el("div", { class: "hint", "aria-live": "polite" });
+  const row = el("div", { class: "row" });
+  const save = el("button", { class: "btn primary", type: "submit" }, p.id ? "Save changes" : "Add to map");
+  const cancel = el("button", { class: "btn ghost", type: "button" }, "Close");
+  row.append(save, cancel);
+  if (p.id) { const del = el("button", { class: "btn danger", type: "button" }, "Remove"); let armed = false; del.onclick = async () => { if (!armed) { armed = true; del.textContent = "Tap again to remove"; return; } const n = people.filter(x => x.reportsTo === p.id).length; await removePerson(p.id); msg.textContent = n ? `${n} ${n === 1 ? "person now sits" : "people now sit"} at the top level.` : ""; closePerson(); }; row.append(del); }
+  if (!canWrite) { [kind, name, role, team, rep, note, save].forEach(x => x.disabled = true); msg.textContent = "You can view this map but not change it."; }
+  f.append(row, msg); a.append(f);
+  cancel.onclick = closePerson;
+  f.onsubmit = async (e) => {
+    e.preventDefault();
+    if (!name.value.trim()) { msg.textContent = "Add a name first."; name.focus(); return; }
+    const data = { name: name.value.trim(), role: role.value.trim(), team: team.value.trim(), reportsTo: rep.value, note: note.value.trim(), kind: kind.value, order: p.order ?? Date.now() };
+    save.disabled = true; msg.textContent = "Saving…";
+    try { await savePerson(p.id, data); closePerson(); } catch (err) { msg.textContent = writeError(err); save.disabled = false; }
+  };
+  name.focus();
+}
+function closePerson() { editingPerson = null; $("personEditor").hidden = true; $("orgLayout").classList.remove("editing"); }
+$("addPerson").onclick = () => openPerson(null);
+
+// ---------- workflows ----------
+function ownerColor(name) { const p = people.find(x => (x.name || "").toLowerCase() === String(name).toLowerCase()); return p ? teamVar(p.team) : "var(--fg)"; }
+function renderFlows() {
+  const tabs = $("flowTabs"); tabs.textContent = "";
+  const sorted = [...flows].sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+  if (!activeFlow || !flows.find(f => f.id === activeFlow)) activeFlow = sorted[0]?.id || null;
+  for (const f of sorted) { const b = el("button", { class: "chip", type: "button", "aria-pressed": f.id === activeFlow }, f.name || "Untitled"); b.onclick = () => { activeFlow = f.id; closeFlow(); renderFlows(); }; tabs.append(b); }
+  $("editFlow").hidden = !activeFlow;
+  const c = $("flowCanvas"); c.textContent = "";
+  if (!flowsReady) { c.append(emptyState("Loading workflows…", "")); return; }
+  const f = flows.find(x => x.id === activeFlow);
+  if (!f) { c.append(emptyState("No workflows yet", canWrite ? "Create one for a process your team repeats, like recruiting or a shoot day." : "Nothing has been added yet.")); return; }
+  const chain = el("div", { class: "chain" });
+  chain.append(el("h3", { class: "flowtitle" }, f.name || "Untitled"));
+  if (f.summary) chain.append(el("p", { class: "hint", style: "text-align:center;margin:0 0 14px" }, f.summary));
+  const steps = Array.isArray(f.steps) ? f.steps : [];
+  if (!steps.length) chain.append(emptyState("No steps yet", "Use Edit steps to add the first one."));
+  steps.forEach((s, i) => {
+    if (i) { const a = el("div", { class: "arrow" }); const s2 = sv("svg", { width: 14, height: 30, viewBox: "0 0 14 30" }); s2.append(sv("path", { d: "M7 2 V24 M2 20 L7 27 L12 20", stroke: "var(--muted)", "stroke-width": "1.6", fill: "none" })); a.append(s2); chain.append(a); }
+    const card = el("div", { class: "step" });
+    card.append(el("div", { class: "n" }, String(i + 1).padStart(2, "0")));
+    const body = el("div"); body.append(el("h4", {}, s.label || "Untitled step"));
+    if (s.note) body.append(el("p", {}, s.note));
+    const owners = String(s.owners || "").split(",").map(x => x.trim()).filter(Boolean);
+    if (owners.length) { const o = el("div", { class: "owners" }); owners.forEach(n => { const ch = el("span", { class: "owner" }, n); ch.style.color = ownerColor(n); o.append(ch); }); body.append(o); }
+    card.append(body); chain.append(card);
+  });
+  c.append(chain);
+}
+function openFlow(id) {
+  const src = flows.find(x => x.id === id);
+  editingFlow = { id: src?.id || null, name: src?.name || "", summary: src?.summary || "", steps: (src?.steps || []).map(s => ({ label: s.label || "", owners: s.owners || "", note: s.note || "" })), order: src?.order };
+  if (!editingFlow.steps.length) editingFlow.steps.push({ label: "", owners: "", note: "" });
+  drawFlowEditor();
+}
+function drawFlowEditor() {
+  const a = $("flowEditor"); a.textContent = ""; a.hidden = false; $("flowLayout").classList.add("editing");
+  const F = editingFlow;
+  a.append(el("div", { class: "mono", style: "color:var(--muted)" }, F.id ? "Edit workflow" : "New workflow"));
+  const name = el("input", { id: "ff-name", maxlength: "60", placeholder: "e.g. MU Unit recruitment" }); name.value = F.name; name.oninput = () => F.name = name.value;
+  const sum = el("input", { id: "ff-sum", maxlength: "140", placeholder: "One line on what this flow is for" }); sum.value = F.summary; sum.oninput = () => F.summary = sum.value;
+  const l1 = el("label", {}, "Workflow name"); l1.append(name); const l2 = el("label", {}, "Summary"); l2.append(sum);
+  a.append(l1, l2, el("div", { class: "hint" }, "Owners: names separated by commas. Names that match the org chart get their team colour."));
+  const dl = el("datalist", { id: "peoplelist" }); people.forEach(p => dl.append(el("option", { value: p.name }))); a.append(dl);
+  F.steps.forEach((s, i) => {
+    const r = el("div", { class: "steprow" }); const fl = el("div", { class: "fields" });
+    const lab = el("input", { id: `fs-l-${i}`, maxlength: "80", placeholder: `Step ${i + 1}` }); lab.value = s.label; lab.oninput = () => s.label = lab.value;
+    const own = el("input", { id: `fs-o-${i}`, maxlength: "120", placeholder: "Owners", list: "peoplelist" }); own.value = s.owners; own.oninput = () => s.owners = own.value;
+    const nt = el("input", { id: `fs-n-${i}`, maxlength: "160", placeholder: "Note (optional)" }); nt.value = s.note; nt.oninput = () => s.note = nt.value;
+    fl.append(lab, own, nt);
+    const ctl = el("div", { class: "ctl" });
+    const up = el("button", { class: "icon", type: "button", "aria-label": `Move step ${i + 1} up` }, "↑"); up.disabled = i === 0; up.onclick = () => { [F.steps[i - 1], F.steps[i]] = [F.steps[i], F.steps[i - 1]]; drawFlowEditor(); };
+    const dn = el("button", { class: "icon", type: "button", "aria-label": `Move step ${i + 1} down` }, "↓"); dn.disabled = i === F.steps.length - 1; dn.onclick = () => { [F.steps[i + 1], F.steps[i]] = [F.steps[i], F.steps[i + 1]]; drawFlowEditor(); };
+    const rm = el("button", { class: "icon", type: "button", "aria-label": `Remove step ${i + 1}` }, "✕"); rm.onclick = () => { F.steps.splice(i, 1); drawFlowEditor(); };
+    ctl.append(up, dn, rm); r.append(fl, ctl); a.append(r);
+  });
+  const add = el("button", { class: "btn ghost", type: "button" }, "+ Add step"); add.onclick = () => { F.steps.push({ label: "", owners: "", note: "" }); drawFlowEditor(); $(`fs-l-${F.steps.length - 1}`)?.focus(); };
+  const msg = el("div", { class: "hint", "aria-live": "polite" });
+  const row = el("div", { class: "row" });
+  const save = el("button", { class: "btn primary", type: "button" }, "Save workflow");
+  const close = el("button", { class: "btn ghost", type: "button" }, "Close");
+  row.append(save, close);
+  if (F.id) { const del = el("button", { class: "btn danger", type: "button" }, "Delete"); let armed = false; del.onclick = async () => { if (!armed) { armed = true; del.textContent = "Tap again to delete"; return; } try { await removeFlow(F.id); activeFlow = null; closeFlow(); } catch (e) { msg.textContent = writeError(e); } }; row.append(del); }
+  if (!canWrite) { a.querySelectorAll("input,button.icon").forEach(x => x.disabled = true); add.disabled = save.disabled = true; msg.textContent = "You can view this workflow but not change it."; }
+  a.append(add, row, msg);
+  close.onclick = closeFlow;
+  save.onclick = async () => {
+    if (!F.name.trim()) { msg.textContent = "Name the workflow first."; name.focus(); return; }
+    const steps = F.steps.map(s => ({ label: s.label.trim(), owners: s.owners.trim(), note: s.note.trim() })).filter(s => s.label);
+    save.disabled = true; msg.textContent = "Saving…";
+    try { const id = await saveFlow(F.id, { name: F.name.trim(), summary: F.summary.trim(), steps, order: F.order ?? Date.now() }); activeFlow = id; closeFlow(); } catch (e) { msg.textContent = writeError(e); save.disabled = false; }
+  };
+}
+function closeFlow() { editingFlow = null; $("flowEditor").hidden = true; $("flowLayout").classList.remove("editing"); renderFlows(); }
+$("addFlow").onclick = () => openFlow(null);
+$("editFlow").onclick = () => openFlow(activeFlow);
+
+// ---------- storage ----------
+function writeError(err) { const c = err && err.code; if (c === "permission_denied" || c === "not_granted") return "You don't have permission to edit this map. Ask the owner for edit access."; return "Couldn't save. Check your connection and try again."; }
+let localMode = false;
+async function savePerson(id, data) {
+  if (localMode) { if (id) Object.assign(people.find(p => p.id === id), data); else people.push({ id: "l" + Math.random().toString(36).slice(2), ...data }); renderOrg(); return; }
+  if (id) await db.collection("people").doc(id).set(data); else await db.collection("people").add(data);
+}
+async function removePerson(id) {
+  const orphans = people.filter(p => p.reportsTo === id);
+  if (localMode) { people = people.filter(p => p.id !== id); orphans.forEach(o => o.reportsTo = ""); renderOrg(); return; }
+  for (const o of orphans) await db.collection("people").doc(o.id).update({ reportsTo: "" });
+  await db.collection("people").doc(id).delete();
+}
+async function saveFlow(id, data) {
+  if (localMode) { if (id) { Object.assign(flows.find(f => f.id === id), data); return id; } const nid = "l" + Math.random().toString(36).slice(2); flows.push({ id: nid, ...data }); return nid; }
+  if (id) { await db.collection("flows").doc(id).set(data); return id; }
+  const ref = await db.collection("flows").add(data); return ref.id;
+}
+async function removeFlow(id) { if (localMode) { flows = flows.filter(f => f.id !== id); return; } await db.collection("flows").doc(id).delete(); }
+
+function setStatus(t) { $("status").textContent = t; }
+
+// ---------- export ----------
+$("exportOrg").onclick = async () => {
+  const live = $("orgCanvas").querySelector("svg"); if (!live || !downloads) return;
+  const cs = getComputedStyle(document.documentElement);
+  const clone = live.cloneNode(true); const W = +live.getAttribute("width"), H = +live.getAttribute("height");
+  // resolve CSS variables into literal colours for the image
+  const resolve = (v) => v && v.startsWith("var(") ? cs.getPropertyValue(v.slice(4, -1)).trim() : v;
+  clone.querySelectorAll("*").forEach(n => { for (const a of ["fill", "stroke"]) { const v = n.getAttribute(a); if (v) n.setAttribute(a, resolve(v)); } const ff = n.getAttribute("font-family"); if (ff) n.setAttribute("font-family", ff.includes("mono") ? "Menlo, monospace" : "Helvetica, Arial, sans-serif"); });
+  const bgRect = document.createElementNS(SVGNS, "rect"); bgRect.setAttribute("width", W); bgRect.setAttribute("height", H); bgRect.setAttribute("fill", cs.getPropertyValue("--bg").trim()); clone.insertBefore(bgRect, clone.firstChild);
+  clone.setAttribute("xmlns", SVGNS);
+  const blob = new Blob([new XMLSerializer().serializeToString(clone)], { type: "image/svg+xml" });
+  const url = URL.createObjectURL(blob); const img = new Image();
+  img.onload = async () => {
+    const s = 2, cv = document.createElement("canvas"); cv.width = W * s; cv.height = H * s;
+    const ctx = cv.getContext("2d"); ctx.scale(s, s); ctx.drawImage(img, 0, 0); URL.revokeObjectURL(url);
+    cv.toBlob(async (png) => { try { await downloads.save({ filename: "cinematy-crew-map.png", data: png }); } catch (e) { if (e && e.code === "unavailable") $("exportOrg").hidden = true; } }, "image/png");
+  };
+  img.src = url;
+};
+
+// ---------- boot ----------
+renderOrg(); renderFlows();
+const timer = setTimeout(() => { if (!peopleReady) { startLocal("Couldn't reach the shared map, showing an unsaved scratch copy."); } }, 10000);
+function startLocal(msg) {
+  localMode = true; peopleReady = flowsReady = true; setStatus(msg);
+  renderOrg(); renderFlows();
+}
+(async () => {
+  const api = window.claude && typeof window.claude.use === "function" ? window.claude : null;
+  if (!api) { clearTimeout(timer); startLocal("Scratch copy · open this in Claude to save and share"); return; }
+  const [d, dlc, u] = await Promise.all([api.use("db"), api.use("downloads"), api.use("user")]);
+  downloads = dlc;
+  if (u && typeof u.can === "function") { try { const v = await u.can("data.write"); if (v === false) canWrite = false; } catch (e) {} }
+  if (!d) { clearTimeout(timer); startLocal("Scratch copy · sign in to Claude to save and share"); return; }
+  db = d;
+  setStatus(canWrite ? "Shared · changes save for everyone" : "Shared · view only");
+  db.collection("people").onSnapshot((snap) => {
+    clearTimeout(timer); peopleReady = true;
+    people = snap.docs.map(x => ({ id: x.id, ...x.data() }));
+    renderOrg(); if (!editingFlow) renderFlows();
+  }, () => { clearTimeout(timer); startLocal("Couldn't load the shared map, showing an unsaved scratch copy."); });
+  db.collection("flows").onSnapshot((snap) => {
+    flowsReady = true; flows = snap.docs.map(x => ({ id: x.id, ...x.data() }));
+    if (!editingFlow) renderFlows();
+  }, () => {});
+})();
+})();
+</script>
