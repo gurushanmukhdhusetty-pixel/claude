@@ -2,16 +2,18 @@
 const { W, H, C, F, SAFE, clamp, lerp, seg, E, env, rng, hash, noise1, fmt, text, measure, reveal, revealChars, mono } = BB;
 const { v } = G3;
 const cv = document.getElementById('c'); let ctx = cv.getContext('2d');
-let SUBS = [];
+let SUBS = []; let TMAP = [[0, 0], [1e4, 1e4]];
+// new-take time -> original layout time (piecewise linear between matched words)
+function remap(t) { const m = TMAP; if (t <= m[0][0]) return t - m[0][0] + m[0][1]; for (let i = 1; i < m.length; i++) if (t <= m[i][0]) { const [a0, b0] = m[i - 1], [a1, b1] = m[i]; return b0 + (t - a0) / (a1 - a0) * (b1 - b0); } const L = m[m.length - 1]; return t - L[0] + L[1]; }
 const DUR = 75.81;
 
 function init(data) {
-  G3.setEarth(data.earth);
+  G3.setEarth(data.earth); if (data.timemap) TMAP = data.timemap;
   const bin = atob(data.mask); const u8 = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i); G3.setMask(u8, 2048, 1024);
   // tidy transcript tokens: join decimals ("$41" ".1"), spelling fixes
   const ws = [];
   data.words.forEach(w => { if (/^\.\d/.test(w.w) && ws.length) { const p = ws[ws.length - 1]; p.w += w.w; p.e = w.e; } else ws.push({ ...w }); });
-  ws.forEach(w => { if (w.w === "center's") w.w = 'centres'; if (w.w === 'of' && Math.abs(w.s - 55.88) < .05) w.w = 'off'; if (w.w === '3.') w.w = '3.'; });
+  ws.forEach((w, i) => { if (w.w === "center's") w.w = 'centres'; if (w.w === 'of' && i > 0 && ws[i - 1].w === 'months') w.w = 'off'; if (w.w === '2.' && i > 0 && ws[i - 1].w !== 'Episode') w.w = '2,'; if (w.w === '3.') w.w = '3.'; });
   const kw = ['spacex', 'spacex\'s', '$41', '$41.1', 'billion', 'rockets', 'xai', 'xai\'s', 'google', '$920', 'anthropic', 'competitors', 'landlord', 'landlord.', 'gigawatts', 'aws', 'risks', 'quarter', 'chips', 'power', 'control', 'directors', 'marketing', 'december', '31st', 'follow', 'february', 'tenant', 'compute'];
   SUBS = BB.buildSubs(ws, { keywords: new Set(kw) });
 }
@@ -115,7 +117,7 @@ function sMove(t) {
     CL.card(ctx, 70 + bx, 380 + by + (1 - inP) * 1000, 940, 640, { rot: -.025 + br, seed: 31 }, (g, w, h) => {
       BB.mono(g, 'COMPUTE DEALS · ANNUAL REVENUE', 50, 80, { color: '#5b5a57', size: 22, weight: 700 });
       g.fillStyle = '#0b0b0c'; g.fillRect(50, 100, w - 100, 3);
-      const n = lerp(0, 41.1, E.outExpo(seg(t, 10.6, 13.6)));
+      const n = lerp(0, 41.1, E.outExpo(seg(t, 9.45, 13.6)));
       CL.highlight(g, 50, 170, 640, 190, seg(t, 13.4, 13.9), { color: 'rgba(229,37,42,0.88)', seed: 6 });
       text(g, '$' + n.toFixed(1) + 'B', 60, 330, { size: 190, weight: 900, color: '#0b0b0c', track: -8 });
       text(g, 'PER YEAR', 64, 420, { size: 56, weight: 900, color: '#0b0b0c' });
@@ -331,7 +333,8 @@ function tearClip(g, p, seed) {
   const y = lerp(H + 80, -80, E.io5(p)); const pts = []; for (let x = -20; x <= W + 20; x += 18) pts.push([x, y + (hash(x * .13 + seed) - .5) * 26 + Math.sin(x * .01 + seed) * 18]);
   return pts;
 }
-function render(t) {
+function render(tv) {
+  const t = remap(tv);
   ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.globalAlpha = 1; ctx.globalCompositeOperation = 'source-over'; ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H);
   let idx = SCN.findIndex(s => t >= s[0] && t < s[1]); if (idx < 0) idx = SCN.length - 1; const fn = SCN[idx][2];
   let tr = null; for (const k in TR) { const at = +k, [ty, d] = TR[k]; if (t >= at - d / 2 && t < at + d / 2) tr = { at, ty, d }; }
@@ -350,7 +353,7 @@ function render(t) {
     else if (tr.ty === 'split') { inFn(t); const e = E.io5(p); const cy = H * .5, off = e * W * 1.05; if (p < 1) { ctx.save(); ctx.beginPath(); ctx.rect(0, 0, W, cy); ctx.clip(); ctx.translate(off, 0); outFn(t); ctx.restore(); ctx.save(); ctx.beginPath(); ctx.rect(0, cy, W, H - cy); ctx.clip(); ctx.translate(-off, 0); outFn(t); ctx.restore(); ctx.fillStyle = C.red; ctx.fillRect(0, cy - 4, W, 8 * (1 - e)); } }
   }
   ctx.restore();
-  const off = SUBS_OFF.some(([s, e]) => t >= s && t < e); if (!off) BB.subs(ctx, t, SUBS, {});
+  const off = SUBS_OFF.some(([s, e]) => t >= s && t < e); if (!off) BB.subs(ctx, tv, SUBS, {});
   CL.finish(ctx, t, { dust: .8, leak: env(t, 0, 2, .1, 1.5) + env(t, 62, 63.5, .1, 1) });
   BB.post(ctx, t, { grain: .1 });
 }

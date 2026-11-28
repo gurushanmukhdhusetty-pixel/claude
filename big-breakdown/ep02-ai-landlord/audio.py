@@ -5,7 +5,11 @@ import sys, numpy as np, wave
 from scipy import signal
 
 SR = 48000
-DUR = 75.81
+DUR = 76.93
+import json, os
+_TM = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'data/timemap.json')))
+def remap_old(t_old):  # original layout time -> new take time
+    return float(np.interp(t_old, [p[1] for p in _TM], [p[0] for p in _TM]))
 N = int(DUR * SR) + SR // 2
 rng = np.random.default_rng(42)
 
@@ -31,7 +35,7 @@ def saw(f, d, det=0.0):  # band-limited-ish saw via additive harmonics up to 8k
         out += np.sin(2 * np.pi * fr * k * t + k) / k
     return out * .6
 def place(buf, x, at, gain=1.0, pan=0.0):
-    i = int(at * SR);
+    i = int(remap_old(at) * SR);
     if i >= len(buf): return
     x = x[: len(buf) - i]
     if x.ndim == 1:

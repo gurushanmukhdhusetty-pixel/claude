@@ -3,7 +3,7 @@
 # usage: ./build.sh <voiceover audio file>
 set -euo pipefail
 cd "$(dirname "$0")"; VO="$1"; mkdir -p out
-FRAMES=2275; P=4; STEP=$(( (FRAMES + P - 1) / P ))
+FRAMES=2308; P=4; STEP=$(( (FRAMES + P - 1) / P ))
 if [ "${SKIP_RENDER:-0}" != 1 ]; then
   for i in $(seq 0 $((P-1))); do s=$((i*STEP)); e=$(( s+STEP > FRAMES ? FRAMES : s+STEP )); node render.js chunk $s $e out/part$i.mp4 > out/log$i.txt 2>&1 & done; wait
 fi
