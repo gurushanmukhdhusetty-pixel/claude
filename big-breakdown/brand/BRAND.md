@@ -30,3 +30,13 @@ Logo → red `FOLLOW FOR MORE` block → creator handle (smaller than the series
 Original synthesised score at 96 BPM in D minor; energy follows the narration's sections.
 Impacts on chapter cards, risers into every major reveal, whooshes on every transition,
 UI blips on HUD panels. Music is side-chain ducked under the voice; final master at −14 LUFS, −1.5 dBTP.
+
+## Collage / pixel add-on (`collage.js`, introduced in EP02)
+An optional edit style layered on the same identity (logo, type, red, HUD, subtitles unchanged):
+- **Textures:** charcoal paper with fibres and blotches, off-white newsprint and dark kraft cut-outs, halftone, graph paper, dust and scratches, gate-weave flicker.
+- **Cut-outs:** torn-edge cards with drop shadows (`CL.card`), masking tape (`CL.tape`), label stickers, ink stamps with gaps.
+- **Marker annotations:** highlighter swipes, hand-drawn circles, underlines, crosses and arrows, drawn on progressively.
+- **Stop-motion:** collage elements "boil" (jitter) at 12 fps; counters and pixel builds step on twos.
+- **Pixel art:** sprites (rocket, pylon, key, crown, coins, people), pixel data centres and chips, pixel-assembled headlines (`CL.pixelText`), and `CL.pixelate` for any layer (e.g. a mosaic Earth).
+- **Transitions:** mosaic pixelate, torn-paper reveal with a red rule under the tear, plus the series split cut.
+- **Sound:** chiptune blips for pixel events, paper slaps, marker scratches, typing and split-flap clicks on top of the series score.
